@@ -10,10 +10,10 @@ const datas =  ref([
  
 <template>
   <div>
-    <div v-if="datas.length=0">
+    <div v-show="datas.length===0">
     <h1 class="ne">No Event Schudule Today</h1>
     </div>
-    <table v-else>
+    <table v-show="datas.length!=0">
       <thead>
         <tr>
           <th>Booking Name</th>
@@ -23,12 +23,12 @@ const datas =  ref([
           <th>ooo</th>
         </tr>
       </thead>
-      <tbody v-for="data in datas" :key="data.name">
-        <th>{{data.name}}</th>
-        <th>{{data.catagory}}</th>
-        <th>{{data.stTime}}</th>
-        <th>{{data.duration}}</th>
-        <th>{{data.ooo}}</th>
+      <tbody v-for="(data,index) in datas" :key="index">
+        <td>{{data.name}}</td>
+        <td>{{data.catagory}}</td>
+        <td>{{data.stTime}}</td>
+        <td>{{data.duration}}</td>
+        <td>{{data.ooo}}</td>
       </tbody>
     </table>
   </div>
@@ -41,7 +41,7 @@ const datas =  ref([
   color:white;
   font-style: italic;
 }
-th {
+th , td {
   font-size:30px;
   padding-left: 100px;
   padding-top: 30px;
