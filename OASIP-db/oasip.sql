@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.26, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: mydb
+-- Host: localhost    Database: mydb
 -- ------------------------------------------------------
 -- Server version	8.0.26
 
@@ -54,6 +54,7 @@ CREATE TABLE `event` (
   `bookingEmail` varchar(45) NOT NULL,
   `eventCatagoryName` varchar(45) DEFAULT NULL,
   `StartTime` datetime NOT NULL,
+  `Durations` int NOT NULL,
   `Note` varchar(500) DEFAULT NULL,
   `Category_Id` int NOT NULL,
   PRIMARY KEY (`bookingId`),
@@ -69,7 +70,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` VALUES (1,'Somchai Jaidee(OR-7)','somchai.jai@mail.kmutt.ac.th','DevOps/Infra Clinic','2022-05-23 13:30:00',NULL,2),(2,'Somsri Rakdee(SJ-3)','somsri.rak@mail.kmutt.ac.th','Project Management Clinic','2022-04-27 09:30:00','ขอปรึกษาปัญหาเพื่อนไม่ช่วยงาน',1),(3,'สมเกียรติ ขยันเรียนกลุ่ม TT-4','somkiat.kay@kmutt.ac.th','Database Clinic','2022-05-23 16:30:00',NULL,3);
+INSERT INTO `event` VALUES (1,'Somchai Jaidee(OR-7)','somchai.jai@mail.kmutt.ac.th','DevOps/Infra Clinic','2022-05-23 13:30:00',30,NULL,2),(2,'Somsri Rakdee(SJ-3)','somsri.rak@mail.kmutt.ac.th','Project Management Clinic','2022-04-27 09:30:00',30,'ขอปรึกษาปัญหาเพื่อนไม่ช่วยงาน',1),(3,'สมเกียรติ ขยันเรียนกลุ่ม TT-4','somkiat.kay@kmutt.ac.th','Database Clinic','2022-05-23 16:30:00',15,NULL,3);
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -82,4 +83,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-04-30 14:02:51
+-- Dump completed on 2022-04-30 15:59:20
