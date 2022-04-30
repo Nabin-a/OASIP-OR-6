@@ -20,10 +20,13 @@ public class Event {
     private String bookingEmail;
 
     @Column(name = "eventCatagoryName", length = 45)
-    private String eventCatagoryName;
+    private String eventCategoryName;
 
     @Column(name = "StartTime", nullable = false)
     private Instant startTime;
+
+    @Column(name = "Durations", nullable = false)
+    private Integer durations;
 
     @Column(name = "Note", length = 500)
     private String note;
@@ -56,12 +59,20 @@ public class Event {
         this.startTime = startTime;
     }
 
-    public String getEventCatagoryName() {
-        return eventCatagoryName;
+    public String getEventCategoryName() {
+        return eventCategoryName;
     }
 
-    public void setEventCatagoryName(String eventCatagoryName) {
-        this.eventCatagoryName = eventCatagoryName;
+    public Integer getDurations() {
+        return durations;
+    }
+
+    public void setDurations(Integer durations) {
+        this.durations = durations;
+    }
+
+    public void setEventCategoryName(String eventCatagoryName) {
+        this.eventCategoryName = eventCatagoryName;
     }
 
     public String getBookingEmail() {
