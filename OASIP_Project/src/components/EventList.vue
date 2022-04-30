@@ -22,9 +22,9 @@ defineProps({
     </thead>
     <tbody v-for="(event, index) in eventList" :key="index">
       <td>{{event.bookingName}}</td>
-      <td>{{event.eventCatagoryName}}</td>
+      <td>{{event.eventCategoryName}}</td>
       <td>{{event.startTime}}</td>
-      <td></td>
+      <td>{{event.durations}}</td>
     </tbody>
   </table>
     <!-- <ul v-else>
