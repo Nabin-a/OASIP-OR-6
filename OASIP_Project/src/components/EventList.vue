@@ -12,9 +12,9 @@ defineProps({
 <p v-if="eventList.length < 1">No schedule events</p>
     <ul v-else>
       <li v-for="(event, index) in eventList" :key="index">
+        Note: {{event.note}} ,Catagoty: {{ event.eventCategoryName }} 
         Name: {{ event.bookName }}, 
         Start Time: {{ event.startTime }},
-        Note: {{event.note}} ,Catagoty: {{ event.catagoty }} 
       </li>
     </ul>
 </template>
