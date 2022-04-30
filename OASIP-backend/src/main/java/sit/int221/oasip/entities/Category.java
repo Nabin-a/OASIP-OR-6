@@ -5,15 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "catagory")
+@Table(name = "category")
 @Entity
-public class Catagory {
+public class Category {
     @Id
     @Column(name = "Id", nullable = false)
     private Integer id;
 
-    @Column(name = "CatagoryName", nullable = false, length = 100)
-    private String catagoryName;
+    @Column(name = "CategoryName", nullable = false, length = 100)
+    private String categoryName;
 
     @Column(name = "Description", length = 500)
     private String description;
@@ -37,12 +37,12 @@ public class Catagory {
         this.description = description;
     }
 
-    public String getCatagoryName() {
-        return catagoryName;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCatagoryName(String catagoryName) {
-        this.catagoryName = catagoryName;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public Integer getId() {

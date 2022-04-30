@@ -4,37 +4,43 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Table(name = "event", indexes = {
-        @Index(name = "ClientFirstsName_index", columnList = "bookName"),
-        @Index(name = "fk_Event_Catagory_idx", columnList = "Catagory_Id")
+        @Index(name = "ClientFirstsName_index", columnList = "bookingName"),
+        @Index(name = "fk_Event_Catagory_idx", columnList = "Category_Id")
 })
 @Entity
 public class Event {
     @Id
-    @Column(name = "bookId", nullable = false)
+    @Column(name = "bookingId", nullable = false)
     private Integer id;
 
-    @Column(name = "bookName", nullable = false, length = 100)
-    private String bookName;
+    @Column(name = "bookingName", nullable = false, length = 100)
+    private String bookingName;
 
     @Column(name = "bookingEmail", nullable = false, length = 45)
     private String bookingEmail;
 
+    @Column(name = "eventCatagoryName", length = 45)
+    private String eventCategoryName;
+
     @Column(name = "StartTime", nullable = false)
     private Instant startTime;
+
+    @Column(name = "Durations", nullable = false)
+    private Integer durations;
 
     @Column(name = "Note", length = 500)
     private String note;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "Catagory_Id", nullable = false)
-    private Catagory catagory;
+    @JoinColumn(name = "Category_Id", nullable = false)
+    private Category category;
 
-    public Catagory getCatagory() {
-        return catagory;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCatagory(Catagory catagory) {
-        this.catagory = catagory;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getNote() {
@@ -53,6 +59,22 @@ public class Event {
         this.startTime = startTime;
     }
 
+    public String getEventCategoryName() {
+        return eventCategoryName;
+    }
+
+    public Integer getDurations() {
+        return durations;
+    }
+
+    public void setDurations(Integer durations) {
+        this.durations = durations;
+    }
+
+    public void setEventCategoryName(String eventCatagoryName) {
+        this.eventCategoryName = eventCatagoryName;
+    }
+
     public String getBookingEmail() {
         return bookingEmail;
     }
@@ -61,12 +83,12 @@ public class Event {
         this.bookingEmail = bookingEmail;
     }
 
-    public String getBookName() {
-        return bookName;
+    public String getBookingName() {
+        return bookingName;
     }
 
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
+    public void setBookingName(String bookingName) {
+        this.bookingName = bookingName;
     }
 
     public Integer getId() {
