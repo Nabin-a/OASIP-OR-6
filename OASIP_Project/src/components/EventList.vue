@@ -1,4 +1,5 @@
 <script setup>
+import moment from "moment"
 defineProps({
   eventList: {
     type: Array,
@@ -16,7 +17,8 @@ defineProps({
         <tr>
           <th>Booking Name</th>
           <th>Catagory</th>
-          <th>Start Up Time</th>
+          <th>Start Date</th>
+          <th>Start Time</th>
           <th>Duration</th>
           <th></th>
         </tr>
@@ -24,17 +26,11 @@ defineProps({
     <tbody v-for="(event, index) in eventList" :key="index">
       <td>{{event.bookingName}}</td>
       <td>{{event.eventCategoryName}}</td>
-      <td>{{event.startTime}}</td>
+      <td>{{moment(event.startTime).format('l')}}</td>
+      <td>{{moment(event.startTime).format('LT')}}</td>
       <td>{{event.durations}}</td>
     </tbody>
   </table>
-    <!-- <ul v-else>
-      <li v-for="(event, index) in eventList" :key="index">
-        Name: {{ event.bookName }}, 
-        Note: {{event.note}} ,Catagoty: {{ event.eventCatagoryName }} 
-        Start Time: {{ event.startTime }},
-      </li>
-    </ul> -->
 </template>
  
 <style>
