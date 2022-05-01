@@ -1,6 +1,7 @@
 package sit.int221.oasip.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ public class EventController {
 
     @GetMapping("")
     public List<Event> getAllEvent(){
-        return repository.findAll();
+        List<Event> events = repository.findAll(Sort.by(Sort.Direction.DESC, "startTime"));
+        return events;
     }
 }
