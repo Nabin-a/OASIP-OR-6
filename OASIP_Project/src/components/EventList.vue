@@ -11,7 +11,7 @@ defineProps({
  
 <template>
 <h2>Event List</h2>
-<p v-if="eventList.length < 1">No schedule events</p>
+<h1 v-if="eventList.length < 1">No schedule events</h1>
   <table v-else>
     <thead>
         <tr>
