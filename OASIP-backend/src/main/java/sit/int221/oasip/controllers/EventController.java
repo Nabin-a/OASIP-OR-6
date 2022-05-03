@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 import sit.int221.oasip.entities.Event;
 import sit.int221.oasip.repositories.EventRepository;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 
+@CrossOrigin(origins="*")
 @RestController
 @RequestMapping("api/event")
+
 public class EventController {
     @Autowired
     private EventRepository repository;

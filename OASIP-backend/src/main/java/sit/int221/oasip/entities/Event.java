@@ -19,7 +19,7 @@ public class Event {
     @Column(name = "bookingEmail", nullable = false, length = 45)
     private String bookingEmail;
 
-    @Column(name = "eventCatagoryName", length = 45)
+    @Column(name = "eventCategoryName", length = 45)
     private String eventCategoryName;
 
     @Column(name = "StartTime", nullable = false)
