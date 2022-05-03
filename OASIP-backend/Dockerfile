@@ -1,5 +1,5 @@
-FROM maven:3.8.2-jdk-8
-WORKDIR usr/src/app
-COPY /src usr/src/app
-RUN mvn clean install
-CMD mvn spring-boot:run
+FROM openjdk:8-jdk-alpine
+VOLUME /tmp
+ARG JAR_FILE
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
