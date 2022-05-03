@@ -1,5 +1,9 @@
-FROM maven:3.8.2-jdk-8
-WORKDIR usr/src/app
-COPY /src usr/src/app
-RUN mvn clean install
-CMD mvn spring-boot:run
+FROM openjdk:16-jdk-alpine
+USER root
+RUN mkdir -p /home/OSAP
+COPY oasip-0.0.1.jar /home/OSAP/oasip-0.0.1.jar
+RUN chmod -R 777 /home/OSAP/
+
+WORKDIR /home/OSAP
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","oasip-0.0.1.jar"]
