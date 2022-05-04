@@ -1,9 +1,8 @@
 package sit.int221.oasip.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Table(name = "category")
 @Entity
@@ -20,6 +19,9 @@ public class Category {
 
     @Column(name = "`Duration(min.)`", nullable = false)
     private Integer durationMin;
+
+    @OneToMany(mappedBy = "category")
+    private Set<Event> events = new LinkedHashSet<>();
 
     public Integer getDurationMin() {
         return durationMin;
