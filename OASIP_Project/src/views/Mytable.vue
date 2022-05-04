@@ -9,7 +9,7 @@ onBeforeMount(async () => {
 })
 
 const getNotes = async () => {
-  const res = await fetch('http://172.20.72.94:8080/api/event')
+  const res = await fetch('http://localhost:8080/api/event')
   if (res.status === 200) {
     events.value = await res.json()
     console.log(events.value)
@@ -24,6 +24,7 @@ const getNotes = async () => {
     <EventList
         :eventList="events"
     />
+   
 </template>
  
 <style>

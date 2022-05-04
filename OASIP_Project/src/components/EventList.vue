@@ -6,33 +6,48 @@ defineProps({
     require: true
   }
 })
-
 </script>
  
 <template>
-<h2>Event List</h2>
-<h1 v-if="eventList.length < 1">No schedule events</h1>
-  <table v-else>
+<div class="container pt-3 pb-5">
+<h2>Scheduled Events</h2>
+<p v-if="eventList.length < 1">No schedule events</p>
+  <table class ="table table-dark table-hover table-bordered table-striped" v-else>
     <thead>
-        <tr>
-          <th>Booking Name</th>
-          <th>Catagory</th>
-          <th>Start Date</th>
-          <th>Start Time</th>
-          <th>Duration</th>
-          <th></th>
+       <tr>
+          <th scope="col">Booking Name</th>
+          <th scope="col">Catagory</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">Start Time</th>
+          <th scope="col">Duration</th>
+          <th scope="col" style="padding-left:18px">ooo</th>
         </tr>
-    </thead>
+      </thead>
     <tbody v-for="(event, index) in eventList" :key="index">
-      <td>{{event.bookingName}}</td>
-      <td>{{event.eventCategoryName}}</td>
-      <td>{{moment(event.startTime).format('l')}}</td>
-      <td>{{moment(event.startTime).format('LT')}}</td>
-      <td>{{event.durations}}</td>
+    <tr>
+      <td scope="col">{{event.bookingName}}</td>
+      <td scope="col">{{event.eventCategoryName}}</td>
+      <td scope="col">{{moment(event.startTime).format('l')}}</td>
+      <td scope="col">{{moment(event.startTime).format('LT')}}</td>
+      <td scope="col">{{event.durations}}</td>
+      <div>
+      <router-link :to="{name: 'Note',
+                         params: {id: event.id}}">Note</router-link>
+      
+        
+      </div>
+      
+      
+    </tr>
     </tbody>
   </table>
+  </div>
 </template>
  
 <style>
+
+
+
+
 
 </style>
