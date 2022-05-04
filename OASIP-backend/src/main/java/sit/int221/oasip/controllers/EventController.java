@@ -14,7 +14,6 @@ import java.util.List;
 public class EventController {
     @Autowired
 //    private EventRepository repository;
-
 //    @Autowired
     private EventService eventService;
 

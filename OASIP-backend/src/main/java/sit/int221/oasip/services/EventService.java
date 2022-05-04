@@ -24,17 +24,4 @@ public class EventService {
         List<Event> employeeList = repository.findAll(Sort.by(Sort.Direction.DESC, "startTime"));
         return listMapper.mapList(employeeList, EventDtoList.class, modelMapper);
     }
-
-
-
-
-//    private EventDTO convertEntityToDto(Event event){
-//        EventDTO eventDTO = new EventDTO();
-//        eventDTO.setBookingName(event.getBookingName());
-//        eventDTO.setDurations(event.getDurations());
-//        eventDTO.setStartTime(event.getStartTime());
-//        eventDTO.setCategory(event.getCategory().getCategoryName());
-//        return eventDTO;
-//    }
-
 }
