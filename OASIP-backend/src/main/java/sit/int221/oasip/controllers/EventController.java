@@ -12,11 +12,7 @@ import sit.int221.oasip.repositories.EventRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.List;
 
-<<<<<<< HEAD
-@CrossOrigin(origins="*")
-=======
 @CrossOrigin(origins = "*")
->>>>>>> 0851d37311716cd8ba707f3398f375c65d446bba
 @RestController
 @RequestMapping("api/event")
 
