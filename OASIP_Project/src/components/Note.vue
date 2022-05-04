@@ -2,8 +2,8 @@
 
 import { useRoute, useRouter } from 'vue-router';
 defineProps({
-  eventList: {
-    type: Array,
+  eventId: {
+    type: Object,
     require: true
   }
 })
@@ -20,7 +20,7 @@ const goBack =() => appRouter.go(-1)
     <div>
         <h1>Event Detail</h1>
         <div>
-            <li v-for ="(event, index) in eventList" :key="index">
+            <li v-for ="(event, index) in eventId" :key="index">
             ss:{{event.bookingName}},
             </li>
         </div>
