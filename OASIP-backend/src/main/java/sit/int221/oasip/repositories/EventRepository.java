@@ -9,5 +9,4 @@ import java.util.Date;
 import java.util.List;
 
 public interface EventRepository extends JpaRepository<Event, Integer> {
-
 }
