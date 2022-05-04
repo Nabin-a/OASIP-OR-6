@@ -7,7 +7,10 @@ defineProps({
     require: true
   }
 })
+
+
 let {params} = useRoute()
+console.log(params.id)
 
 const appRouter=useRouter()
 const goBack =() => appRouter.go(-1)
@@ -17,13 +20,11 @@ const goBack =() => appRouter.go(-1)
     <div>
         <h1>Event Detail</h1>
         <div>
-            <div v-for ="event in eventList" :key="event.id">
-            
-            <li>{{event.id}}</li>
-            <li>zzz</li>
-            <li>{{event.bookingName}}</li>
-            </div>
+            <li v-for ="(event, index) in eventList" :key="index">
+            ss:{{event.bookingName}},
+            </li>
         </div>
+        
         <div>
             <button @click="goBack">Back</button>
         </div>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 FROM node:lts-alpine as build-stage
 WORKDIR /app
 COPY package*.json ./
@@ -9,3 +10,10 @@ RUN npm run build
 
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
+=======
+FROM node:14-alpine3.12
+WORKDIR /usr/src/
+COPY package*.json ./
+RUN npm install
+CMD ["npm", "run", "start"]
+>>>>>>> dev-nabin

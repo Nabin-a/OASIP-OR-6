@@ -30,12 +30,14 @@ defineProps({
       <td scope="col">{{moment(event.startTime).format('l')}}</td>
       <td scope="col">{{moment(event.startTime).format('LT')}}</td>
       <td scope="col">{{event.durations}}</td>
-      <div>
+      <td>
       <router-link :to="{name: 'Note',
-                         params: {id: event.id}}">Note</router-link>
+                         params: {id: event.id}}"><button class ="btn btn-primary">Note</button>
+                         
+        </router-link>
       
         
-      </div>
+      </td>
       
       
     </tr>

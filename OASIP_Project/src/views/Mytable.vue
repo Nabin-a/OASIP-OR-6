@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
 import EventList from '../components/EventList.vue';
+import Note from '../components/Note.vue';
 const events = ref([])
 
 onBeforeMount(async () => {
@@ -16,6 +17,13 @@ const getNotes = async () => {
     return events.value
   } else console.log('error, cannot get notes')
 }
+const ddd = async () => {
+  const res = await fetch(`http://localhost:8080/notes/${id}`)
+  if (res.status === 200) {
+    notes.value = await res.json()
+    console.log(notes.value)
+  } else console.log('error, cannot get data')
+}
 
 
 </script>
@@ -24,6 +32,8 @@ const getNotes = async () => {
     <EventList
         :eventList="events"
     />
+    
+    
    
 </template>
  
