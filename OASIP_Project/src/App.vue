@@ -1,5 +1,4 @@
 <script setup>
-import Table from './components/Table.vue';
 import EventList from './components/EventList.vue';
 import Mytable from './views/Mytable.vue';
 

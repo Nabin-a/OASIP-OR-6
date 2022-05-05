@@ -1,5 +1,6 @@
 <script setup>
 import moment from "moment"
+
 defineProps({
   eventList: {
     type: Array,
@@ -25,10 +26,11 @@ defineProps({
     </thead>
     <tbody v-for="(event, index) in eventList" :key="index">
       <td>{{event.bookingName}}</td>
-      <td>{{event.eventCategoryName}}</td>
+      <td>{{event.category}}</td>
       <td>{{moment(event.startTime).format('l')}}</td>
-      <td>{{moment(event.startTime).format('LT')}}</td>
+      <td>{{moment(event.startTime).format('kk:mm')}}</td>
       <td>{{event.durations}}</td>
+      <td><button @click="$emit('showDetail', event.id)">Detail</button></td>
     </tbody>
   </table>
 </template>
