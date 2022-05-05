@@ -32,7 +32,9 @@ import Mytable from './views/Mytable.vue';
    </div> -->
   <div>
     <!-- <Table /> -->
-    <Mytable/>
+    <Mytable
+      
+    />
   </div>
 </template>
  
