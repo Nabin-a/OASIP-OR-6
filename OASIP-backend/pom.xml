@@ -50,6 +50,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+<<<<<<< HEAD
         </dependency>
         <dependency>
             <groupId>org.modelmapper</groupId>
@@ -57,6 +58,10 @@
             <version>3.1.0</version>
             <scope>compile</scope>
         </dependency>
+=======
+    	</dependency>
+    		
+>>>>>>> d355592f374fe7e1f6038f571c23470bfa9fee1d
     </dependencies>
 
     <build>

@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+          oasipdb1:
+                  image: mysql
+                  restart: unless-stopped
+                  environment:
+                          MYSQL_ROOT_PASSWORD: 'abc123'
+                          MYSQL_DATABASE: mydb
+                  ports:
+                          - 3306:3306
+                  volumes:
+                          - ./OASIP-db:/docker-entrypoint-initdb.d/
+                          - ./db:/var/lib/mysql
+          app:
+                  depends_on :
+                          - oasipdb1
+                  build: ./OASIP-backend
+                  restart: on-failure
+                  ports:
+                          - 8080:8080
+                  environment:
+                          SPRING_APPLICATION_JSON: '{
+                            "spring.datasource.url"  : "jdbc:mysql://oasipdb1:3306/mydb?allowPublicKeyRetrieval=true&useSSL=false",
+                            "spring.datasource.username" : "root",
+                            "spring.datasource.password" : "abc123",
+                            "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
+                            "spring.jpa.hibernate.ddl-auto" : "none"
+                          }'
+volumes: 
+         db:

@@ -8,8 +8,13 @@ onBeforeMount(async () => {
   console.log(events.value)
 })
 
+<<<<<<< HEAD
 const getEvent = async () => {
   const res = await fetch('http://localhost:8080/api/event')
+=======
+const getNotes = async () => {
+  const res = await fetch('http://172.20.74.94:8080/api/event')
+>>>>>>> d355592f374fe7e1f6038f571c23470bfa9fee1d
   if (res.status === 200) {
     events.value = await res.json()
     console.log(events.value)
