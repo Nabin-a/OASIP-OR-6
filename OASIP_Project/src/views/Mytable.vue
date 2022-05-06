@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
 import EventList from '../components/EventList.vue';
-import Note from '../components/Note.vue';
 import Home from './Home.vue';
 const events = ref([])
 const eventid = ref([])
@@ -16,7 +15,7 @@ const eventid = ref([])
 
 
 
-const getNotes = async () => {
+const getEvents = async () => {
   const res = await fetch('http://localhost:8080/api/event')
   if (res.status === 200) {
     events.value = await res.json()
