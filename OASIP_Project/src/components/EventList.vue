@@ -1,68 +1,62 @@
 <script setup>
-import moment from "moment"
-import EventDetail from "./EventDetail.vue";
+import moment from "moment";
 defineProps({
   eventList: {
     type: Array,
-    require: true
-  }
-})
+    require: true,
+  },
+});
 </script>
- 
+
 <template>
-<div class="container pt-3 pb-5">
-<h2>Scheduled Events</h2>
-<p v-if="eventList.length < 1">No schedule events</p>
-  <table class ="table table-dark table-hover table-bordered table-striped" v-else>
-    <thead>
-       <tr>
+  <div class="container pt-3 pb-5">
+    <h2>Scheduled Events</h2>
+    <p v-if="eventList.length < 1">No schedule events</p>
+    <table
+      class="table table-dark table-hover table-bordered table-striped"
+      v-else
+    >
+      <thead>
+        <tr>
           <th scope="col">Booking Name</th>
           <th scope="col">Catagory</th>
           <th scope="col">Start Date</th>
           <th scope="col">Start Time</th>
           <th scope="col">Duration</th>
-          <th scope="col" style="padding-left:18px">ooo</th>
+          <th scope="col" style="padding-left: 18px">ooo</th>
         </tr>
       </thead>
-    <tbody v-for="(event, index) in eventList" :key="index">
-    <tr>
-      <td scope="col">{{event.bookingName}}</td>
-      <td scope="col">{{event.category}}</td>
-      <td scope="col">{{moment(event.startTime).format('l')}}</td>
-      <td scope="col">{{moment(event.startTime).format('kk:m')}}</td>
-      <td scope="col">{{event.durations}} mins</td>
-      <td>
-      <router-link :to="{
-        name: 'Detail',
-        params: { 
-          id: event.id, 
-          name: event.bookingName, 
-          email: event.bookingEmail,
-          category: event.category,
-          startTime: event.startTime,
-          duration: event.durations,
-          note: event.note  
-        }}">
-          <button @click="$emit('getEventId', event.id)" class ="btn btn-primary">
-            Detail
-          </button>              
-      </router-link>
-      <!-- <button lick="$emit('getEventId', event.id)" class ="btn btn-primary">
-      //   Detail
-      // </button>  -->
-      </td>
-      
-      
-    </tr>
-    </tbody>
-  </table>
+      <tbody v-for="(event, index) in eventList" :key="index">
+        <tr>
+          <td scope="col">{{ event.bookingName }}</td>
+          <td scope="col">{{ event.category }}</td>
+          <td scope="col">{{ moment(event.startTime).format("l") }}</td>
+          <td scope="col">{{ moment(event.startTime).format("kk:m") }}</td>
+          <td scope="col">{{ event.durations }} mins</td>
+          <td>
+            <!-- <router-link -->
+              <!-- :to="{
+                name: 'Detail',
+                params: {
+                  id: event.id,
+                },
+              }"
+            > -->
+            <!-- </router-link> -->
+            <!-- <button lick="$emit('getEventId', event.id)" class ="btn btn-primary">
+              //   Detail
+            </button>  -->
+              <button
+                @click="$emit('getEventId', event.id)"
+                class="btn btn-primary"
+              >
+                Detail
+              </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
- 
-<style>
 
-
-
-
-
-</style>
+<style></style>

@@ -1,10 +1,10 @@
 <script setup>
-
 import { useRoute, useRouter } from 'vue-router';
-const { params } = useRoute()
-
-const appRouter=useRouter()
-const goBack =() => appRouter.go(-1)
+defineProps({
+    eventDetail:{
+        type: Object,
+    }
+})
 </script>
  
 <template>
@@ -12,18 +12,13 @@ const goBack =() => appRouter.go(-1)
         <h1>Event Detail</h1>
         <div>
             <ul>
-                <li>{{ this.$route.params.id }}</li>
-                <li>{{ this.$route.params.name }}</li>
-                <li>{{ this.$route.params.email }}</li>
-                <li>{{ this.$route.params.category }}</li>
-                <li>{{ this.$route.params.startTime }}</li>
-                <li>{{ this.$route.params.duration }} mins</li>
-                <li>{{ this.$route.params.note }}</li>
+                <li>{{ eventDetail.bookingName }}</li>
+                <li>{{ eventDetail.bookingEmail }}</li>
+                <li>{{ eventDetail.category }}</li>
+                <li>{{ eventDetail.startTime }}</li>
+                <li>{{ eventDetail.durations }}</li>
+                <li>{{ eventDetail.note }} </li>
             </ul>
-        </div>
-        
-        <div>
-            <button @click="goBack">Back</button>
         </div>
     </div>
 </template>

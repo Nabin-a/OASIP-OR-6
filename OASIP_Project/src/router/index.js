@@ -10,7 +10,7 @@ const routes = [
     name: "Home",
     component: Home,
   },
-  { path: "/event/:id", name: "Detail", component: EventDetail },
+//   { path: "/event/:id", name: "Detail", component: EventDetail },
 ];
 
 const router = createRouter({ history, routes });
