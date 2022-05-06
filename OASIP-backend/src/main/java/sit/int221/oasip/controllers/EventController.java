@@ -1,12 +1,9 @@
 package sit.int221.oasip.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-<<<<<<< HEAD
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.CrossOrigin;
-=======
 import org.springframework.http.HttpStatus;
->>>>>>> f21dbc83c0999dc0f95e39ca7f2a095cb56e0b1c
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,8 +41,4 @@ public class EventController {
     public EventDtoDetail getEventById(@PathVariable Integer id){
         return eventService.getEventById(id);
     }
-//    public Event getEventId(@PathVariable Integer id){
-//        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(
-//                HttpStatus.NOT_FOUND, id + "does not exist!!"));
-//    }
 }

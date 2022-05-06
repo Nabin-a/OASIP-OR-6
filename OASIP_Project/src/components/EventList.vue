@@ -1,5 +1,6 @@
 <script setup>
 import moment from "moment"
+import EventDetail from "./EventDetail.vue";
 defineProps({
   eventList: {
     type: Array,
@@ -31,12 +32,24 @@ defineProps({
       <td scope="col">{{moment(event.startTime).format('kk:m')}}</td>
       <td scope="col">{{event.durations}} mins</td>
       <td>
-      <router-link :to="{name: 'Note',
-                         params: {id: event.id}}"><button class ="btn btn-primary">Note</button>
-                         
-        </router-link>
-      
-        
+      <router-link :to="{
+        name: 'Detail',
+        params: { 
+          id: event.id, 
+          name: event.bookingName, 
+          email: event.bookingEmail,
+          category: event.category,
+          startTime: event.startTime,
+          duration: event.durations,
+          note: event.note  
+        }}">
+          <button @click="$emit('getEventId', event.id)" class ="btn btn-primary">
+            Detail
+          </button>              
+      </router-link>
+      <!-- <button lick="$emit('getEventId', event.id)" class ="btn btn-primary">
+      //   Detail
+      // </button>  -->
       </td>
       
       
