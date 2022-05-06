@@ -31,7 +31,7 @@ public class Event {
     @Column(name = "Note", length = 500)
     private String note;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "Category_Id", nullable = false)
     private Category category;
 
