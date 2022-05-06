@@ -27,20 +27,23 @@ const show = () =>{
 // })
 
 </script>
- 
+
 <template>
-<div class="container pt-3 pb-5">
-<h2>Scheduled Events</h2>
-<p v-if="eventList.length < 1">No schedule events</p>
-  <table class ="table table-dark table-hover table-bordered table-striped" v-else>
-    <thead>
-       <tr>
+  <div class="container pt-3 pb-5">
+    <h2>Scheduled Events</h2>
+    <p v-if="eventList.length < 1">No schedule events</p>
+    <table
+      class="table table-dark table-hover table-bordered table-striped"
+      v-else
+    >
+      <thead>
+        <tr>
           <th scope="col">Booking Name</th>
           <th scope="col">Catagory</th>
           <th scope="col">Start Date</th>
           <th scope="col">Start Time</th>
           <th scope="col">Duration</th>
-          <th scope="col" style="padding-left:18px">ooo</th>
+          <th scope="col" style="padding-left: 18px">ooo</th>
         </tr>
       </thead>
     <tbody v-for="(event, index) in eventList" :key="index">
@@ -130,11 +133,5 @@ const show = () =>{
 
   </div>
 </template>
- 
-<style>
 
-
-
-
-
-</style>
+<style></style>

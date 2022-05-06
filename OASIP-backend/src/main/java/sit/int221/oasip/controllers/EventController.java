@@ -42,8 +42,4 @@ public class EventController {
     public EventDtoDetail getEventById(@PathVariable Integer id){
         return eventService.getEventById(id);
     }
-//    public Event getEventId(@PathVariable Integer id){
-//        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(
-//                HttpStatus.NOT_FOUND, id + "does not exist!!"));
-//    }
 }
