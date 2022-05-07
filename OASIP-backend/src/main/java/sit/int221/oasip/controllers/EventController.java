@@ -14,15 +14,9 @@ import sit.int221.oasip.DTO.EventDtoList;
 import sit.int221.oasip.entities.Event;
 import sit.int221.oasip.repositories.EventRepository;
 import sit.int221.oasip.services.EventService;
-
-
 import java.util.List;
 
-<<<<<<< HEAD
 @CrossOrigin(origins = "*")
-=======
-
->>>>>>> b7f116e1bea2f62b8e832cb25c393c14f67e353a
 @RestController
 @RequestMapping("api/event")
 
