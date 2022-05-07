@@ -13,6 +13,7 @@ import sit.int221.oasip.repositories.EventRepository;
 import sit.int221.oasip.services.EventService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -21,8 +22,8 @@ import java.util.List;
 
 public class EventController {
     @Autowired
-//    private EventRepository repository;
-//    @Autowired
+    private EventRepository repository;
+    @Autowired
     private EventService eventService;
 
     @GetMapping("")
@@ -30,17 +31,20 @@ public class EventController {
 //        List<Event> events = repository.findAll(Sort.by(Sort.Direction.DESC, "startTime"));
 //        return events;
 //    }
-    public List<EventDtoList> getEventDTO(){
+    public List<EventDtoList> getEventDTO() {
         return eventService.getEventsAll();
     }
 
     @GetMapping("/{id}")
-    public EventDtoDetail getEventById(@PathVariable Integer id){
+    public EventDtoDetail getEventById(@PathVariable Integer id) {
         return eventService.getEventById(id);
     }
 
     @PostMapping("")
-    public Event create(@RequestBody EventDtoCreate newEventDtoCreate){
-        return eventService.save(newEventDtoCreate);
+    public Event create(@RequestBody Event newEvent) {
+        return repository.saveAndFlush(newEvent);
     }
+//    public Event create(@RequestBody EventDtoCreate newEventDtoCreate){
+//        return eventService.save(newEventDtoCreate);
+//    }
 }
