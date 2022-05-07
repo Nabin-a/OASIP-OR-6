@@ -2,16 +2,19 @@
 import { ref, onBeforeMount } from 'vue';
 import EventList from '../components/EventList.vue';
 import EventDetail from '../components/EventDetail.vue';
-
 const events = ref([])
 const eventDetail = ref({})
-const notes = ref([])
 const isShow = ref(false)
+// function show(data) {
+// const nameText = document.querySelector('.fullname');
+// const emailText = document.querySelector('.email');
+// const duration = document.querySelector('duration');
+// const category = document.querySelector('category');
+// const note = document.querySelector('note')
+// }
 
-onBeforeMount(async () => {
-  await getEvents()
-  console.log(events.value)
-})
+
+
 
 const getEvents = async () => {
   const res = await fetch('http://localhost:8080/api/event')
@@ -22,14 +25,20 @@ const getEvents = async () => {
   } else console.log('error, cannot get notes')
 }
 
-const getEventId = async (id) => {
-  const res = await fetch(`http://localhost:8080/api/event/${id}`)
-  if (res.status === 200) {
-   eventDetail.value = await res.json()
-    console.log(eventDetail.value)
-  } else console.log('error, cannot get this event id')
-}
+onBeforeMount(async () => {
+  await getEvents()
+  console.log(events.value)
+})
 
+const getEventid = async (id) => {
+  console.log(id)
+  const res = await fetch(`http://localhost:8080/api/event/${id}`)
+
+  if (res.status === 200) {
+    eventDetail.value = await res.json()
+    console.log(eventDetail.value)
+  } else console.log('error, cannot get data')
+}
 
 
 
@@ -37,13 +46,12 @@ const getEventId = async (id) => {
 
 <template>
     <EventList
-        :eventList="events"
-        @getEventId="getEventId"        
+        :eventList="events" @getEventId="getEventid"
     />
     <EventDetail
-        :eventDetail="eventDetail"
-    />
-    
+        :eventDetail="eventDetail"  
+      />
+   
 </template>
  
 <style>

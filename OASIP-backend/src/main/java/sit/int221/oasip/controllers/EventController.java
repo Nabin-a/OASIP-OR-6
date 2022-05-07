@@ -3,6 +3,7 @@ package sit.int221.oasip.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +15,14 @@ import sit.int221.oasip.entities.Event;
 import sit.int221.oasip.repositories.EventRepository;
 import sit.int221.oasip.services.EventService;
 
+
 import java.util.List;
 
+<<<<<<< HEAD
 @CrossOrigin(origins = "*")
+=======
+
+>>>>>>> b7f116e1bea2f62b8e832cb25c393c14f67e353a
 @RestController
 @RequestMapping("api/event")
 
@@ -26,6 +32,7 @@ public class EventController {
 //    @Autowired
     private EventService eventService;
 
+    @CrossOrigin(origins="*")
     @GetMapping("")
 //    public List<Event> getAllEvent(){
 //        List<Event> events = repository.findAll(Sort.by(Sort.Direction.DESC, "startTime"));
