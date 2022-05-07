@@ -3,7 +3,6 @@
 import moment from 'moment'
 import { ref,computed } from 'vue'
 
-defineEmits(['getDetailbyid'])
 defineProps({
   eventList: {
     type: Array,
@@ -15,7 +14,6 @@ const show = () =>{
   hiding.value = true
 
 }
-
 
 
 
@@ -33,7 +31,7 @@ const show = () =>{
     <h2>Scheduled Events</h2>
     <p v-if="eventList.length < 1">No schedule events</p>
     <table
-      class="table table-dark table-hover table-bordered table-striped"
+      class="table table-dark table-striped table-hover" 
       v-else
     >
       <thead>
@@ -55,6 +53,20 @@ const show = () =>{
       <td scope="col">{{event.durations}} mins</td>
       <td>
 
+        
+  <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal" @click="$emit('getEventId', event.id)">
+  Detail
+</button>
+
+<!-- Modal -->
+
+    
+      </td>
+      </tr>
+      </tbody>
+      </table>
+
 
 
       <!-- <router-link :to="{name: 'Note',
@@ -74,60 +86,8 @@ const show = () =>{
         <li>{{moment(event.startTime).format('l')}}</li>
         <li>{{moment(event.startTime).format('kk:m')}}</li>
         </div> -->
-    
+  
 
-      </td>
-    <div class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-    
-      
-    </tr>
-    </tbody>
-  </table>
-
-    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 
