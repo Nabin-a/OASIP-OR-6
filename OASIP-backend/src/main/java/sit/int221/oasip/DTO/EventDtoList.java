@@ -16,5 +16,6 @@ public class EventDtoList {
     private String bookingName;
     private Instant startTime;
     private Integer durations;
-    private String category;
+    private String categoryName;
+    private Integer categoryDuration;
 }
