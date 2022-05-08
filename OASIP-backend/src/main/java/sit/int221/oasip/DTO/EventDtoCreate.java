@@ -14,7 +14,7 @@ public class EventDtoCreate {
     private Integer id;
     private String bookingName;
     private String bookingEmail;
-    private Integer category;
     private Instant startTime;
     private String note;
+    private String categoryId;
 }

@@ -21,8 +21,8 @@ import java.util.List;
 @RequestMapping("api/event")
 
 public class EventController {
-    @Autowired
-    private EventRepository repository;
+//    @Autowired
+//    private EventRepository repository;
     @Autowired
     private EventService eventService;
 
@@ -41,10 +41,10 @@ public class EventController {
     }
 
     @PostMapping("")
-    public Event create(@RequestBody Event newEvent) {
-        return repository.saveAndFlush(newEvent);
-    }
-//    public Event create(@RequestBody EventDtoCreate newEventDtoCreate){
-//        return eventService.save(newEventDtoCreate);
+//    public Event create(@RequestBody Event newEvent) {
+//        return repository.saveAndFlush(newEvent);
 //    }
+    public Event create(@RequestBody EventDtoCreate newEventDtoCreate){
+        return eventService.save(newEventDtoCreate);
+    }
 }
