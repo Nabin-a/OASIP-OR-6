@@ -59,7 +59,6 @@ const show = () =>{
   Detail
 </button>
 
-<!-- Modal -->
 
     
       </td>
@@ -67,25 +66,27 @@ const show = () =>{
       </tbody>
       </table>
 
+<div class="container">
+  <h2 class="py-2">Datepicker in Bootstrap 5</h2>
+  <form class="row">
+    <label for="date" class="col-1 col-form-label">Date</label>
+    <div class="col-5">
+      <div class="input-group date" id="datepicker">
+        <input type="text" class="form-control" id="date"/>
+        <span class="input-group-append">
+          <span class="input-group-text bg-light d-block">
+            <i class="fa fa-calendar"></i>
 
-
-      <!-- <router-link :to="{name: 'Note',
-                         params: {id: event.id
-                                    , bookingName: event.bookingName
-                                    , bookingEmail: event.bookingEmail
-                                    , duration: event.durations}}" @click="$emit('getDetailbyid',event.id)"><button class ="btn btn-primary" >Note</button>
-           
-        </router-link> -->
-        <!-- <button @click="hiding = !hiding" @click.self.prevent class ="btn btn-primary" >Note</button>
-        <div v-show="hiding">
+          </span>
+        </span>
         
-        <li>{{event.bookingName}}</li>
-        <li>{{event.category}}</li>
-        <li>{{event.bookingEmail}}</li>
-        <li>{{event.durations}}</li>
-        <li>{{moment(event.startTime).format('l')}}</li>
-        <li>{{moment(event.startTime).format('kk:m')}}</li>
-        </div> -->
+        
+      </div>
+    </div>
+  </form>
+</div>
+
+    
   
 
 
@@ -94,4 +95,7 @@ const show = () =>{
   </div>
 </template>
 
-<style></style>
+<style>
+
+
+</style>

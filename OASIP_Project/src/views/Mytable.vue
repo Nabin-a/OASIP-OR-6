@@ -2,6 +2,7 @@
 import { ref, onBeforeMount } from 'vue';
 import EventList from '../components/EventList.vue';
 import EventDetail from '../components/EventDetail.vue';
+import EventCreate from '../components/EventCreate.vue';
 const events = ref([])
 const eventDetail = ref({})
 const isShow = ref(false)
@@ -40,6 +41,22 @@ const getEventid = async (id) => {
   } else console.log('error, cannot get data')
 }
 
+const createNewSchedule = async (newSchedule) => {
+  console.log(newSchedule)
+  const res = await fetch('http://localhost:8080/api/event', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({ BookingName: newSchedule })
+  })
+  if (res.status === 201) {
+    const addedSchedule = await res.json()
+    events.value.push(addedSchedule)
+    console.log('added sucessfully')
+  } else console.log('error, cannot be added')
+}
+
 
 
 </script>
@@ -51,7 +68,8 @@ const getEventid = async (id) => {
     <EventDetail
         :eventDetail="eventDetail"  
       />
-   
+    <EventCreate />
+
 </template>
  
 <style>

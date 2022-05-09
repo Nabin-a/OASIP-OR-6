@@ -6,6 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import sit.int221.oasip.DTO.EventDtoCreate;
 import sit.int221.oasip.DTO.EventDtoDetail;
 import sit.int221.oasip.DTO.EventDtoList;
 import sit.int221.oasip.entities.Event;
@@ -32,5 +33,10 @@ public class EventService {
         Event event = repository.findById(id).orElseThrow(()->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: "+id+"Does not exist"));
         return modelMapper.map(event, EventDtoDetail.class);
+    }
+
+    public Event save(EventDtoCreate newEvent){
+        Event event = modelMapper.map(newEvent, Event.class);
+        return repository.saveAndFlush(event);
     }
 }
