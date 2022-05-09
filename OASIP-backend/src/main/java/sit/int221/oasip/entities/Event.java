@@ -13,10 +13,10 @@ public class Event {
     @Column(name = "bookingId", nullable = false)
     private Integer id;
 
-    @Column(name = "bookingName", nullable = false, length = 100)
+    @Column(name = "bookingName", length = 100)
     private String bookingName;
 
-    @Column(name = "bookingEmail", nullable = false, length = 45)
+    @Column(name = "bookingEmail", length = 45)
     private String bookingEmail;
 
     @Column(name = "eventCatagoryName", length = 45)
@@ -25,13 +25,13 @@ public class Event {
     @Column(name = "StartTime", nullable = false)
     private Instant startTime;
 
-    @Column(name = "Durations", nullable = false)
+    @Column(name = "Durations")
     private Integer durations;
 
     @Column(name = "Note", length = 500)
     private String note;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "Category_Id", nullable = false)
     private Category category;
 
