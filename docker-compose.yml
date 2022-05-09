@@ -1,7 +1,7 @@
 version: "3.8"
 services:
           oasipdb1:
-                  image: mysql
+                  image: oasipdb
                   restart: unless-stopped
                   environment:
                           MYSQL_ROOT_PASSWORD: 'abc123'
