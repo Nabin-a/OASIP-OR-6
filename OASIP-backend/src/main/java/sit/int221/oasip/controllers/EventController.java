@@ -11,9 +11,12 @@ import sit.int221.oasip.DTO.EventDtoList;
 import sit.int221.oasip.entities.Event;
 import sit.int221.oasip.repositories.EventRepository;
 import sit.int221.oasip.services.EventService;
+<<<<<<< HEAD
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+=======
+>>>>>>> feb824607160c9db6466d12a8abdc54fadcbcb22
 import java.util.List;
 
 @CrossOrigin(origins = "*")
