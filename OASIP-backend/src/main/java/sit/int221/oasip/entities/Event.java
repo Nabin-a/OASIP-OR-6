@@ -10,22 +10,23 @@ import java.time.Instant;
 @Entity
 public class Event {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookingId", nullable = false)
     private Integer id;
 
-    @Column(name = "bookingName", length = 100)
+    @Column(name = "bookingName", nullable = false, length = 100)
     private String bookingName;
 
-    @Column(name = "bookingEmail", length = 45)
+    @Column(name = "bookingEmail" ,nullable = false , length = 45)
     private String bookingEmail;
 
-    @Column(name = "eventCatagoryName", length = 45)
+    @Column(name = "eventCategoryName", length = 45)
     private String eventCategoryName;
 
     @Column(name = "StartTime", nullable = false)
     private Instant startTime;
 
-    @Column(name = "Durations")
+    @Column(name = "Durations", nullable = false)
     private Integer durations;
 
     @Column(name = "Note", length = 500)

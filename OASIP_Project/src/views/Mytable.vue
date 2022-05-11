@@ -42,6 +42,7 @@ const getEventid = async (id) => {
   } else console.log('error, cannot get data')
 }
 
+<<<<<<< HEAD
 const createNewSchedule = async (newSchedule) => {
   console.log(newSchedule)
   const res = await fetch('http://localhost:8080/api/event', {
@@ -57,6 +58,23 @@ const createNewSchedule = async (newSchedule) => {
     console.log('added sucessfully')
   } else console.log('error, cannot be added')
 }
+=======
+const createEvent = async (newEvent)=>{
+  const res = await fetch(`http://localhost:8080/api/event`,{
+    method: 'POST',
+    headers:{
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      id: ,
+      bookingName: ,
+      bookingEmail: ,
+      
+    })
+  })
+}
+
+>>>>>>> 5cc53d35937c3ad49b7f26b816a450cf1fcd6615
 
 
 
