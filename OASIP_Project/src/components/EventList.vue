@@ -45,48 +45,31 @@ const show = () =>{
         </tr>
       </thead>
     <tbody v-for="(event, index) in eventList" :key="index">
-    <tr>
-      <td scope="col">{{event.bookingName}}</td>
-      <td scope="col">{{event.category}}</td>
-      <td scope="col">{{moment(event.startTime).format('l')}}</td>
-      <td scope="col">{{moment(event.startTime).format('kk:m')}}</td>
-      <td scope="col">{{event.durations}} mins</td>
-      <td>
+          <tr>
+            <td scope="col">{{event.bookingName}}</td>
+            <td scope="col">{{event.category}}</td>
+            <td scope="col">{{moment(event.startTime).format('l')}}</td>
+            <td scope="col">{{moment(event.startTime).format('kk:m')}}</td>
+            <td scope="col">{{event.durations}} mins</td>
+            <td>
 
         
   <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal" @click="$emit('getEventId', event.id)">
   Detail
 </button>
-
-
     
-      </td>
-      </tr>
-      </tbody>
+            </td>
+          </tr>
+       </tbody>
       </table>
 
-<div class="container">
-  <h2 class="py-2">Datepicker in Bootstrap 5</h2>
-  <form class="row">
-    <label for="date" class="col-1 col-form-label">Date</label>
-    <div class="col-5">
-      <div class="input-group date" id="datepicker">
-        <input type="text" class="form-control" id="date"/>
-        <span class="input-group-append">
-          <span class="input-group-text bg-light d-block">
-            <i class="fa fa-calendar"></i>
 
-          </span>
-        </span>
-        
-        
-      </div>
-    </div>
-  </form>
-</div>
+  
 
-    
+<!-- Modal -->
+
+ 
   
 
 

@@ -5,6 +5,7 @@ import EventDetail from '../components/EventDetail.vue';
 import EventCreate from '../components/EventCreate.vue';
 const events = ref([])
 const eventDetail = ref({})
+const eventCreate = ref({})
 const isShow = ref(false)
 // function show(data) {
 // const nameText = document.querySelector('.fullname');
@@ -52,7 +53,7 @@ const createNewSchedule = async (newSchedule) => {
   })
   if (res.status === 201) {
     const addedSchedule = await res.json()
-    events.value.push(addedSchedule)
+    eventCreate.value.push(addedSchedule)
     console.log('added sucessfully')
   } else console.log('error, cannot be added')
 }
@@ -63,13 +64,16 @@ const createNewSchedule = async (newSchedule) => {
 
 <template>
     <EventList
-        :eventList="events" @getEventId="getEventid"
+        :eventList="events" @getEventId="getEventid" 
+                          
     />
     <EventDetail
         :eventDetail="eventDetail"  
       />
-    <EventCreate />
-
+    <EventCreate 
+        :eventCreate="eventCreate"
+        @createSchudule="createNewSchedule"
+        />
 </template>
  
 <style>
