@@ -47,7 +47,7 @@ const show = () =>{
     <tbody v-for="(event, index) in eventList" :key="index">
           <tr>
             <td scope="col">{{event.bookingName}}</td>
-            <td scope="col">{{event.category}}</td>
+            <td scope="col">{{event.categoryName}}</td>
             <td scope="col">{{moment(event.startTime).format('l')}}</td>
             <td scope="col">{{moment(event.startTime).format('kk:m')}}</td>
             <td scope="col">{{event.durations}} mins</td>

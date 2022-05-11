@@ -4,6 +4,7 @@ defineEmits(['createSchedule'])
 const props = defineProps({
     eventCreate:{
         type: Object,
+        default :{}
     }
 })
 
@@ -18,15 +19,24 @@ const newSchedule = computed(() => {
   }
 })
 console.log(newSchedule.value)
+
+const datetime = computed(() => {
+  if (newSchedule.startTime) {
+    const temp = new Date(newSchedule.startTime);
+    return temp.toISOString();
+  }
+})
+
+
 </script>
 
 <template>
 <h2>Create Schudule</h2>
     <!-- Note Detail: <input type="text" v-model="eventCreate.noteDetail" /> -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
- >
-  Launch demo modal
-</button>
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+ > -->
+  <!-- Launch demo modal -->
+<!-- </button>
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -35,9 +45,19 @@ console.log(newSchedule.value)
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        name:<input type="text" v-model="newSchedule.id" /> <br/>
+        name:<input type="text" v-model="newSchedule.bookingName" /> <br/>
+        email:<input type="text" v-model="newSchedule.bookingEmail" /> <br/>
+        startTime:<input type="date" v-model="newSchedule.startTime" /> <br/>
+        durations:<input type="text" v-model="newSchedule.durations" /> <br/>
+        category:<input type="text" v-model="newSchedule.categoryId" /> <br/>
         
-        <button @click="$emit('createSchedule',newSchedule.id)">Create</button>
+        <button @click="$emit('createSchedule',
+            newSchedule.bookingName,
+            newSchedule.bookingEmail,
+            newSchedule.startTime,
+            newSchedule.durations,
+            newSchedule.categoryId
+        )">Create</button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -45,9 +65,25 @@ console.log(newSchedule.value)
       </div>
     </div>
   </div>
+</div> -->
+
+<div>
+        name:<input type="text" v-model="newSchedule.bookingName" /> <br/>
+        email:<input type="text" v-model="newSchedule.bookingEmail" /> <br/>
+        startTime:<input type="datetime-local" v-model="newSchedule.startTime" /> <br/>
+        durations:<input type="text" v-model="newSchedule.durations" /> <br/>
+        category:<input type="number" v-model="newSchedule.categoryId" />
+        <!-- <option value="{{newSchedule.categoryId}}"></option>
+        </select> <br/> -->
+        <button type="submit" @click="$emit('createSchedule',
+            newSchedule.bookingName ,
+            newSchedule.bookingEmail ,
+            datetime,
+            newSchedule.durations ,
+            newSchedule.categoryId
+        )">Create</button>
 </div>
-
-
+      
   
 </template>
 

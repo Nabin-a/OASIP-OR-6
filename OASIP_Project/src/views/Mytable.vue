@@ -32,6 +32,20 @@ onBeforeMount(async () => {
   console.log(events.value)
 })
 
+const getEventCategory = async () => {
+  const res = await fetch('http://localhost:8080/api/event')
+  if (res.status === 200) {
+    events.value = await res.json()
+    console.log(events.value)
+    return events.value
+  } else console.log('error, cannot get notes')
+}
+
+onBeforeMount(async () => {
+  await getEvents()
+  console.log(events.value)
+})
+
 const getEventid = async (id) => {
   console.log(id)
   const res = await fetch(`http://localhost:8080/api/event/${id}`)
@@ -42,39 +56,27 @@ const getEventid = async (id) => {
   } else console.log('error, cannot get data')
 }
 
-<<<<<<< HEAD
-const createNewSchedule = async (newSchedule) => {
-  console.log(newSchedule)
+const createNewSchedule = async (newBookingName,newBookingEmail,newStartTime,newDurations,newCategory) => {
+  console.log(newBookingName,newBookingEmail,newStartTime,newDurations,newCategory)
   const res = await fetch('http://localhost:8080/api/event', {
     method: 'POST',
     headers: {
-      'content-type': 'application/json'
+      'content-type': 'application/json;'
     },
-    body: JSON.stringify({ bookingName: newSchedule })
+    body: JSON.stringify({ 
+      bookingName: newBookingName,
+      bookingEmail: newBookingEmail,
+      startTime: newStartTime,
+      durations: newDurations,
+      category: newCategory,
+    })
   })
   if (res.status === 201) {
     const addedSchedule = await res.json()
-    eventCreate.value.push(addedSchedule)
+    events.value.push(addedSchedule)
     console.log('added sucessfully')
   } else console.log('error, cannot be added')
 }
-=======
-const createEvent = async (newEvent)=>{
-  const res = await fetch(`http://localhost:8080/api/event`,{
-    method: 'POST',
-    headers:{
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify({
-      id: ,
-      bookingName: ,
-      bookingEmail: ,
-      
-    })
-  })
-}
-
->>>>>>> 5cc53d35937c3ad49b7f26b816a450cf1fcd6615
 
 
 
@@ -89,7 +91,7 @@ const createEvent = async (newEvent)=>{
         :eventDetail="eventDetail"  
       />
     <EventCreate 
-        :eventCreate="eventCreate"
+        :eventCreate="events"
         @createSchedule="createNewSchedule"
         />
 </template>

@@ -17,7 +17,7 @@ public class EventDtoCreate {
     private Instant startTime;
     private Integer durations;
     private String note;
-    private Category category;
+    private Category categoryId;
 }
 
 
