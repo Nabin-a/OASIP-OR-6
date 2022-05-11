@@ -56,19 +56,32 @@ const getEventid = async (id) => {
   } else console.log('error, cannot get data')
 }
 
+<<<<<<< HEAD
 const createNewSchedule = async (newBookingName,newBookingEmail,newStartTime,newDurations,newCategory) => {
   console.log(newBookingName,newBookingEmail,newStartTime,newDurations,newCategory)
+=======
+const createNewSchedule = async (newSchedule) => {
+  console.log(newSchedule)
+>>>>>>> 297c06ba9a1d45f92586aa0211ab0381561031a4
   const res = await fetch('http://localhost:8080/api/event', {
     method: 'POST',
     headers: {
       'content-type': 'application/json;'
     },
     body: JSON.stringify({ 
+<<<<<<< HEAD
       bookingName: newBookingName,
       bookingEmail: newBookingEmail,
       startTime: newStartTime,
       durations: newDurations,
       category: newCategory,
+=======
+      bookingName: newSchedule.bookingName,
+      bookingEmail: newSchedule.bookingEmail,
+      startTime: newSchedule.startTime,
+      note: newSchedule.note,
+      category: newSchedule.category
+>>>>>>> 297c06ba9a1d45f92586aa0211ab0381561031a4
     })
   })
   if (res.status === 201) {

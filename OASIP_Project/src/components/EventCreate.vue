@@ -45,6 +45,7 @@ const datetime = computed(() => {
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+<<<<<<< HEAD
         name:<input type="text" v-model="newSchedule.bookingName" /> <br/>
         email:<input type="text" v-model="newSchedule.bookingEmail" /> <br/>
         startTime:<input type="date" v-model="newSchedule.startTime" /> <br/>
@@ -58,6 +59,13 @@ const datetime = computed(() => {
             newSchedule.durations,
             newSchedule.categoryId
         )">Create</button>
+=======
+        name:<input type="text" v-model="newSchedule.BookingName" /> <br/>
+        email:<input type="text" v-model="newSchedule.BookingEmail" /> <br/>
+        start:<input type="text" v-model="newSchedule.startTime" /> <br/>
+        note:<input type="text" v-model="newSchedule.note" /> <br/>
+        <button @click="$emit('createNewSchedule', newSchedule)">Create</button>
+>>>>>>> 297c06ba9a1d45f92586aa0211ab0381561031a4
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

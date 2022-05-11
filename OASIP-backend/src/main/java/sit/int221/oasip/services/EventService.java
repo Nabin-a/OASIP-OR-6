@@ -9,7 +9,9 @@ import org.springframework.web.server.ResponseStatusException;
 import sit.int221.oasip.DTO.EventDtoCreate;
 import sit.int221.oasip.DTO.EventDtoDetail;
 import sit.int221.oasip.DTO.EventDtoList;
+import sit.int221.oasip.entities.Category;
 import sit.int221.oasip.entities.Event;
+import sit.int221.oasip.repositories.CategoryRepository;
 import sit.int221.oasip.repositories.EventRepository;
 
 import java.util.List;
@@ -23,6 +25,8 @@ public class EventService {
     private ModelMapper modelMapper;
     @Autowired
     private ListMapperService listMapper;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public List<EventDtoList> getEventsAll() {
         List<Event> eventList = repository.findAll(Sort.by(Sort.Direction.DESC, "startTime"));
@@ -36,7 +40,12 @@ public class EventService {
     }
 
     public Event save(EventDtoCreate newEvent){
-        Event event = modelMapper.map(newEvent, Event.class);
+        Category category = categoryRepository.findById(newEvent.getEventCategoryId())
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                                newEvent.getEventCategoryId() + " does't exist !!"));
+        newEvent.setDurations(category.getDurationMin());
+        Event event = modelMapper.map(newEvent , Event.class);
         return repository.saveAndFlush(event);
     }
 }
