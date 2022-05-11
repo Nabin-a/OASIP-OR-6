@@ -4,7 +4,7 @@ USE `mydb`;
 
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
-  `Id` int NOT NULL auto_increment,
+  `eventCategoryId` int NOT NULL auto_increment,
   `CategoryName` varchar(100) NOT NULL,
   `Description` varchar(500) DEFAULT NULL,
   `Duration(min.)` int NOT NULL,
