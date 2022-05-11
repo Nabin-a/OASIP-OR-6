@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
-
+defineEmits(['createSchedule'])
 const props = defineProps({
     eventCreate:{
         type: Object,
@@ -10,8 +10,8 @@ const props = defineProps({
 const newSchedule = computed(() => {
   return {
     id: props.eventCreate.id,
-    BookingName: props.eventCreate.BookingName,
-    BookingEmail: props.eventCreate.BookingEmail,
+    bookingName: props.eventCreate.bookingName,
+    bookingEmail: props.eventCreate.bookingEmail,
     startTime: props.eventCreate.startTime,
     note: props.eventCreate.note,
     categoryId: props.eventCreate.categoryId
@@ -35,11 +35,9 @@ console.log(newSchedule.value)
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        name:<input type="text" v-model="newSchedule.BookingName" /> <br/>
-        email:<input type="text" v-model="newSchedule.BookingEmail" /> <br/>
-        start:<input type="text" v-model="newSchedule.startTime" /> <br/>
-        note:<input type="text" v-model="newSchedule.note" /> <br/>
-        <button @click="$emit('createNewSchedule',newSchedule.BookingName)">Create</button>
+        name:<input type="text" v-model="newSchedule.id" /> <br/>
+        
+        <button @click="$emit('createSchedule',newSchedule.id)">Create</button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

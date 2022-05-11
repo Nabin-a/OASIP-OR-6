@@ -49,7 +49,7 @@ const createNewSchedule = async (newSchedule) => {
     headers: {
       'content-type': 'application/json'
     },
-    body: JSON.stringify({ BookingName: newSchedule })
+    body: JSON.stringify({ bookingName: newSchedule })
   })
   if (res.status === 201) {
     const addedSchedule = await res.json()
@@ -72,7 +72,7 @@ const createNewSchedule = async (newSchedule) => {
       />
     <EventCreate 
         :eventCreate="eventCreate"
-        @createSchudule="createNewSchedule"
+        @createSchedule="createNewSchedule"
         />
 </template>
  
