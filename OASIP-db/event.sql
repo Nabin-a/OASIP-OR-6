@@ -1,3 +1,4 @@
+USE mydb;
 LOCK TABLES `event` WRITE;
 INSERT INTO `event` VALUES
     (1,'Somchai Jaidee(OR-7)','somchai.jai@mail.kmutt.ac.th','DevOps/Infra Clinic','2022-05-23 13:30:00',30,NULL,2),

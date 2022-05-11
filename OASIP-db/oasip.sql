@@ -1,10 +1,10 @@
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb`
+USE `mydb`;
 
 
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
-  `Id` int NOT NULL,
+  `Id` int NOT NULL auto_increment,
   `CategoryName` varchar(100) NOT NULL,
   `Description` varchar(500) DEFAULT NULL,
   `Duration(min.)` int NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `category` (
 
 DROP TABLE IF EXISTS `event`;
 CREATE TABLE `event` (
-  `bookingId` int NOT NULL,
+  `bookingId` int NOT NULL auto_increment,
   `bookingName` varchar(100) NOT NULL,
   `bookingEmail` varchar(45) NOT NULL,
   `eventCategoryName` varchar(45) DEFAULT NULL,

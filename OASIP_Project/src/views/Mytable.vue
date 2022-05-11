@@ -30,6 +30,21 @@ const getEventId = async (id) => {
   } else console.log('error, cannot get this event id')
 }
 
+const createEvent = async (newEvent)=>{
+  const res = await fetch(`http://localhost:8080/api/event`,{
+    method: 'POST',
+    headers:{
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      id: ,
+      bookingName: ,
+      bookingEmail: ,
+      
+    })
+  })
+}
+
 
 
 

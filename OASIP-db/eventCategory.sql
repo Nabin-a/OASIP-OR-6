@@ -1,4 +1,5 @@
-LOCK TABLES `category` WRITE
+USE mydb;
+LOCK TABLES `category` WRITE;
 INSERT INTO `category` VALUES 
     (1,'Project Management Clinic','ตารางนัดหมายนี้ใช้สำหรับนัดหมาย project management clinic ในวิชา INT221 integrated project I ให้นักศึกษาเตรียมเอกสารที่เกี่ยวข้องเพื่อแสดงระหว่างขอคำปรึกษา',30),
     (2,'DevOps/Infra Clinic','Use this event category for DevOps/Infra clinic.',20),
