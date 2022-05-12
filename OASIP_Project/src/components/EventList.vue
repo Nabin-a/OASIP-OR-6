@@ -41,7 +41,7 @@ const show = () =>{
           <th scope="col">Start Date</th>
           <th scope="col">Start Time</th>
           <th scope="col">Duration</th>
-          <th scope="col" style="padding-left: 18px">ooo</th>
+          <th scope="col" style="padding-left: 4.2%">ooo</th>
         </tr>
       </thead>
     <tbody v-for="(event, index) in eventList" :key="index">
@@ -56,10 +56,10 @@ const show = () =>{
         
   <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal" @click="$emit('getEventId', event.id)">
-  Detail
-</button>
+  <i class="fa fa-info-circle"></i>
+</button> &nbsp
 <button type="button" class="btn btn-danger" @click="$emit('removeEvent', event.id)">
-  ลบทิ้งไอสัส
+  <i class="fa fa-trash"></i>
 </button>
             </td>
 

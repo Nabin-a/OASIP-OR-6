@@ -7,13 +7,6 @@ const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
 const isShow = ref(false);
-// function show(data) {
-// const nameText = document.querySelector('.fullname');
-// const emailText = document.querySelector('.email');
-// const duration = document.querySelector('duration');
-// const category = document.querySelector('category');
-// const note = document.querySelector('note')
-// }
 
 const getEvents = async () => {
   const res = await fetch("http://localhost:8080/api/event");
@@ -58,14 +51,16 @@ const createNewSchedule = async (
   newBookingEmail,
   newStartTime,
   newDurations,
-  newCategory
+  newCategory,
+  newNote
 ) => {
   console.log(
     newBookingName,
     newBookingEmail,
     newStartTime,
     newDurations,
-    newCategory
+    newCategory,
+    newNote
   );
   const res = await fetch("http://localhost:8080/api/event", {
     method: "POST",
@@ -77,7 +72,8 @@ const createNewSchedule = async (
       bookingEmail: newBookingEmail,
       startTime: newStartTime,
       durations: newDurations,
-      eventCategoryId: newCategory
+      eventCategoryId: newCategory,
+      note: newNote
     })
   });
   if (res.status === 201) {
@@ -88,7 +84,7 @@ const createNewSchedule = async (
 };
 
 const removeEvent = async (id) => {
-  if (confirm("Press a button!") == true) {
+  if (confirm("Delete this column?") == true) {
     console.log(id);
     const res = await fetch(`http://localhost:8080/api/event/${id}`, {
       method: "DELETE"
