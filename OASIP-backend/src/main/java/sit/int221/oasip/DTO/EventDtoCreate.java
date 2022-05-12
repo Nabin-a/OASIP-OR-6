@@ -17,12 +17,5 @@ public class EventDtoCreate {
     private Instant startTime;
     private Integer durations;
     private String note;
-<<<<<<< HEAD
-    private Category categoryId;
-}
-
-
-=======
     private Integer eventCategoryId;
 }
->>>>>>> 297c06ba9a1d45f92586aa0211ab0381561031a4

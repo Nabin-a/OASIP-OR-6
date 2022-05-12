@@ -1,12 +1,12 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue';
-import EventList from '../components/EventList.vue';
-import EventDetail from '../components/EventDetail.vue';
-import EventCreate from '../components/EventCreate.vue';
-const events = ref([])
-const eventDetail = ref({})
-const eventCreate = ref({})
-const isShow = ref(false)
+import { ref, onBeforeMount } from "vue";
+import EventList from "../components/EventList.vue";
+import EventDetail from "../components/EventDetail.vue";
+import EventCreate from "../components/EventCreate.vue";
+const events = ref([]);
+const eventDetail = ref({});
+const eventCategory = ref([]);
+const isShow = ref(false);
 // function show(data) {
 // const nameText = document.querySelector('.fullname');
 // const emailText = document.querySelector('.email');
@@ -15,100 +15,104 @@ const isShow = ref(false)
 // const note = document.querySelector('note')
 // }
 
-
-
-
 const getEvents = async () => {
-  const res = await fetch('http://localhost:8080/api/event')
+  const res = await fetch("http://localhost:8080/api/event");
   if (res.status === 200) {
-    events.value = await res.json()
-    console.log(events.value)
-    return events.value
-  } else console.log('error, cannot get notes')
-}
+    events.value = await res.json();
+    console.log(events.value);
+    return events.value;
+  } else console.log("error, cannot get notes");
+};
 
 onBeforeMount(async () => {
-  await getEvents()
-  console.log(events.value)
-})
+  await getEvents();
+  console.log(events.value);
+});
 
 const getEventCategory = async () => {
-  const res = await fetch('http://localhost:8080/api/event')
+  const res = await fetch("http://localhost:8080/api/category");
   if (res.status === 200) {
-    events.value = await res.json()
-    console.log(events.value)
-    return events.value
-  } else console.log('error, cannot get notes')
-}
+    eventCategory.value = await res.json();
+    console.log(eventCategory.value);
+    return eventCategory.value;
+  } else console.log("error, cannot get notes");
+};
 
 onBeforeMount(async () => {
-  await getEvents()
-  console.log(events.value)
-})
+  await getEventCategory();
+  console.log(eventCategory.value);
+});
 
 const getEventid = async (id) => {
-  console.log(id)
-  const res = await fetch(`http://localhost:8080/api/event/${id}`)
+  console.log(id);
+  const res = await fetch(`http://localhost:8080/api/event/${id}`);
 
   if (res.status === 200) {
-    eventDetail.value = await res.json()
-    console.log(eventDetail.value)
-  } else console.log('error, cannot get data')
-}
+    eventDetail.value = await res.json();
+    console.log(eventDetail.value);
+  } else console.log("error, cannot get data");
+};
 
-<<<<<<< HEAD
-const createNewSchedule = async (newBookingName,newBookingEmail,newStartTime,newDurations,newCategory) => {
-  console.log(newBookingName,newBookingEmail,newStartTime,newDurations,newCategory)
-=======
-const createNewSchedule = async (newSchedule) => {
-  console.log(newSchedule)
->>>>>>> 297c06ba9a1d45f92586aa0211ab0381561031a4
-  const res = await fetch('http://localhost:8080/api/event', {
-    method: 'POST',
+const createNewSchedule = async (
+  newBookingName,
+  newBookingEmail,
+  newStartTime,
+  newDurations,
+  newCategory
+) => {
+  console.log(
+    newBookingName,
+    newBookingEmail,
+    newStartTime,
+    newDurations,
+    newCategory
+  );
+  const res = await fetch("http://localhost:8080/api/event", {
+    method: "POST",
     headers: {
-      'content-type': 'application/json;'
+      "content-type": "application/json;"
     },
-    body: JSON.stringify({ 
-<<<<<<< HEAD
+    body: JSON.stringify({
       bookingName: newBookingName,
       bookingEmail: newBookingEmail,
       startTime: newStartTime,
       durations: newDurations,
-      category: newCategory,
-=======
-      bookingName: newSchedule.bookingName,
-      bookingEmail: newSchedule.bookingEmail,
-      startTime: newSchedule.startTime,
-      note: newSchedule.note,
-      category: newSchedule.category
->>>>>>> 297c06ba9a1d45f92586aa0211ab0381561031a4
+      eventCategoryId: newCategory
     })
-  })
+  });
   if (res.status === 201) {
-    const addedSchedule = await res.json()
-    events.value.push(addedSchedule)
-    console.log('added sucessfully')
-  } else console.log('error, cannot be added')
-}
+    alert('Added sucessfully')
+    const addedSchedule = await res.json();
+    events.value.push(addedSchedule);
+  } else console.log("error, cannot be added");
+};
 
-
-
+const removeEvent = async (id) => {
+  if (confirm("Press a button!") == true) {
+    console.log(id);
+    const res = await fetch(`http://localhost:8080/api/event/${id}`, {
+      method: "DELETE"
+    });
+    if (res.status === 200) {
+      events.value = events.value.filter((event) => event.id !== id);
+      console.log("deleted successfully");
+    } else console.log("error, cannot delete data");
+  }
+};
 </script>
 
 <template>
-    <EventList
-        :eventList="events" @getEventId="getEventid" 
-                          
-    />
-    <EventDetail
-        :eventDetail="eventDetail"  
-      />
-    <EventCreate 
-        :eventCreate="events"
-        @createSchedule="createNewSchedule"
-        />
+  <EventList
+    :eventList="events"
+    @getEventId="getEventid"
+    @removeEvent="removeEvent"
+  />
+  <EventDetail :eventDetail="eventDetail" />
+  <EventCreate
+    :eventCreate="events"
+    :eventCategory="eventCategory"
+    @createSchedule="createNewSchedule"
+  />
 </template>
- 
-<style>
 
-</style>
+<style></style>

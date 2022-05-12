@@ -2,7 +2,7 @@
 
 import moment from 'moment'
 import { ref,computed } from 'vue'
-
+defineEmits(['removeEvent','getEventId'])
 defineProps({
   eventList: {
     type: Array,
@@ -58,8 +58,11 @@ const show = () =>{
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal" @click="$emit('getEventId', event.id)">
   Detail
 </button>
-    
+<button type="button" class="btn btn-danger" @click="$emit('removeEvent', event.id)">
+  ลบทิ้งไอสัส
+</button>
             </td>
+
           </tr>
        </tbody>
       </table>
