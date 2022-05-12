@@ -8,7 +8,7 @@ CREATE TABLE `category` (
   `CategoryName` varchar(100) NOT NULL,
   `Description` varchar(500) DEFAULT NULL,
   `Duration(min.)` int NOT NULL,
-  PRIMARY KEY (`Id`)
+  PRIMARY KEY (`eventCategoryId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 
@@ -26,6 +26,6 @@ CREATE TABLE `event` (
   PRIMARY KEY (`bookingId`),
   KEY `ClientFirstsName_index` (`bookingName`),
   KEY `fk_Event_Category_idx` (`Category_Id`),
-  CONSTRAINT `fk_Event_Catagory` FOREIGN KEY (`Category_Id`) REFERENCES `category` (`Id`)
+  CONSTRAINT `fk_Event_Catagory` FOREIGN KEY (`Category_Id`) REFERENCES `category` (`eventCategoryId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
