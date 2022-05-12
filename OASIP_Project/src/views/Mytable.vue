@@ -1,51 +1,118 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue';
-import EventList from '../components/EventList.vue';
-import EventDetail from '../components/EventDetail.vue';
-
-const events = ref([])
-const eventDetail = ref({})
-const notes = ref([])
-const isShow = ref(false)
-
-onBeforeMount(async () => {
-  await getEvents()
-  console.log(events.value)
-})
+import { ref, onBeforeMount } from "vue";
+import EventList from "../components/EventList.vue";
+import EventDetail from "../components/EventDetail.vue";
+import EventCreate from "../components/EventCreate.vue";
+const events = ref([]);
+const eventDetail = ref({});
+const eventCategory = ref([]);
+const isShow = ref(false);
+// function show(data) {
+// const nameText = document.querySelector('.fullname');
+// const emailText = document.querySelector('.email');
+// const duration = document.querySelector('duration');
+// const category = document.querySelector('category');
+// const note = document.querySelector('note')
+// }
 
 const getEvents = async () => {
-  const res = await fetch('http://localhost:8080/api/event')
+  const res = await fetch("http://localhost:8080/api/event");
   if (res.status === 200) {
-    events.value = await res.json()
-    console.log(events.value)
-    return events.value
-  } else console.log('error, cannot get notes')
-}
+    events.value = await res.json();
+    console.log(events.value);
+    return events.value;
+  } else console.log("error, cannot get notes");
+};
 
-const getEventId = async (id) => {
-  const res = await fetch(`http://localhost:8080/api/event/${id}`)
+onBeforeMount(async () => {
+  await getEvents();
+  console.log(events.value);
+});
+
+const getEventCategory = async () => {
+  const res = await fetch("http://localhost:8080/api/category");
   if (res.status === 200) {
-   eventDetail.value = await res.json()
-    console.log(eventDetail.value)
-  } else console.log('error, cannot get this event id')
-}
+    eventCategory.value = await res.json();
+    console.log(eventCategory.value);
+    return eventCategory.value;
+  } else console.log("error, cannot get notes");
+};
 
+onBeforeMount(async () => {
+  await getEventCategory();
+  console.log(eventCategory.value);
+});
 
+const getEventid = async (id) => {
+  console.log(id);
+  const res = await fetch(`http://localhost:8080/api/event/${id}`);
 
+  if (res.status === 200) {
+    eventDetail.value = await res.json();
+    console.log(eventDetail.value);
+  } else console.log("error, cannot get data");
+};
 
+const createNewSchedule = async (
+  newBookingName,
+  newBookingEmail,
+  newStartTime,
+  newDurations,
+  newCategory
+) => {
+  console.log(
+    newBookingName,
+    newBookingEmail,
+    newStartTime,
+    newDurations,
+    newCategory
+  );
+  const res = await fetch("http://localhost:8080/api/event", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json;"
+    },
+    body: JSON.stringify({
+      bookingName: newBookingName,
+      bookingEmail: newBookingEmail,
+      startTime: newStartTime,
+      durations: newDurations,
+      eventCategoryId: newCategory
+    })
+  });
+  if (res.status === 201) {
+    alert('Added sucessfully')
+    const addedSchedule = await res.json();
+    events.value.push(addedSchedule);
+  } else console.log("error, cannot be added");
+};
+
+const removeEvent = async (id) => {
+  if (confirm("Press a button!") == true) {
+    console.log(id);
+    const res = await fetch(`http://localhost:8080/api/event/${id}`, {
+      method: "DELETE"
+    });
+    if (res.status === 200) {
+      events.value = events.value.filter((event) => event.id !== id);
+      console.log("deleted successfully");
+    } else console.log("error, cannot delete data");
+  }
+};
 </script>
 
 <template>
-    <EventList
-        :eventList="events"
-        @getEventId="getEventId"        
-    />
-    <EventDetail
-        :eventDetail="eventDetail"
-    />
-    
+  <EventList
+    :eventList="events"
+    @getEventId="getEventid"
+    @removeEvent="removeEvent"
+  />
+  <EventDetail :eventDetail="eventDetail" />
+  <EventCreate
+    :eventCreate="events"
+    :eventCategory="eventCategory"
+    @createSchedule="createNewSchedule"
+  />
 </template>
- 
-<style>
 
-</style>
+<style></style>

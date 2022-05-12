@@ -1,15 +1,21 @@
 package sit.int221.oasip.entities;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Table(name = "category")
 @Entity
+@Getter
+@Setter
 public class Category {
     @Id
-    @Column(name = "Id", nullable = false)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    private Integer eventCategoryId;
 
     @Column(name = "CategoryName", nullable = false, length = 100)
     private String categoryName;
@@ -22,36 +28,4 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     private Set<Event> events = new LinkedHashSet<>();
-
-    public Integer getDurationMin() {
-        return durationMin;
-    }
-
-    public void setDurationMin(Integer durationMin) {
-        this.durationMin = durationMin;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCategoryName() {
-        return categoryName;
-    }
-
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

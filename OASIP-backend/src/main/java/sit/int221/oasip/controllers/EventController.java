@@ -12,9 +12,11 @@ import sit.int221.oasip.entities.Event;
 import sit.int221.oasip.repositories.EventRepository;
 import sit.int221.oasip.services.EventService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import java.util.List;
 
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/event")
 
@@ -39,6 +41,7 @@ public class EventController {
     }
 
     @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
 //    public Event create(@RequestBody Event newEvent) {
 //        return repository.saveAndFlush(newEvent);
 //    }
