@@ -17,4 +17,5 @@ public class EventDtoList {
     private Instant startTime;
     private Integer durations;
     private String categoryName;
+
 }

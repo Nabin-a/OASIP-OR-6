@@ -41,6 +41,7 @@ public class EventController {
     }
 
     @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)
 //    public Event create(@RequestBody Event newEvent) {
 //        return repository.saveAndFlush(newEvent);
 //    }
