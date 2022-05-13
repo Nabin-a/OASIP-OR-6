@@ -7,16 +7,9 @@ const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
 const isShow = ref(false);
-// function show(data) {
-// const nameText = document.querySelector('.fullname');
-// const emailText = document.querySelector('.email');
-// const duration = document.querySelector('duration');
-// const category = document.querySelector('category');
-// const note = document.querySelector('note')
-// }
 
 const getEvents = async () => {
-  const res = await fetch("http://localhost:8080/api/event");
+  const res = await fetch("http://10.4.56.99/or6/api/event");
   if (res.status === 200) {
     events.value = await res.json();
     console.log(events.value);
@@ -30,7 +23,7 @@ onBeforeMount(async () => {
 });
 
 const getEventCategory = async () => {
-  const res = await fetch("http://localhost:8080/api/category");
+  const res = await fetch("http://10.4.56.99:8080/or6/api/category");
   if (res.status === 200) {
     eventCategory.value = await res.json();
     console.log(eventCategory.value);
@@ -45,7 +38,7 @@ onBeforeMount(async () => {
 
 const getEventid = async (id) => {
   console.log(id);
-  const res = await fetch(`http://localhost:8080/api/event/${id}`);
+  const res = await fetch(`http://10.4.56.99:8080/or6/api/event/${id}`);
 
   if (res.status === 200) {
     eventDetail.value = await res.json();
@@ -58,16 +51,18 @@ const createNewSchedule = async (
   newBookingEmail,
   newStartTime,
   newDurations,
-  newCategory
+  newCategory,
+  newNote
 ) => {
   console.log(
     newBookingName,
     newBookingEmail,
     newStartTime,
     newDurations,
-    newCategory
+    newCategory,
+    newNote
   );
-  const res = await fetch("http://localhost:8080/api/event", {
+  const res = await fetch("http://10.4.56.99:8080/or6/api/event", {
     method: "POST",
     headers: {
       "content-type": "application/json;"
@@ -77,7 +72,8 @@ const createNewSchedule = async (
       bookingEmail: newBookingEmail,
       startTime: newStartTime,
       durations: newDurations,
-      eventCategoryId: newCategory
+      eventCategoryId: newCategory,
+      note: newNote
     })
   });
   if (res.status === 201) {
@@ -88,9 +84,9 @@ const createNewSchedule = async (
 };
 
 const removeEvent = async (id) => {
-  if (confirm("Press a button!") == true) {
+  if (confirm("Delete this column?") == true) {
     console.log(id);
-    const res = await fetch(`http://localhost:8080/api/event/${id}`, {
+    const res = await fetch(`http://10.4.56.99:8080/or6/api/event/${id}`, {
       method: "DELETE"
     });
     if (res.status === 200) {

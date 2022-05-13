@@ -95,6 +95,13 @@ const startTime = ref();
                 v-model="eventCategorySelect.durations"
               />
               </li>
+              <br/>
+              <li class="list-group-item">
+              note: <input class="form-control"
+                type="text"
+                v-model="newSchedule.note"
+              />
+              </li>
               </ul>
             </div>
           </form>
@@ -117,7 +124,8 @@ const startTime = ref();
                 newSchedule.bookingEmail,
                 datetime,
                 eventCategorySelect.durations,
-                eventCategorySelect.id
+                eventCategorySelect.id,
+                newSchedule.note
               )
             "
           >
@@ -132,4 +140,7 @@ const startTime = ref();
   
 </template>
 
-<style></style>
+<style>
+
+
+</style>
