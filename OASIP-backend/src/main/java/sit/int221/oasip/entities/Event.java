@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.ZonedDateTime;
 
 @Table(name = "event", indexes = {
         @Index(name = "ClientFirstsName_index", columnList = "bookingName"),
@@ -30,7 +31,7 @@ public class Event {
     private String eventCategoryName;
 
     @Column(name = "StartTime", nullable = false)
-    private Instant startTime;
+    private ZonedDateTime startTime;
 
     @Column(name = "Durations", nullable = false)
     private Integer durations;

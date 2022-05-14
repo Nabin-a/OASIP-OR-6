@@ -3,7 +3,7 @@ import EventDetail from "../components/EventDetail.vue";
 import EventList from "../components/EventList.vue";
 import Home from "../views/Home.vue";
 
-const history = createWebHistory();
+const history = createWebHistory(import.meta.env.BASE_URL);
 const routes = [
   {
     path: "/",
