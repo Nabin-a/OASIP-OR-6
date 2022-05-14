@@ -7,6 +7,7 @@ import lombok.Setter;
 import sit.int221.oasip.entities.Category;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ import java.time.Instant;
 public class EventDtoCreate {
     private String bookingName;
     private String bookingEmail;
-    private Instant startTime;
+    private ZonedDateTime startTime;
     private Integer durations;
     private String note;
     private Integer eventCategoryId;

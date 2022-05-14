@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ public class EventDtoDetail {
  private Integer id;
  private String bookingName;
  private String bookingEmail;
- private Instant startTime;
+ private ZonedDateTime startTime;
  private Integer durations;
  private String category;
  private String note;
