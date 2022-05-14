@@ -77,6 +77,7 @@ const createNewSchedule = async (
     })
   });
   if (res.status === 201) {
+    location.reload();
     alert('Added sucessfully')
     const addedSchedule = await res.json();
     events.value.push(addedSchedule);
