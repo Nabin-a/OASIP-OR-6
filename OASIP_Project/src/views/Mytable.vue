@@ -9,7 +9,11 @@ const eventCategory = ref([]);
 const isShow = ref(false);
 
 const getEvents = async () => {
+<<<<<<< HEAD
   const res = await fetch("http://localhost:8080/api/event");
+=======
+  const res = await fetch(import.meta.env.BASE_URL+"api/event");
+>>>>>>> 745800e94a815574f6ee0ed46f738d1c65561d53
   if (res.status === 200) {
     events.value = await res.json();
     console.log(events.value);
@@ -23,7 +27,11 @@ onBeforeMount(async () => {
 });
 
 const getEventCategory = async () => {
+<<<<<<< HEAD
   const res = await fetch("http://localhost:8080/api/category");
+=======
+  const res = await fetch(import.meta.env.BASE_URL+"api/category");
+>>>>>>> 745800e94a815574f6ee0ed46f738d1c65561d53
   if (res.status === 200) {
     eventCategory.value = await res.json();
     console.log(eventCategory.value);
@@ -38,7 +46,11 @@ onBeforeMount(async () => {
 
 const getEventid = async (id) => {
   console.log(id);
+<<<<<<< HEAD
   const res = await fetch(`http://localhost:8080/api/event/${id}`);
+=======
+  const res = await fetch(import.meta.env.BASE_URL+`api/event/${id}`);
+>>>>>>> 745800e94a815574f6ee0ed46f738d1c65561d53
 
   if (res.status === 200) {
     eventDetail.value = await res.json();
@@ -62,7 +74,11 @@ const createNewSchedule = async (
     newCategory,
     newNote
   );
+<<<<<<< HEAD
   const res = await fetch("http://localhost:8080/api/event", {
+=======
+  const res = await fetch(import.meta.env.BASE_URL+"api/event", {
+>>>>>>> 745800e94a815574f6ee0ed46f738d1c65561d53
     method: "POST",
     headers: {
       "content-type": "application/json;"
@@ -88,7 +104,11 @@ const createNewSchedule = async (
 const removeEvent = async (id) => {
   if (confirm("Delete this column?") == true) {
     console.log(id);
+<<<<<<< HEAD
     const res = await fetch(`http://localhost:8080/api/event/${id}`, {
+=======
+    const res = await fetch(import.meta.env.BASE_URL+`api/event/${id}`, {
+>>>>>>> 745800e94a815574f6ee0ed46f738d1c65561d53
       method: "DELETE"
     });
     if (res.status === 200) {
