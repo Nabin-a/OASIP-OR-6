@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/event")
 
@@ -23,8 +24,7 @@ public class EventController {
     private EventRepository repository;
     @Autowired
     private EventService eventService;
-
-    @CrossOrigin
+    
     @GetMapping("")
     public List<EventDtoList> getEventDTO() {
         return eventService.getEventsAll();
