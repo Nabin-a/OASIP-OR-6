@@ -2,25 +2,21 @@
 import { ref, computed } from "vue";
 defineEmits(["createSchedule","updateEvent"]);
 const props = defineProps({
-  eventCreate: {
+  currentEvent: {
     type: Object,
     default: {}
   },
   eventCategory: {
     type: Array
-  },
-  currentEvent: {
-    type: Object,
-    default: {}
   }
 });
 
 const newSchedule = computed(() => {
   return {
-    id: props.eventCreate.id,
-    bookingName: props.eventCreate.bookingName,
-    bookingEmail: props.eventCreate.bookingEmail,
-    note: props.eventCreate.note
+    id: props.currentEvent.id,
+    bookingName: props.currentEvent.bookingName,
+    bookingEmail: props.currentEvent.bookingEmail,
+    note: props.currentEvent.note
   };
 });
 console.log(newSchedule.value);
@@ -158,7 +154,7 @@ const eventCategorySelect = ref({});
               <br />
               <li class="list-group-item">email: <input type="text" class="form-control" disabled v-model="currentEvent.bookingEmail" /></li>
               <br />
-              <li class="list-group-item">startTime: <input type="datetime-local" class="form-control" v-model="currentEvent.startTime" /></li>
+              <li class="list-group-item">startTime: <input type="datetime-local" class="form-control" v-model="startTime" /></li>
               <br />
               <li class="list-group-item">category: <input type="text" class="form-control" disabled v-model="currentEvent.category">
               </li>
@@ -178,8 +174,7 @@ const eventCategorySelect = ref({});
                 'updateEvent',
                 newSchedule,
                 datetime,
-                eventCategorySelect.durations,
-                eventCategorySelect.id
+                currentEvent.id
               )
             "
           >
