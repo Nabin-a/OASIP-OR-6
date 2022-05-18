@@ -14,8 +14,8 @@ import sit.int221.oasip.entities.Event;
 import sit.int221.oasip.repositories.CategoryRepository;
 import sit.int221.oasip.repositories.EventRepository;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EventService {

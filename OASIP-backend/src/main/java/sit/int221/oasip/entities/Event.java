@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.Instant;
+import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
 @Table(name = "event", indexes = {
@@ -21,10 +21,10 @@ public class Event {
     @Column(nullable = false)
     private Integer bookingId;
 
-    @Column(name = "bookingName", nullable = false, length = 100)
+    @Column(name = "bookingName", length = 100)
     private String bookingName;
 
-    @Column(name = "bookingEmail" ,nullable = false , length = 45)
+    @Column(name = "bookingEmail", length = 45)
     private String bookingEmail;
 
     @Column(name = "eventCategoryName", length = 45)
