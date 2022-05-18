@@ -8,15 +8,19 @@ const props = defineProps({
   },
   eventCategory: {
     type: Array
+  },
+  eventCreate: {
+    type: Object,
+    default: {}
   }
 });
 
 const newSchedule = computed(() => {
   return {
-    id: props.currentEvent.id,
-    bookingName: props.currentEvent.bookingName,
-    bookingEmail: props.currentEvent.bookingEmail,
-    note: props.currentEvent.note
+    id: props.eventCreate.id,
+    bookingName: props.eventCreate.bookingName,
+    bookingEmail: props.eventCreate.bookingEmail,
+    note: props.eventCreate.note
   };
 });
 console.log(newSchedule.value);
@@ -172,9 +176,13 @@ const eventCategorySelect = ref({});
             @click="
               $emit(
                 'updateEvent',
-                newSchedule,
+                currentEvent.id,
+                currentEvent.bookingName,
+                currentEvent.bookingEmail,
+                currentEvent.category,
+                currentEvent.durations,
                 datetime,
-                currentEvent.id
+                currentEvent.note
               )
             "
           >

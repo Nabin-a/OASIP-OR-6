@@ -8,7 +8,6 @@ const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
 
-
 const getEvents = async () => {
   const res = await fetch("http://localhost:8080/api/event");
   if (res.status === 200) {
@@ -100,30 +99,29 @@ const removeEvent = async (id) => {
 };
 
 // PUT
-const editingEvent = ref({})
-const toEditMode = (editEvent) => {
-  console.log(editEvent)
-  editingEvent.value = editEvent
-}
-const updateEvent = async (editNote,editTime,id) => {
-  console.log(editNote,editTime,id)
+const updateEvent = async (id,CuBookingName,CuBookingEmail,CuCatetgory,CuDurations,editTime,editNote,) => {
+  console.log(id,editTime,editNote)
   const res = await fetch(`http://localhost:8000/api/event/${id}`, {
     method: 'PUT',
     headers: {
-      'content-type': 'application/json'
+      'content-type': 'application/json;'
     },
     body: JSON.stringify({
-      note: editNote,
-      startTime: editTime
+      bookingName: CuBookingName,
+      bookingEmail: CuBookingEmail,
+      durations: CuDurations,
+      category: CuCatetgory,
+      startTime: editTime,
+      note: editNote
     })
   })
   if (res.status === 200) {
     const editedEvent = await res.json()
     events.value = events.value.map((event) =>
-      event.id === editedEvent.id
+      event.bookingId === editedEvent.bookingId
         ? { ...event, note: editedEvent.note ,
                       startTme: editedEvent.startTime }
-        : note , startTime
+        : event
     )
     console.log('edited successfully')
   } else console.log('error, cannot be added')
@@ -148,14 +146,12 @@ const updateEvent = async (editNote,editTime,id) => {
   <EventCreate
     
     :eventCategory="eventCategory"
+    :eventCreate="events"
     :currentEvent="eventDetail"
     @createSchedule="createNewSchedule"
     @updateEvent="updateEvent"
   />
-  
-  <EventEdit 
-    :currentEvent="editingEvent"
-    />
+
   
 
 </template>
