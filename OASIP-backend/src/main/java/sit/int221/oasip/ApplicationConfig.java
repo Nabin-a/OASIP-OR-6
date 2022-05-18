@@ -12,7 +12,7 @@ import sit.int221.oasip.services.ListMapperService;
 public class ApplicationConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
+        registry.addMapping("/**").allowedMethods("POST", "GET",  "PUT", "PATCH", "OPTIONS", "DELETE");
     }
 
     @Bean

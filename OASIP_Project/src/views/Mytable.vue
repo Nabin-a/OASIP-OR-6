@@ -3,7 +3,6 @@ import { ref, onBeforeMount } from "vue";
 import EventList from "../components/EventList.vue";
 import EventDetail from "../components/EventDetail.vue";
 import EventCreate from "../components/EventCreate.vue";
-import EventEdit from "../components/EventEdit.vue"
 const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
@@ -99,33 +98,23 @@ const removeEvent = async (id) => {
 };
 
 // PUT
-const updateEvent = async (id,CuBookingName,CuBookingEmail,CuCatetgory,CuDurations,editTime,editNote,) => {
+const updateEvent = async (id,editTime,editNote,) => {
   console.log(id,editTime,editNote)
-  const res = await fetch(`http://localhost:8000/api/event/${id}`, {
+  const res = await fetch(`http://localhost:8080/api/event/${id}`, {
     method: 'PUT',
     headers: {
       'content-type': 'application/json;'
     },
     body: JSON.stringify({
-      bookingName: CuBookingName,
-      bookingEmail: CuBookingEmail,
-      durations: CuDurations,
-      category: CuCatetgory,
       startTime: editTime,
       note: editNote
     })
   })
   if (res.status === 200) {
-    const editedEvent = await res.json()
-    events.value = events.value.map((event) =>
-      event.bookingId === editedEvent.bookingId
-        ? { ...event, note: editedEvent.note ,
-                      startTme: editedEvent.startTime }
-        : event
-    )
+    location.reload();
+    alert('Edit Success')
     console.log('edited successfully')
-  } else console.log('error, cannot be added')
-  editingEvent.value = ''
+  } else console.log('error, cannot be edit')
 }
 
 
@@ -137,14 +126,11 @@ const updateEvent = async (id,CuBookingName,CuBookingEmail,CuCatetgory,CuDuratio
     :eventList="events"
     @getEventId="getEventid"
     @removeEvent="removeEvent"
-    @editEvent="toEditMode"
   />
   <EventDetail :eventDetail="eventDetail" 
-    @updateEvent="updateEvent"
    />
-   <!-- :eventCreate="events" -->
+
   <EventCreate
-    
     :eventCategory="eventCategory"
     :eventCreate="events"
     :currentEvent="eventDetail"
