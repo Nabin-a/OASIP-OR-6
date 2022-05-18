@@ -57,7 +57,7 @@ defineProps({
 <button type="button" class="btn btn-danger" @click="$emit('removeEvent', event.id)">
   <i class="fa fa-trash"></i>
 </button>
-<button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" @click="$emit('editEvent',event)">
+<button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" @click="$emit('getEventId',event.id)">
   Edit
 </button>
 
