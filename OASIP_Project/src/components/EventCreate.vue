@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-defineEmits(["createSchedule"]);
+defineEmits(["createSchedule","updateEvent"]);
 const props = defineProps({
   eventCreate: {
     type: Object,
@@ -153,8 +153,20 @@ const eventCategorySelect = ref({});
       </div>
       <div class="modal-body">
         <ul class="list-group">
-            <input type="text" disabled v-model="currentEvent.bookingName">
-            {{currentEvent.bookingEmail}}
+            
+            <li class="list-group-item">name: <input type="text" class="form-control" disabled v-model="currentEvent.bookingName" /></li>
+              <br />
+              <li class="list-group-item">email: <input type="text" class="form-control" disabled v-model="currentEvent.bookingEmail" /></li>
+              <br />
+              <li class="list-group-item">startTime: <input type="datetime-local" class="form-control" v-model="currentEvent.startTime" /></li>
+              <br />
+              <li class="list-group-item">category: <input type="text" class="form-control" disabled v-model="currentEvent.category">
+              </li>
+              <br />
+              <li class="list-group-item">category: <input type="text" class="form-control" disabled v-model="currentEvent.durations"></li>
+              <br />
+              <li class="list-group-item">category: <textarea type="text" class="form-control" v-model="currentEvent.note">
+              </textarea></li>
         </ul>
       </div>
       <div class="modal-footer">
