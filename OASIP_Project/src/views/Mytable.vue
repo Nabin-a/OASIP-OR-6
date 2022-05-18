@@ -3,17 +3,14 @@ import { ref, onBeforeMount } from "vue";
 import EventList from "../components/EventList.vue";
 import EventDetail from "../components/EventDetail.vue";
 import EventCreate from "../components/EventCreate.vue";
+import EventEdit from "../components/EventEdit.vue"
 const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
-const isShow = ref(false);
+
 
 const getEvents = async () => {
-<<<<<<< HEAD
   const res = await fetch("http://localhost:8080/api/event");
-=======
-  const res = await fetch(import.meta.env.BASE_URL+"api/event");
->>>>>>> 745800e94a815574f6ee0ed46f738d1c65561d53
   if (res.status === 200) {
     events.value = await res.json();
     console.log(events.value);
@@ -27,11 +24,7 @@ onBeforeMount(async () => {
 });
 
 const getEventCategory = async () => {
-<<<<<<< HEAD
   const res = await fetch("http://localhost:8080/api/category");
-=======
-  const res = await fetch(import.meta.env.BASE_URL+"api/category");
->>>>>>> 745800e94a815574f6ee0ed46f738d1c65561d53
   if (res.status === 200) {
     eventCategory.value = await res.json();
     console.log(eventCategory.value);
@@ -46,11 +39,7 @@ onBeforeMount(async () => {
 
 const getEventid = async (id) => {
   console.log(id);
-<<<<<<< HEAD
   const res = await fetch(`http://localhost:8080/api/event/${id}`);
-=======
-  const res = await fetch(import.meta.env.BASE_URL+`api/event/${id}`);
->>>>>>> 745800e94a815574f6ee0ed46f738d1c65561d53
 
   if (res.status === 200) {
     eventDetail.value = await res.json();
@@ -74,11 +63,7 @@ const createNewSchedule = async (
     newCategory,
     newNote
   );
-<<<<<<< HEAD
   const res = await fetch("http://localhost:8080/api/event", {
-=======
-  const res = await fetch(import.meta.env.BASE_URL+"api/event", {
->>>>>>> 745800e94a815574f6ee0ed46f738d1c65561d53
     method: "POST",
     headers: {
       "content-type": "application/json;"
@@ -104,11 +89,7 @@ const createNewSchedule = async (
 const removeEvent = async (id) => {
   if (confirm("Delete this column?") == true) {
     console.log(id);
-<<<<<<< HEAD
     const res = await fetch(`http://localhost:8080/api/event/${id}`, {
-=======
-    const res = await fetch(import.meta.env.BASE_URL+`api/event/${id}`, {
->>>>>>> 745800e94a815574f6ee0ed46f738d1c65561d53
       method: "DELETE"
     });
     if (res.status === 200) {
@@ -117,6 +98,39 @@ const removeEvent = async (id) => {
     } else console.log("error, cannot delete data");
   }
 };
+
+// PUT
+const editingEvent = ref({})
+const toEditMode = (editEvent) => {
+  console.log(editEvent)
+  editingEvent.value = editEvent
+}
+const updateEvent = async (editingEvent) => {
+  const res = await fetch(`http://localhost:8000/api/event/${editingEvent.id}`, {
+    method: 'PUT',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({
+      StartTime: editingEvent.startTime,
+      note: editingEvent.note
+    })
+  })
+  if (res.status === 200) {
+    const editedEvent = await res.json()
+    events.value = events.value.map((event) =>
+      event.id === editedEvent.id
+        ? { ...event, note: editedEvent.note ,
+                      StartTme: editedEvent.StartTime }
+        : note , StartTime
+    )
+    console.log('edited successfully')
+  } else console.log('error, cannot be added')
+  editingEvent.value = ''
+}
+
+
+
 </script>
 
 <template>
@@ -124,13 +138,24 @@ const removeEvent = async (id) => {
     :eventList="events"
     @getEventId="getEventid"
     @removeEvent="removeEvent"
+    @editEvent="toEditMode"
   />
-  <EventDetail :eventDetail="eventDetail" />
+  <EventDetail :eventDetail="eventDetail" 
+    @updateEvent="updateEvent"
+   />
   <EventCreate
     :eventCreate="events"
     :eventCategory="eventCategory"
+    :currentEvent="editingEvent"
     @createSchedule="createNewSchedule"
+    @updateEvent="updateEvent"
   />
+  
+  <EventEdit 
+    :currentEvent="editingEvent"
+    />
+  
+
 </template>
 
 <style></style>

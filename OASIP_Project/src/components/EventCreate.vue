@@ -8,6 +8,10 @@ const props = defineProps({
   },
   eventCategory: {
     type: Array
+  },
+  currentEvent: {
+    type: Object,
+    default: {}
   }
 });
 
@@ -28,9 +32,10 @@ const datetime = computed(() => {
   }
 });
 
+const startTime = ref();
+
 const eventCategorySelect = ref({});
 
-const startTime = ref();
 </script>
 
 <template>
@@ -137,7 +142,42 @@ const startTime = ref();
   </div>
   </div>
 
-  
+
+
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel2">Edit Event</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+            <input type="text" disabled v-model="currentEvent.bookingName">
+            {{currentEvent.bookingEmail}}
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button
+            type="submit"
+            class="btn btn-success"
+            @click="
+              $emit(
+                'updateEvent',
+                newSchedule,
+                datetime,
+                eventCategorySelect.durations,
+                eventCategorySelect.id
+              )
+            "
+          >
+            Create
+          </button>
+          
+        </div>
+      </div>  
+    </div>    
+  </div>
 </template>
 
 <style>
