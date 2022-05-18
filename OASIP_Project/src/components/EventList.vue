@@ -2,18 +2,14 @@
 
 import moment from 'moment'
 import { ref,computed } from 'vue'
-defineEmits(['removeEvent','getEventId'])
+defineEmits(['removeEvent','getEventId','editEvent'])
 defineProps({
   eventList: {
     type: Array,
     require: true
   }
 })
-const hiding = ref(false)
-const show = () =>{
-  hiding.value = true
 
-}
 
 
 
@@ -61,6 +57,17 @@ const show = () =>{
 <button type="button" class="btn btn-danger" @click="$emit('removeEvent', event.id)">
   <i class="fa fa-trash"></i>
 </button>
+<button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" @click="$emit('editEvent',event)">
+  Edit
+</button>
+
+
+
+
+  <!-- @click="$emit('getEventId', event.id)" -->
+  
+
+
             </td>
 
           </tr>
