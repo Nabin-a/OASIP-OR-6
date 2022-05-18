@@ -105,7 +105,7 @@ const toEditMode = (editEvent) => {
   console.log(editEvent)
   editingEvent.value = editEvent
 }
-const updateEvent = async (editingEvent) => {
+const updateEvent = async (editingEvent,id) => {
   const res = await fetch(`http://localhost:8000/api/event/${editingEvent.id}`, {
     method: 'PUT',
     headers: {
@@ -146,7 +146,7 @@ const updateEvent = async (editingEvent) => {
   <EventCreate
     :eventCreate="events"
     :eventCategory="eventCategory"
-    :currentEvent="editingEvent"
+    :currentEvent="eventDetail"
     @createSchedule="createNewSchedule"
     @updateEvent="updateEvent"
   />
