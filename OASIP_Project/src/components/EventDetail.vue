@@ -9,15 +9,6 @@ defineProps({
     }
 })
 
-const datetime = computed(() => {
-  if (startTime.value) {
-    const temp = new Date(startTime.value);
-    return temp.toISOString();
-  }
-});
-
-const startTime = ref();
-
 </script>
  
 <template>
