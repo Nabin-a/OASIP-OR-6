@@ -29,7 +29,7 @@ defineProps({
           <th scope="col">Start Date</th>
           <th scope="col">Start Time</th>
           <th scope="col">Duration</th>
-          <th scope="col" style="padding-left: 4.2%">ooo</th>
+          <th scope="col" style="padding-left: 6%">ooo</th>
         </tr>
       </thead>
       <tbody v-for="(event, index) in eventList" :key="index">
@@ -52,20 +52,20 @@ defineProps({
             </button>
             &nbsp
             <button
-              type="button"
-              class="btn btn-danger"
-              @click="$emit('removeEvent', event.id)"
-            >
-              <i class="fa fa-trash"></i>
-            </button>
-            &nbsp
-            <button
               class="btn btn-success"
               data-bs-target="#exampleModalToggle2"
               data-bs-toggle="modal"
               @click="$emit('getEventId', event.id)"
             >
               <i class="fa fa-edit"></i>
+            </button>
+            &nbsp
+            <button
+              type="button"
+              class="btn btn-danger"
+              @click="$emit('removeEvent', event.id)"
+            >
+              <i class="fa fa-trash"></i>
             </button>
           </td>
         </tr>
