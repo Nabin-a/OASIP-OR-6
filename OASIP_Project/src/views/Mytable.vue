@@ -105,15 +105,16 @@ const toEditMode = (editEvent) => {
   console.log(editEvent)
   editingEvent.value = editEvent
 }
-const updateEvent = async (editingEvent,id) => {
-  const res = await fetch(`http://localhost:8000/api/event/${editingEvent.id}`, {
+const updateEvent = async (editNote,editTime,id) => {
+  console.log(editNote,editTime,id)
+  const res = await fetch(`http://localhost:8000/api/event/${id}`, {
     method: 'PUT',
     headers: {
       'content-type': 'application/json'
     },
     body: JSON.stringify({
-      StartTime: editingEvent.startTime,
-      note: editingEvent.note
+      note: editNote,
+      startTime: editTime
     })
   })
   if (res.status === 200) {
@@ -121,8 +122,8 @@ const updateEvent = async (editingEvent,id) => {
     events.value = events.value.map((event) =>
       event.id === editedEvent.id
         ? { ...event, note: editedEvent.note ,
-                      StartTme: editedEvent.StartTime }
-        : note , StartTime
+                      startTme: editedEvent.startTime }
+        : note , startTime
     )
     console.log('edited successfully')
   } else console.log('error, cannot be added')
@@ -143,8 +144,9 @@ const updateEvent = async (editingEvent,id) => {
   <EventDetail :eventDetail="eventDetail" 
     @updateEvent="updateEvent"
    />
+   <!-- :eventCreate="events" -->
   <EventCreate
-    :eventCreate="events"
+    
     :eventCategory="eventCategory"
     :currentEvent="eventDetail"
     @createSchedule="createNewSchedule"
