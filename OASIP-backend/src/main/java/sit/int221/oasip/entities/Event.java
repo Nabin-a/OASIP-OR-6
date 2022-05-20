@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 
 @Table(name = "event", indexes = {
@@ -30,12 +32,14 @@ public class Event {
     @Column(name = "eventCategoryName", length = 45)
     private String eventCategoryName;
 
+    @Future
     @Column(name = "StartTime", nullable = false)
     private ZonedDateTime startTime;
 
     @Column(name = "Durations", nullable = false)
     private Integer durations;
 
+    @Size(max = 500)
     @Column(name = "Note", length = 500)
     private String note;
 
