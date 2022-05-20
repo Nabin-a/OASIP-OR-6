@@ -3,7 +3,6 @@ import { ref, onBeforeMount } from "vue";
 import EventList from "../components/EventList.vue";
 import EventDetail from "../components/EventDetail.vue";
 import EventCreate from "../components/EventCreate.vue";
-import EventEdit from "../components/EventEdit.vue"
 const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
@@ -101,7 +100,7 @@ const removeEvent = async (id) => {
 // PUT
 const updateEvent = async (id,CuBookingName,CuBookingEmail,CuCatetgory,CuDurations,editTime,editNote,) => {
   console.log(id,editTime,editNote)
-  const res = await fetch(`http://localhost:8000/api/event/${id}`, {
+  const res = await fetch(`http://localhost:8080/api/event/${id}`, {
     method: 'PUT',
     headers: {
       'content-type': 'application/json;'
@@ -124,8 +123,7 @@ const updateEvent = async (id,CuBookingName,CuBookingEmail,CuCatetgory,CuDuratio
         : event
     )
     console.log('edited successfully')
-  } else console.log('error, cannot be added')
-  editingEvent.value = ''
+  } else console.log('error, cannot be edit')
 }
 
 
@@ -137,14 +135,10 @@ const updateEvent = async (id,CuBookingName,CuBookingEmail,CuCatetgory,CuDuratio
     :eventList="events"
     @getEventId="getEventid"
     @removeEvent="removeEvent"
-    @editEvent="toEditMode"
   />
-  <EventDetail :eventDetail="eventDetail" 
-    @updateEvent="updateEvent"
-   />
+  <EventDetail :eventDetail="eventDetail"/>
    <!-- :eventCreate="events" -->
   <EventCreate
-    
     :eventCategory="eventCategory"
     :eventCreate="events"
     :currentEvent="eventDetail"

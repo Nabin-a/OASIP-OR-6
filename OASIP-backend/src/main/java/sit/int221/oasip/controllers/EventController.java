@@ -2,10 +2,6 @@ package sit.int221.oasip.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import sit.int221.oasip.DTO.EventDtoCreate;
@@ -18,9 +14,7 @@ import sit.int221.oasip.services.EventService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -31,7 +25,7 @@ public class EventController {
     private EventRepository repository;
     @Autowired
     private EventService eventService;
-    
+
     @GetMapping("")
     public List<EventDtoList> getEventDTO() {
         return eventService.getEventsAll();
@@ -45,10 +39,7 @@ public class EventController {
     //POST
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Event create(@Valid @RequestBody EventDtoCreate newEventDtoCreate, BindingResult result){
-        if(result.hasErrors()){
-            System.out.println("The information is invalid");
-        }
+    public Event create(@RequestBody @Valid EventDtoCreate newEventDtoCreate){
         return eventService.save(newEventDtoCreate);
     }
 
@@ -67,21 +58,9 @@ public class EventController {
             edit.setStartTime(editEvent.getStartTime());
             edit.setNote(editEvent.getNote());
             return repository.saveAndFlush(edit);
-        }).orElseGet(()->{
-            return repository.save(editEvent);
-        });
+        }).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Can not find eventId " + id));
     }
 
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public Map<String, String> handleValidationExceptions(
-//            MethodArgumentNotValidException ex) {
-//        Map<String, String> errors = new HashMap<>();
-//        ex.getBindingResult().getAllErrors().forEach((error) -> {
-//            String fieldName = ((FieldError) error).getField();
-//            String errorMessage = error.getDefaultMessage();
-//            errors.put(fieldName, errorMessage);
-//        });
-//        return errors;
-//    }
 }

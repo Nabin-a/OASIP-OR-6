@@ -26,5 +26,6 @@ public class ApplicationConfig implements WebMvcConfigurer {
         return ListMapperService.getInstance();
     }
 
+
 }
 

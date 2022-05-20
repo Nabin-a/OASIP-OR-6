@@ -2,25 +2,27 @@ package sit.int221.oasip.DTO;
 
 import lombok.*;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 import java.time.ZonedDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor @AllArgsConstructor
 public class EventDtoCreate {
-    @NotBlank(message = "name must not be blank") @Max(100)
+    @NotBlank(message = "name must not be blank") @Size(max = 100, message = "size must between 1 - 100")
     private String bookingName;
 
-    @NotBlank @Max(45)
+    @NotNull
     private String bookingEmail;
 
-    @NotBlank
+    @Future
+    @NotNull
     private ZonedDateTime startTime;
+
     private Integer durations;
 
-    @Max(value = 500, message = "note must be between 0 and 500")
+    @Size(max = 500)
     private String note;
+
     private Integer eventCategoryId;
 }
