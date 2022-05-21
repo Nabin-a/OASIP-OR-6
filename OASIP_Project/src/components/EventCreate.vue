@@ -5,15 +5,15 @@ defineEmits(["createSchedule", "updateEvent"]);
 const props = defineProps({
   currentEvent: {
     type: Object,
-    default: {}
+    default: {},
   },
   eventCategory: {
-    type: Array
+    type: Array,
   },
   eventCreate: {
     type: Object,
-    default: {}
-  }
+    default: {},
+  },
 });
 
 const newSchedule = computed(() => {
@@ -21,7 +21,7 @@ const newSchedule = computed(() => {
     id: props.eventCreate.id,
     bookingName: props.eventCreate.bookingName,
     bookingEmail: props.eventCreate.bookingEmail,
-    note: props.eventCreate.note
+    note: props.eventCreate.note,
   };
 });
 console.log(newSchedule.value);

@@ -15,7 +15,6 @@ import sit.int221.oasip.repositories.CategoryRepository;
 import sit.int221.oasip.repositories.EventRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -37,7 +36,7 @@ public class EventService {
     //Method get Event by eventId
     public EventDtoDetail getEventById(Integer id){
         Event event = repository.findById(id).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: "+id+"Does not exist"));
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: "+id+" does not exist"));
         return modelMapper.map(event, EventDtoDetail.class);
     }
 

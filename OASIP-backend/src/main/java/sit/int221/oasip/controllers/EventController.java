@@ -13,6 +13,7 @@ import sit.int221.oasip.services.EventService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -24,7 +25,7 @@ public class EventController {
     private EventRepository repository;
     @Autowired
     private EventService eventService;
-    
+
     @GetMapping("")
     public List<EventDtoList> getEventDTO() {
         return eventService.getEventsAll();
@@ -38,7 +39,7 @@ public class EventController {
     //POST
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Event create(@RequestBody EventDtoCreate newEventDtoCreate){
+    public Event create(@RequestBody @Valid EventDtoCreate newEventDtoCreate){
         return eventService.save(newEventDtoCreate);
     }
 
@@ -52,13 +53,14 @@ public class EventController {
 
     //PUT
     @PutMapping("/{id}")
-    public  Event edit(@RequestBody Event editEvent, @PathVariable Integer id){
+    public  Event edit(@RequestBody @Valid Event editEvent, @PathVariable Integer id){
         return repository.findById(id).map(edit -> {
             edit.setStartTime(editEvent.getStartTime());
             edit.setNote(editEvent.getNote());
             return repository.saveAndFlush(edit);
-        }).orElseGet(()->{
-            return repository.save(editEvent);
-        });
+        }).orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Can not find eventId " + id));
     }
+
 }
