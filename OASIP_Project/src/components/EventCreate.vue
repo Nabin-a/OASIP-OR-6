@@ -42,6 +42,9 @@ const eventStartTimeEdit = computed(() => {
     return moment(props.currentEvent.startTime).format("YYYY-MM-DDTHH:mm");
   }
 });
+
+
+
 </script>
 
 <template>
@@ -85,7 +88,7 @@ const eventStartTimeEdit = computed(() => {
                     <input
                       type="text"
                       class="form-control"
-                      v-model="newSchedule.bookingName"
+                      v-model="newSchedule.bookingName"                    
                     />
                   </li>
                   <br />
@@ -104,6 +107,7 @@ const eventStartTimeEdit = computed(() => {
                       type="datetime-local"
                       class="form-control"
                       v-model="startTime"
+                      :min="new Date().toISOString().substring(0,16)"
                     />
                   </li>
                   <br />
@@ -234,6 +238,7 @@ const eventStartTimeEdit = computed(() => {
                 type="datetime-local"
                 class="form-control"
                 v-model="startTime"
+                :min="new Date().toISOString().substring(0,16)"
               />
             </li>
             <br />

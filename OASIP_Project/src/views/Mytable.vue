@@ -7,6 +7,11 @@ const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
 
+const date = new  Date()
+
+
+
+
 const getEvents = async () => {
   const res = await fetch("http://localhost:8080/api/event");
   if (res.status === 200) {
@@ -138,8 +143,10 @@ const updateEvent = async (id,editTime,editNote,) => {
     @updateEvent="updateEvent"
   />
 
-  
-
+<form>
+<input id="dt" type="datetime-local" :min="new Date().toISOString().slice(0,16)" required> 
+<button type="submit"></button>
+</form>
 </template>
 
 <style></style>
