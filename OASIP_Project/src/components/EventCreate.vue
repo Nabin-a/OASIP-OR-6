@@ -26,6 +26,10 @@ const newSchedule = computed(() => {
 });
 console.log(newSchedule.value);
 
+
+
+const nameIsValid = props.eventCreate.bookingEmail > 0
+
 const datetime = computed(() => {
   if (startTime.value) {
     const temp = new Date(startTime.value);
@@ -42,8 +46,6 @@ const eventStartTimeEdit = computed(() => {
     return moment(props.currentEvent.startTime).format("YYYY-MM-DDTHH:mm");
   }
 });
-
-
 
 </script>
 
@@ -87,18 +89,27 @@ const eventStartTimeEdit = computed(() => {
                     name:
                     <input
                       type="text"
+                      id="name"
                       class="form-control"
-                      v-model="newSchedule.bookingName"                    
+                      v-model="newSchedule.bookingName"
+                      minlength="1"
+                      maxlength="100"      
+                      required              
                     />
+                    <p v-if="nameIsValid" class="error-message">name must not be null</p>
                   </li>
                   <br />
                   <li class="list-group-item">
                     email:
                     <input
-                      type="text"
+                      type="email"
+                      id="email"
                       class="form-control"
+                      placeholder="user@example.com"
                       v-model="newSchedule.bookingEmail"
+                      required
                     />
+                    
                   </li>
                   <br />
                   <li class="list-group-item">
@@ -108,6 +119,7 @@ const eventStartTimeEdit = computed(() => {
                       class="form-control"
                       v-model="startTime"
                       :min="new Date().toISOString().substring(0,16)"
+                      required
                     />
                   </li>
                   <br />
@@ -162,6 +174,7 @@ const eventStartTimeEdit = computed(() => {
             <button
               type="submit"
               class="btn btn-success"
+              
               @click="
                 $emit(
                   'createSchedule',
@@ -286,7 +299,8 @@ const eventStartTimeEdit = computed(() => {
         </div>
       </div>
     </div>
-  </div>
+  </div> 
+
 </template>
 
 <style></style>
