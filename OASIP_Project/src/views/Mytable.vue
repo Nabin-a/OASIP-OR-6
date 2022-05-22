@@ -7,6 +7,11 @@ const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
 
+const date = new  Date()
+
+
+
+
 const getEvents = async () => {
   const res = await fetch("http://localhost:8080/api/event");
   if (res.status === 200) {
@@ -98,7 +103,7 @@ const removeEvent = async (id) => {
 };
 
 // PUT
-const updateEvent = async (id,CuBookingName,CuBookingEmail,CuCatetgory,CuDurations,editTime,editNote,) => {
+const updateEvent = async (id,editTime,editNote,) => {
   console.log(id,editTime,editNote)
   const res = await fetch(`http://localhost:8080/api/event/${id}`, {
     method: 'PUT',
@@ -106,22 +111,13 @@ const updateEvent = async (id,CuBookingName,CuBookingEmail,CuCatetgory,CuDuratio
       'content-type': 'application/json;'
     },
     body: JSON.stringify({
-      bookingName: CuBookingName,
-      bookingEmail: CuBookingEmail,
-      durations: CuDurations,
-      category: CuCatetgory,
       startTime: editTime,
       note: editNote
     })
   })
   if (res.status === 200) {
-    const editedEvent = await res.json()
-    events.value = events.value.map((event) =>
-      event.bookingId === editedEvent.bookingId
-        ? { ...event, note: editedEvent.note ,
-                      startTme: editedEvent.startTime }
-        : event
-    )
+    location.reload();
+    alert('Edit Success')
     console.log('edited successfully')
   } else console.log('error, cannot be edit')
 }
@@ -136,8 +132,9 @@ const updateEvent = async (id,CuBookingName,CuBookingEmail,CuCatetgory,CuDuratio
     @getEventId="getEventid"
     @removeEvent="removeEvent"
   />
-  <EventDetail :eventDetail="eventDetail"/>
-   <!-- :eventCreate="events" -->
+  <EventDetail :eventDetail="eventDetail" 
+   />
+
   <EventCreate
     :eventCategory="eventCategory"
     :eventCreate="events"
@@ -146,8 +143,10 @@ const updateEvent = async (id,CuBookingName,CuBookingEmail,CuCatetgory,CuDuratio
     @updateEvent="updateEvent"
   />
 
-  
-
+<form>
+<input id="dt" type="datetime-local" :min="new Date().toISOString().slice(0,16)" required> 
+<button type="submit"></button>
+</form>
 </template>
 
 <style></style>

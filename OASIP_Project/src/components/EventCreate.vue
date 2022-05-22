@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
+import moment from "moment";
 defineEmits(["createSchedule", "updateEvent"]);
 const props = defineProps({
   currentEvent: {
@@ -25,6 +26,10 @@ const newSchedule = computed(() => {
 });
 console.log(newSchedule.value);
 
+
+
+const nameIsValid = props.eventCreate.bookingEmail > 0
+
 const datetime = computed(() => {
   if (startTime.value) {
     const temp = new Date(startTime.value);
@@ -35,6 +40,13 @@ const datetime = computed(() => {
 const startTime = ref();
 
 const eventCategorySelect = ref({});
+
+const eventStartTimeEdit = computed(() => {
+  if (props.currentEvent.startTime != null) {
+    return moment(props.currentEvent.startTime).format("YYYY-MM-DDTHH:mm");
+  }
+});
+
 </script>
 
 <template>
@@ -77,18 +89,27 @@ const eventCategorySelect = ref({});
                     name:
                     <input
                       type="text"
+                      id="name"
                       class="form-control"
                       v-model="newSchedule.bookingName"
+                      minlength="1"
+                      maxlength="100"      
+                      required              
                     />
+                    <p v-if="nameIsValid" class="error-message">name must not be null</p>
                   </li>
                   <br />
                   <li class="list-group-item">
                     email:
                     <input
-                      type="text"
+                      type="email"
+                      id="email"
                       class="form-control"
+                      placeholder="user@example.com"
                       v-model="newSchedule.bookingEmail"
+                      required
                     />
+                    
                   </li>
                   <br />
                   <li class="list-group-item">
@@ -97,6 +118,8 @@ const eventCategorySelect = ref({});
                       type="datetime-local"
                       class="form-control"
                       v-model="startTime"
+                      :min="new Date().toISOString().substring(0,16)"
+                      required
                     />
                   </li>
                   <br />
@@ -110,7 +133,7 @@ const eventCategorySelect = ref({});
                         v-for="eventcat in props.eventCategory"
                         :value="{
                           durations: eventcat.durationMin,
-                          id: eventcat.eventCategoryId,
+                          id: eventcat.eventCategoryId
                         }"
                       >
                         {{ eventcat.categoryName }}
@@ -151,6 +174,7 @@ const eventCategorySelect = ref({});
             <button
               type="submit"
               class="btn btn-success"
+              
               @click="
                 $emit(
                   'createSchedule',
@@ -192,7 +216,7 @@ const eventCategorySelect = ref({});
         <div class="modal-body">
           <ul class="list-group">
             <li class="list-group-item">
-              name:
+              Booker:
               <input
                 type="text"
                 class="form-control"
@@ -202,7 +226,7 @@ const eventCategorySelect = ref({});
             </li>
             <br />
             <li class="list-group-item">
-              email:
+              Booker Email:
               <input
                 type="text"
                 class="form-control"
@@ -212,16 +236,27 @@ const eventCategorySelect = ref({});
             </li>
             <br />
             <li class="list-group-item">
-              startTime:
+              Current Time:
               <input
                 type="datetime-local"
                 class="form-control"
-                v-model="startTime"
+                disabled
+                v-model="eventStartTimeEdit"
               />
             </li>
             <br />
             <li class="list-group-item">
-              category:
+              Edit Time:
+              <input
+                type="datetime-local"
+                class="form-control"
+                v-model="startTime"
+                :min="new Date().toISOString().substring(0,16)"
+              />
+            </li>
+            <br />
+            <li class="list-group-item">
+              Current Category:
               <input
                 type="text"
                 class="form-control"
@@ -231,7 +266,7 @@ const eventCategorySelect = ref({});
             </li>
             <br />
             <li class="list-group-item">
-              category:
+              Durations:
               <input
                 type="text"
                 class="form-control"
@@ -241,7 +276,7 @@ const eventCategorySelect = ref({});
             </li>
             <br />
             <li class="list-group-item">
-              category:
+              Note:
               <textarea
                 type="text"
                 class="form-control"
@@ -256,24 +291,16 @@ const eventCategorySelect = ref({});
             type="submit"
             class="btn btn-success"
             @click="
-              $emit(
-                'updateEvent',
-                currentEvent.id,
-                currentEvent.bookingName,
-                currentEvent.bookingEmail,
-                currentEvent.category,
-                currentEvent.durations,
-                datetime,
-                currentEvent.note
-              )
+              $emit('updateEvent', currentEvent.id, datetime, currentEvent.note)
             "
           >
-            Create
+            Edit
           </button>
         </div>
       </div>
     </div>
-  </div>
+  </div> 
+
 </template>
 
 <style></style>

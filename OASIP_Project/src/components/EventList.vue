@@ -5,9 +5,16 @@ defineEmits(["removeEvent", "getEventId", "editEvent"]);
 defineProps({
   eventList: {
     type: Array,
-    require: true,
-  },
+    require: true
+  }
 });
+
+// const Detail = computed(() => {
+//     return {
+//     id: props.eventList.id,
+//     bookingName: props.eventList.bookingName,
+//     zzz:props.eventList.bookingEmail}
+// })
 </script>
 
 <template>
@@ -22,7 +29,7 @@ defineProps({
           <th scope="col">Start Date</th>
           <th scope="col">Start Time</th>
           <th scope="col">Duration</th>
-          <th scope="col" style="padding-left: 4.2%">ooo</th>
+          <th scope="col" style="padding-left: 6%">ooo</th>
         </tr>
       </thead>
       <tbody v-for="(event, index) in eventList" :key="index">
@@ -30,7 +37,7 @@ defineProps({
           <td scope="col">{{ event.bookingName }}</td>
           <td scope="col">{{ event.categoryName }}</td>
           <td scope="col">{{ moment(event.startTime).format("l") }}</td>
-          <td scope="col">{{ moment(event.startTime).format("kk:m") }}</td>
+          <td scope="col">{{ moment(event.startTime).format("HH:mm") }}</td>
           <td scope="col">{{ event.durations }} mins</td>
           <td>
             <!-- Button trigger modal -->
@@ -45,19 +52,20 @@ defineProps({
             </button>
             &nbsp
             <button
+              class="btn btn-success"
+              data-bs-target="#exampleModalToggle2"
+              data-bs-toggle="modal"
+              @click="$emit('getEventId', event.id)"
+            >
+              <i class="fa fa-edit"></i>
+            </button>
+            &nbsp
+            <button
               type="button"
               class="btn btn-danger"
               @click="$emit('removeEvent', event.id)"
             >
               <i class="fa fa-trash"></i>
-            </button>
-            <button
-              class="btn btn-primary"
-              data-bs-target="#exampleModalToggle2"
-              data-bs-toggle="modal"
-              @click="$emit('getEventId', event.id)"
-            >
-              Edit
             </button>
           </td>
         </tr>
