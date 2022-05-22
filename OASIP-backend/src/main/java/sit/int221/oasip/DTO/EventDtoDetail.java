@@ -17,6 +17,6 @@ public class EventDtoDetail {
  private String bookingEmail;
  private ZonedDateTime startTime;
  private Integer durations;
- private String category;
+ private String categoryName;
  private String note;
 }

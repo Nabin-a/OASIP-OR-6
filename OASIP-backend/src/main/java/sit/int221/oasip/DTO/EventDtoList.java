@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import sit.int221.oasip.entities.Category;
-
-import java.time.Instant;
 import java.time.ZonedDateTime;
 
 @Getter
