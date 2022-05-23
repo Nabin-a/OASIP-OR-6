@@ -9,19 +9,14 @@ defineProps({
   }
 });
 
-// const Detail = computed(() => {
-//     return {
-//     id: props.eventList.id,
-//     bookingName: props.eventList.bookingName,
-//     zzz:props.eventList.bookingEmail}
-// })
 </script>
 
 <template>
   <div class="container pt-3 pb-5">
-    <h2>Scheduled Events</h2>
-    <p v-if="eventList.length < 1">No schedule events</p>
-    <table class="table table-dark table-striped table-hover" v-else>
+    <h2 style="color: white">Scheduled Events</h2>
+    &nbsp
+    <h4 v-if="eventList.length < 1" style="color: white">No schedule events</h4>
+    <table class="table table-light table-striped table-hover" v-else>
       <thead>
         <tr>
           <th scope="col">Booking Name</th>
@@ -29,23 +24,22 @@ defineProps({
           <th scope="col">Start Date</th>
           <th scope="col">Start Time</th>
           <th scope="col">Duration</th>
-          <th scope="col" style="padding-left: 6%">ooo</th>
+          <th scope="col" style="padding-left: 8.5%">ooo</th>
         </tr>
       </thead>
       <tbody v-for="(event, index) in eventList" :key="index">
         <tr>
           <td scope="col">{{ event.bookingName }}</td>
           <td scope="col">{{ event.categoryName }}</td>
-          <td scope="col">{{ moment(event.startTime).format("l") }}</td>
+          <td scope="col">{{ moment(event.startTime).format("D/MM/YYYY") }}</td>
           <td scope="col">{{ moment(event.startTime).format("HH:mm") }}</td>
           <td scope="col">{{ event.durations }} mins</td>
-          <td>
-            <!-- Button trigger modal -->
+          <td style="padding-left: 2%">
             <button
               type="button"
               class="btn btn-primary"
               data-bs-toggle="modal"
-              data-bs-target="#Modal"
+              data-bs-target="#DetailModal"
               @click="$emit('getEventId', event.id)"
             >
               <i class="fa fa-info-circle"></i>
@@ -53,7 +47,7 @@ defineProps({
             &nbsp
             <button
               class="btn btn-success"
-              data-bs-target="#exampleModalToggle2"
+              data-bs-target="#EditModal"
               data-bs-toggle="modal"
               @click="$emit('getEventId', event.id)"
             >

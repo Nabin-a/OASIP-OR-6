@@ -13,15 +13,15 @@ defineProps({
   <div>
     <div
       class="modal fade"
-      id="Modal"
+      id="DetailModal"
       tabindex="-1"
-      aria-labelledby="ModalLabel"
+      aria-labelledby="DetailModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="ModalLabel">
+          <div class="modal-header bg-dark">
+            <h4 class="modal-title" id="DetailModalLabel">
               Detail of {{ eventDetail.bookingName }}
             </h4>
             <button
@@ -43,7 +43,7 @@ defineProps({
                 Durations : {{ eventDetail.durations }} mins
               </li>
               <li class="list-group-item">
-                Category : {{ eventDetail.category }}
+                Category : {{ eventDetail.categoryName }}
               </li>
               <li class="list-group-item">
                 Booker : {{ eventDetail.bookingName }}
