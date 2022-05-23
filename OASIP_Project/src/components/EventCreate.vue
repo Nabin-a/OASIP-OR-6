@@ -5,15 +5,15 @@ defineEmits(["createSchedule", "updateEvent"]);
 const props = defineProps({
   currentEvent: {
     type: Object,
-    default: {},
+    default: {}
   },
   eventCategory: {
-    type: Array,
+    type: Array
   },
   eventCreate: {
     type: Object,
-    default: {},
-  },
+    default: {}
+  }
 });
 
 const newSchedule = computed(() => {
@@ -21,14 +21,15 @@ const newSchedule = computed(() => {
     id: props.eventCreate.id,
     bookingName: props.eventCreate.bookingName,
     bookingEmail: props.eventCreate.bookingEmail,
-    note: props.eventCreate.note,
+    note: props.eventCreate.note
   };
 });
 console.log(newSchedule.value);
 
-
-
-const nameIsValid = props.eventCreate.bookingEmail > 0
+const theDate = new Date();
+theDate.setHours(theDate.getHours() + 7);
+theDate.setMinutes(theDate.getMinutes() + 1);
+const isodate = theDate.toISOString();
 
 const datetime = computed(() => {
   if (startTime.value) {
@@ -46,34 +47,32 @@ const eventStartTimeEdit = computed(() => {
     return moment(props.currentEvent.startTime).format("YYYY-MM-DDTHH:mm");
   }
 });
-
 </script>
 
 <template>
-  <div class="container">
-    <h2>Create Schudule</h2>
-    <!-- Button trigger modal -->
+  <div class="container pt-3 pb-5">
+    <h2 style="color: white">Create Schudule</h2>
+    <br/>
     <button
       type="button"
       class="btn btn-success"
       data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
+      data-bs-target="#CreateModal"
     >
       <i class="fa fa-plus"></i>
     </button>
 
-    <!-- Modal -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="CreateModal"
       tabindex="-1"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="CreateModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Create Schedule</h5>
+          <div class="modal-header bg-dark">
+            <h5 class="modal-title" id="CreateModalLabel">Create Schedule</h5>
             <button
               type="button"
               class="btn-close"
@@ -82,34 +81,52 @@ const eventStartTimeEdit = computed(() => {
             ></button>
           </div>
           <div class="modal-body">
-            <form>
+            <form class="was-validated" novalidate>
               <div>
                 <ul>
                   <li class="list-group-item">
-                    name:
+                    <label for="uname" class="form-label">Name:</label>
                     <input
                       type="text"
-                      id="name"
                       class="form-control"
+                      id="countChar"
+                      placeholder="Enter your name"
                       v-model="newSchedule.bookingName"
                       minlength="1"
-                      maxlength="100"      
-                      required              
+                      maxlength="100"
+                      required
                     />
-                    <p v-if="nameIsValid" class="error-message">name must not be null</p>
+                    <div class="invalid-feedback">Name must not be blank.</div>
+                    <small>
+                      <div class="form-text">
+                        <span id="current_count">0</span>
+                        <span id="maximum_count">/ 100</span>
+                      </div>
+                    </small>
                   </li>
                   <br />
                   <li class="list-group-item">
-                    email:
+                    Email:
                     <input
                       type="email"
-                      id="email"
                       class="form-control"
+                      id="countEmail"
                       placeholder="user@example.com"
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                       v-model="newSchedule.bookingEmail"
+                      minlength="1"
+                      maxlength="45"
                       required
                     />
-                    
+                    <div class="invalid-feedback">
+                      Your pattern not correctly.
+                    </div>
+                    <small>
+                      <div class="form-text">
+                        <span id="current_email">0</span>
+                        <span id="maximum_email">/ 45</span>
+                      </div>
+                    </small>
                   </li>
                   <br />
                   <li class="list-group-item">
@@ -118,16 +135,18 @@ const eventStartTimeEdit = computed(() => {
                       type="datetime-local"
                       class="form-control"
                       v-model="startTime"
-                      :min="new Date().toISOString().substring(0,16)"
+                      :min="new Date(isodate).toISOString().slice(0, 16)"
                       required
                     />
+                    <div class="invalid-feedback">Date must be future.</div>
                   </li>
                   <br />
                   <li class="list-group-item">
-                    category:
+                    Choose event category:
                     <select
                       class="form-select form-select-lg mb-3"
                       v-model="eventCategorySelect"
+                      required
                     >
                       <option
                         v-for="eventcat in props.eventCategory"
@@ -139,6 +158,7 @@ const eventStartTimeEdit = computed(() => {
                         {{ eventcat.categoryName }}
                       </option>
                     </select>
+                    <div class="invalid-feedback">Please select category.</div>
                   </li>
                   <br />
                   <li class="list-group-item">
@@ -147,17 +167,28 @@ const eventStartTimeEdit = computed(() => {
                       class="form-control"
                       type="number"
                       disabled
+                      placeholder="durations"
                       v-model="eventCategorySelect.durations"
                     />
                   </li>
                   <br />
                   <li class="list-group-item">
                     note:
-                    <input
+                    <textarea
                       class="form-control"
                       type="text"
+                      id="countNote"
+                      placeholder="detail..."
                       v-model="newSchedule.note"
-                    />
+                      minLength="1"
+                      maxlength="500"
+                    ></textarea>
+                    <small>
+                      <div class="form-text">
+                        <span id="current_note">0</span>
+                        <span id="maximum_note">/ 500</span>
+                      </div>
+                    </small>
                   </li>
                 </ul>
               </div>
@@ -174,7 +205,6 @@ const eventStartTimeEdit = computed(() => {
             <button
               type="submit"
               class="btn btn-success"
-              
               @click="
                 $emit(
                   'createSchedule',
@@ -197,15 +227,15 @@ const eventStartTimeEdit = computed(() => {
 
   <div
     class="modal fade"
-    id="exampleModalToggle2"
+    id="EditModal"
     aria-hidden="true"
-    aria-labelledby="exampleModalToggleLabel2"
+    aria-labelledby="EditModalLabel"
     tabindex="-1"
   >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalToggleLabel2">Edit Event</h5>
+        <div class="modal-header bg-dark">
+          <h5 class="modal-title" id="EditModalLabel">Edit Event</h5>
           <button
             type="button"
             class="btn-close"
@@ -214,77 +244,90 @@ const eventStartTimeEdit = computed(() => {
           ></button>
         </div>
         <div class="modal-body">
-          <ul class="list-group">
-            <li class="list-group-item">
-              Booker:
-              <input
-                type="text"
-                class="form-control"
-                disabled
-                v-model="currentEvent.bookingName"
-              />
-            </li>
-            <br />
-            <li class="list-group-item">
-              Booker Email:
-              <input
-                type="text"
-                class="form-control"
-                disabled
-                v-model="currentEvent.bookingEmail"
-              />
-            </li>
-            <br />
-            <li class="list-group-item">
-              Current Time:
-              <input
-                type="datetime-local"
-                class="form-control"
-                disabled
-                v-model="eventStartTimeEdit"
-              />
-            </li>
-            <br />
-            <li class="list-group-item">
-              Edit Time:
-              <input
-                type="datetime-local"
-                class="form-control"
-                v-model="startTime"
-                :min="new Date().toISOString().substring(0,16)"
-              />
-            </li>
-            <br />
-            <li class="list-group-item">
-              Current Category:
-              <input
-                type="text"
-                class="form-control"
-                disabled
-                v-model="currentEvent.category"
-              />
-            </li>
-            <br />
-            <li class="list-group-item">
-              Durations:
-              <input
-                type="text"
-                class="form-control"
-                disabled
-                v-model="currentEvent.durations"
-              />
-            </li>
-            <br />
-            <li class="list-group-item">
-              Note:
-              <textarea
-                type="text"
-                class="form-control"
-                v-model="currentEvent.note"
-              >
-              </textarea>
-            </li>
-          </ul>
+          <form class="was-validated">
+            <ul class="list-group">
+              <li class="list-group-item">
+                Booker:
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  v-model="currentEvent.bookingName"
+                />
+              </li>
+              <br />
+              <li class="list-group-item">
+                Booker Email:
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  v-model="currentEvent.bookingEmail"
+                />
+              </li>
+              <br />
+              <li class="list-group-item">
+                Current Time:
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  disabled
+                  v-model="eventStartTimeEdit"
+                />
+              </li>
+              <br />
+              <li class="list-group-item">
+                Edit Time:
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  v-model="startTime"
+                  :min="new Date(isodate).toISOString().slice(0, 16)"
+                  required
+                />
+                <div class="invalid-feedback">Date must be future.</div>
+              </li>
+              <br />
+              <li class="list-group-item">
+                Current Category:
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  v-model="currentEvent.categoryName"
+                />
+              </li>
+              <br />
+              <li class="list-group-item">
+                Durations:
+                <input
+                  type="text"
+                  class="form-control"
+                  disabled
+                  v-model="currentEvent.durations"
+                />
+              </li>
+              <br />
+              <li class="list-group-item">
+                Note:
+                <textarea
+                  class="form-control"
+                  type="text"
+                  id="countCurNote"
+                  placeholder="detail..."
+                  v-model="currentEvent.note"
+                  minLength="1"
+                  maxlength="500"
+                ></textarea>
+                <small>
+                  <div class="form-text">
+                    <span id="current_CurNote">0</span>
+                    <span id="maximum_CurNote">/ 500</span>
+                  </div>
+                </small>
+              </li>
+            </ul>
+          </form>
         </div>
         <div class="modal-footer">
           <button
@@ -299,8 +342,7 @@ const eventStartTimeEdit = computed(() => {
         </div>
       </div>
     </div>
-  </div> 
-
+  </div>
 </template>
 
 <style></style>

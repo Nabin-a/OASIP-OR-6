@@ -12,7 +12,7 @@ public class EventDtoCreate {
     @NotBlank(message = "name must not be blank") @Size(max = 100, message = "size must between 1 - 100")
     private String bookingName;
 
-    @NotNull
+    @Email @NotNull
     private String bookingEmail;
 
     @Future
