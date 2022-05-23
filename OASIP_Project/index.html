@@ -3,10 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
-
-    <!-- date picker -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-
+    
+  
     <!-- icon bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,26 +13,57 @@
    
     <title>Vite App</title>
   </head>
-  <body>
+  <body class="p-3 mb-2 bg-dark text-dark">
     <div id="app"></div>
     
     <script type="module" src="/src/main.js"></script>
   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" 
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-
-    <!-- Date picker -->
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
     <script type="text/javascript">
-      $(function() {
-          $('#datepicker').datepicker({
-            startDate: new Date()
-          });
-      });
 
-     
+    $(function(){
+    $('#countChar').keyup(function() {    
+    const characterCount = $(this).val().length,
+        current_count = $('#current_count'),
+        maximum_count = $('#maximum_count'),
+        count = $('#count');    
+        current_count.text(characterCount);        
+    });
+    });
+
+    $(function(){
+    $('#countNote').keyup(function() {    
+    const characterNote = $(this).val().length,
+        current_note = $('#current_note'),
+        maximum_note = $('#maximum_note'),
+        countNote = $('#countNote');    
+        current_note.text(characterNote);        
+    });
+    });
+
+    $(function(){
+    $('#countEmail').keyup(function() {    
+    const characterEmail = $(this).val().length,
+        current_email = $('#current_email'),
+        maximum_email = $('#maximum_email'),
+        countEmail = $('#countEmail');    
+        current_email.text(characterEmail);        
+    });
+    });
+
+$(function(){
+$('#countCurNote').keyup(function() {    
+    const characterCurNote = $(this).val().length,
+        current_curNote = $('#current_CurNote'),
+        maximum_curNote = $('#maximum_CurNote'),
+        countCurNote = $('#countCurNote');    
+        current_curNote.text(characterCurNote);        
+});
+});
+
   </script>
   </body>
 </html>
