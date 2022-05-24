@@ -34,7 +34,7 @@ defineProps({
           <div class="modal-body">
             <ul class="list-group">
               <li class="list-group-item">
-                Date : {{ moment(eventDetail.startTime).format("l") }}
+                Date : {{ moment(eventDetail.startTime).format("DD/MM/YYYY") }}
               </li>
               <li class="list-group-item">
                 Time : {{ moment(eventDetail.startTime).format("HH:mm") }}

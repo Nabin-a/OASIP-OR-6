@@ -38,7 +38,6 @@ onBeforeMount(async () => {
 const getEventid = async (id) => {
   console.log(id);
   const res = await fetch(import.meta.env.BASE_URL+`api/event/${id}`);
-
   if (res.status === 200) {
     eventDetail.value = await res.json();
     console.log(eventDetail.value);
