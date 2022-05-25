@@ -8,7 +8,7 @@ const eventDetail = ref({});
 const eventCategory = ref([]);
 
 const getEvents = async () => {
-  const res = await fetch("http://localhost:8080/api/event");
+  const res = await fetch(import.meta.env.BASE_URL+"api/event/");
   if (res.status === 200) {
     events.value = await res.json();
     console.log(events.value);
@@ -22,7 +22,7 @@ onBeforeMount(async () => {
 });
 
 const getEventCategory = async () => {
-  const res = await fetch("http://localhost:8080/api/category");
+  const res = await fetch(import.meta.env.BASE_URL+`api/category`);
   if (res.status === 200) {
     eventCategory.value = await res.json();
     console.log(eventCategory.value);
@@ -37,7 +37,7 @@ onBeforeMount(async () => {
 
 const getEventid = async (id) => {
   console.log(id);
-  const res = await fetch(`http://localhost:8080/api/event/${id}`);
+  const res = await fetch(import.meta.env.BASE_URL+`api/event/${id}`);
 
   if (res.status === 200) {
     eventDetail.value = await res.json();
@@ -61,7 +61,7 @@ const createNewSchedule = async (
     newCategory,
     newNote
   );
-  const res = await fetch("http://localhost:8080/api/event", {
+  const res = await fetch(import.meta.env.BASE_URL+`api/event/`, {
     method: "POST",
     headers: {
       "content-type": "application/json;"
@@ -86,7 +86,7 @@ const createNewSchedule = async (
 const removeEvent = async (id) => {
   if (confirm("Delete this column?") == true) {
     console.log(id);
-    const res = await fetch(`http://localhost:8080/api/event/${id}`, {
+    const res = await fetch(import.meta.env.BASE_URL+`api/event/${id}`, {
       method: "DELETE"
     });
     if (res.status === 200) {
@@ -99,7 +99,7 @@ const removeEvent = async (id) => {
 // PUT
 const updateEvent = async (id, editTime, editNote) => {
   console.log(id, editTime, editNote);
-  const res = await fetch(`http://localhost:8080/api/event/${id}`, {
+  const res = await fetch(import.meta.env.BASE_URL+`api/event/${id}`, {
     method: "PUT",
     headers: {
       "content-type": "application/json;"
