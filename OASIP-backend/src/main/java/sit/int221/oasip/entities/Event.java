@@ -29,14 +29,12 @@ public class Event {
     @Column(name = "bookingEmail", length = 45)
     private String bookingEmail;
 
-    @Future
     @Column(name = "StartTime", nullable = false)
     private ZonedDateTime startTime;
 
     @Column(name = "Durations", nullable = false)
     private Integer durations;
 
-    @Size(max = 500)
     @Column(name = "Note", length = 500)
     private String note;
 

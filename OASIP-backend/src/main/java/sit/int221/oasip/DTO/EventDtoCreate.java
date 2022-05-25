@@ -15,7 +15,7 @@ public class EventDtoCreate {
     @NotNull @Email @Size(max = 45)
     private String bookingEmail;
 
-    @Future
+    @Future(message = "must be future Date time")
     @NotNull
     private ZonedDateTime startTime;
 
