@@ -8,7 +8,7 @@ const eventDetail = ref({});
 const eventCategory = ref([]);
 
 const getEvents = async () => {
-  const res = await fetch(import.meta.env.BASE_URL+`api/event/`);
+  const res = await fetch("http://localhost:8080/api/event");
   if (res.status === 200) {
     events.value = await res.json();
     console.log(events.value);
@@ -22,7 +22,7 @@ onBeforeMount(async () => {
 });
 
 const getEventCategory = async () => {
-  const res = await fetch(import.meta.env.BASE_URL+`api/category`);
+  const res = await fetch("http://localhost:8080/api/category");
   if (res.status === 200) {
     eventCategory.value = await res.json();
     console.log(eventCategory.value);
@@ -37,7 +37,7 @@ onBeforeMount(async () => {
 
 const getEventid = async (id) => {
   console.log(id);
-  const res = await fetch(import.meta.env.BASE_URL+`api/event/${id}`);
+  const res = await fetch(`http://localhost:8080/api/event/${id}`);
 
   if (res.status === 200) {
     eventDetail.value = await res.json();
@@ -61,7 +61,7 @@ const createNewSchedule = async (
     newCategory,
     newNote
   );
-  const res = await fetch(import.meta.env.BASE_URL+`api/event/`, {
+  const res = await fetch("http://localhost:8080/api/event", {
     method: "POST",
     headers: {
       "content-type": "application/json;"
@@ -86,7 +86,7 @@ const createNewSchedule = async (
 const removeEvent = async (id) => {
   if (confirm("Delete this column?") == true) {
     console.log(id);
-    const res = await fetch(import.meta.env.BASE_URL+`api/event/${id}`, {
+    const res = await fetch(`http://localhost:8080/api/event/${id}`, {
       method: "DELETE"
     });
     if (res.status === 200) {
@@ -96,10 +96,10 @@ const removeEvent = async (id) => {
   }
 };
 
-// PUT http://localhost:8080/api/event/${id}
+// PUT
 const updateEvent = async (id, editTime, editNote) => {
   console.log(id, editTime, editNote);
-  const res = await fetch(import.meta.env.BASE_URL+`api/event/${id}`, {
+  const res = await fetch(`http://localhost:8080/api/event/${id}`, {
     method: "PUT",
     headers: {
       "content-type": "application/json;"
@@ -115,6 +115,9 @@ const updateEvent = async (id, editTime, editNote) => {
     console.log("edited successfully");
   } else console.log("error, cannot be edit");
 };
+
+
+
 </script>
 
 <template>
@@ -133,6 +136,37 @@ const updateEvent = async (id, editTime, editNote) => {
   />
   <EventDetail :eventDetail="eventDetail" />
 
+
+ <!-- <div class="container py-5">  
+        <div class="row">  
+            <div class="offset-md-2 col-md-8 offset-md-2">  
+                
+                    <div class="card-header bg-primary text-white">  
+                        <h4 class="card-title text-uppercase">Employee Form</h4>  
+                    </div>  
+                    <div class="card-body">  
+                        <form id="needs-validation" novalidate>  
+                            <div class="row">  
+                                <div class="col-sm-6 col-md-6 col-xs-12">  
+                                    <div class="form-group">  
+                                        <label for="firstname">First Name</label>  
+                                        <input type="text" placeholder="First Name" class="form-control"  required />  
+                                        <div class="invalid-feedback">  
+                                            Please enter first name.  
+                                        </div>  
+                                         <button class="btn btn-primary rounded-0" type="submit">Register</button>  
+                                    </div>  
+                                    
+                                </div>  
+                                </div>
+                                </form>
+                               </div>
+                        </div>
+                        </div> 
+
+                      
+        
+  </div>   -->
 </template>
 
 <style></style>

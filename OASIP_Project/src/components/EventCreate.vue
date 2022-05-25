@@ -24,7 +24,6 @@ const newSchedule = computed(() => {
     note: props.eventCreate.note
   };
 });
-console.log(newSchedule.value);
 
 const theDate = new Date();
 theDate.setHours(theDate.getHours() + 7);
@@ -47,6 +46,10 @@ const eventStartTimeEdit = computed(() => {
     return moment(props.currentEvent.startTime).format("YYYY-MM-DDTHH:mm");
   }
 });
+
+
+
+
 </script>
 
 <template>
@@ -81,7 +84,7 @@ const eventStartTimeEdit = computed(() => {
             ></button>
           </div>
           <div class="modal-body">
-            <form class="was-validated" novalidate>
+            <form class="needs-validation" novalidate>
               <div>
                 <ul>
                   <li class="list-group-item">
@@ -169,6 +172,7 @@ const eventStartTimeEdit = computed(() => {
                       disabled
                       placeholder="durations"
                       v-model="eventCategorySelect.durations"
+                      required
                     />
                   </li>
                   <br />
@@ -180,8 +184,9 @@ const eventStartTimeEdit = computed(() => {
                       id="countNote"
                       placeholder="detail..."
                       v-model="newSchedule.note"
-                      minLength="1"
+                      minLength="0"
                       maxlength="500"
+                      required
                     ></textarea>
                     <small>
                       <div class="form-text">
@@ -191,17 +196,15 @@ const eventStartTimeEdit = computed(() => {
                     </small>
                   </li>
                 </ul>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
+                <div style="margin-left:66%">
+                 <button
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
             >
               Close
             </button>
+             &nbsp
             <button
               type="submit"
               class="btn btn-success"
@@ -213,12 +216,15 @@ const eventStartTimeEdit = computed(() => {
                   datetime,
                   eventCategorySelect.durations,
                   eventCategorySelect.id,
-                  newSchedule.note
+                  newSchedule.note,
                 )
               "
             >
               Create
             </button>
+            </div>
+              </div>
+            </form> 
           </div>
         </div>
       </div>

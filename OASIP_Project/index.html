@@ -24,6 +24,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript">
 
+
+//ใช้ JQuery เข้ามาช่วยในการนับ Character ในช่อง input ต่างๆ
     $(function(){
     $('#countChar').keyup(function() {    
     const characterCount = $(this).val().length,
@@ -54,8 +56,8 @@
     });
     });
 
-$(function(){
-$('#countCurNote').keyup(function() {    
+    $(function(){
+    $('#countCurNote').keyup(function() {    
     const characterCurNote = $(this).val().length,
         current_curNote = $('#current_CurNote'),
         maximum_curNote = $('#maximum_CurNote'),
@@ -63,6 +65,25 @@ $('#countCurNote').keyup(function() {
         current_curNote.text(characterCurNote);        
 });
 });
+
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+
 
   </script>
   </body>
