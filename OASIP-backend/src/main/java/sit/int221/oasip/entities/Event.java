@@ -29,9 +29,6 @@ public class Event {
     @Column(name = "bookingEmail", length = 45)
     private String bookingEmail;
 
-    @Column(name = "eventCategoryName", length = 45)
-    private String eventCategoryName;
-
     @Future
     @Column(name = "StartTime", nullable = false)
     private ZonedDateTime startTime;

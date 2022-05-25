@@ -18,7 +18,6 @@ CREATE TABLE `event` (
   `bookingId` int NOT NULL auto_increment,
   `bookingName` varchar(100) NOT NULL,
   `bookingEmail` varchar(45) NOT NULL,
-  `eventCategoryName` varchar(45) DEFAULT NULL,
   `StartTime` datetime NOT NULL,
   `Durations` int NOT NULL,
   `Note` varchar(500) DEFAULT NULL,

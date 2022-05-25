@@ -1,7 +1,10 @@
 package sit.int221.oasip.controllers;
 
+import net.minidev.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import sit.int221.oasip.DTO.EventDtoCreate;
@@ -39,7 +42,11 @@ public class EventController {
     //POST
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Event create(@RequestBody @Valid EventDtoCreate newEventDtoCreate){
+    public Event create(@Valid @RequestBody EventDtoCreate newEventDtoCreate, BindingResult bindingResult){
+        if (bindingResult.hasFieldErrors()){
+            FieldError error = bindingResult.getFieldError();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, error.getField() +" "+ error.getDefaultMessage());
+        }
         return eventService.save(newEventDtoCreate);
     }
 
