@@ -46,7 +46,8 @@ public class EventController {
     public Event create(@Valid @RequestBody EventDtoCreate newEventDtoCreate, BindingResult bindingResult){
         if (bindingResult.hasFieldErrors()){
             FieldError error = bindingResult.getFieldError();
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, error.getField() +" "+ error.getDefaultMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    error.getField() + ": " + error.getDefaultMessage());
         }
         return eventService.save(newEventDtoCreate);
     }
@@ -61,15 +62,6 @@ public class EventController {
 
     //PUT
     @PutMapping("/{id}")
-//    public  Event edit(@RequestBody @Valid Event editEvent, @PathVariable Integer id){
-//        return repository.findById(id).map(edit -> {
-//            edit.setStartTime(editEvent.getStartTime());
-//            edit.setNote(editEvent.getNote());
-//            return repository.saveAndFlush(edit);
-//        }).orElseThrow(
-//            () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-//                    "Can not find eventId " + id));
-//    }
     public Event edit(@Valid @RequestBody EventDtoEdit edit, @PathVariable Integer id){
         return eventService.edit(edit, id);
     }

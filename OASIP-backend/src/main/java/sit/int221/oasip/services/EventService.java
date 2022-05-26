@@ -57,7 +57,9 @@ public class EventService {
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: "+bookingId+" does not exist"));
         event.setStartTime(editEvent.getStartTime());
         event.setNote(editEvent.getNote());
-        return modelMapper.map(editEvent, Event.class);
+        modelMapper.map(editEvent, event);
+        Event mapEvent = modelMapper.map(event, Event.class);
+        return repository.saveAndFlush(mapEvent);
     }
 
 }
