@@ -15,5 +15,4 @@ public class EventDtoList {
     private ZonedDateTime startTime;
     private Integer durations;
     private String categoryName;
-
 }

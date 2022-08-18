@@ -1,5 +1,6 @@
 package sit.int221.oasip.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +27,7 @@ public class Category {
     @Column(name = "`Duration(min.)`", nullable = false)
     private Integer durationMin;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private Set<Event> events = new LinkedHashSet<>();
 }

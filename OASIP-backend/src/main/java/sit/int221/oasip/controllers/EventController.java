@@ -22,7 +22,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("api/event")
+@RequestMapping("api/events")
 
 public class EventController {
     @Autowired
