@@ -5,9 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.time.ZonedDateTime;
 
 @Table(name = "event", indexes = {
@@ -21,7 +18,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private Integer bookingId;
+    private Integer eventId;
 
     @Column(name = "bookingName", length = 100)
     private String bookingName;
@@ -29,14 +26,17 @@ public class Event {
     @Column(name = "bookingEmail", length = 45)
     private String bookingEmail;
 
+<<<<<<< HEAD
     @Future
     @Column(name = "StartTime", nullable = false)
+=======
+    @Column(name = "startTime", nullable = false)
+>>>>>>> e995019c9583be5cd38629c230db2de8a363ca6d
     private ZonedDateTime startTime;
 
     @Column(name = "Durations", nullable = false)
     private Integer durations;
 
-    @Size(max = 500)
     @Column(name = "Note", length = 500)
     private String note;
 

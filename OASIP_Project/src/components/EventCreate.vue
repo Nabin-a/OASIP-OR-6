@@ -14,7 +14,11 @@ const props = defineProps({
     type: Object,
     default: {}
   }
-});
+})
+
+const checkValidation = (e)=>{
+  e.target.classList.add("was-validated");
+}
 
 const newSchedule = computed(() => {
   return {
@@ -84,11 +88,15 @@ const eventStartTimeEdit = computed(() => {
             ></button>
           </div>
           <div class="modal-body">
+<<<<<<< HEAD
             <form class="needs-validation" novalidate>
+=======
+            <form class="needs-validation" method="checkValidation" novalidate @submit.prevent="checkForm">
+>>>>>>> e995019c9583be5cd38629c230db2de8a363ca6d
               <div>
                 <ul>
                   <li class="list-group-item">
-                    <label for="uname" class="form-label">Name:</label>
+                    <label for="countChar" class="form-label">Name:</label>
                     <input
                       type="text"
                       class="form-control"

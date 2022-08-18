@@ -6,9 +6,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import sit.int221.oasip.DTO.EventDtoCreate;
-import sit.int221.oasip.DTO.EventDtoDetail;
-import sit.int221.oasip.DTO.EventDtoList;
+import sit.int221.oasip.DTO.eventdto.EventDtoCreate;
+import sit.int221.oasip.DTO.eventdto.EventDtoDetail;
+import sit.int221.oasip.DTO.eventdto.EventDtoEdit;
+import sit.int221.oasip.DTO.eventdto.EventDtoList;
 import sit.int221.oasip.entities.Category;
 import sit.int221.oasip.entities.Event;
 import sit.int221.oasip.repositories.CategoryRepository;
@@ -49,6 +50,16 @@ public class EventService {
         newEvent.setDurations(category.getDurationMin());
         Event event = modelMapper.map(newEvent , Event.class);
         return repository.saveAndFlush(event);
+    }
+
+    public Event edit(EventDtoEdit editEvent, Integer bookingId){
+        Event event = repository.findById(bookingId).orElseThrow(()->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: "+bookingId+" does not exist"));
+        event.setStartTime(editEvent.getStartTime());
+        event.setNote(editEvent.getNote());
+        modelMapper.map(editEvent, event);
+        Event mapEvent = modelMapper.map(event, Event.class);
+        return repository.saveAndFlush(mapEvent);
     }
 
 }

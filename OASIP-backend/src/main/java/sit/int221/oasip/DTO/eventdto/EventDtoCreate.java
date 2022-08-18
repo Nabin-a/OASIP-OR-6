@@ -1,4 +1,4 @@
-package sit.int221.oasip.DTO;
+package sit.int221.oasip.DTO.eventdto;
 
 import lombok.*;
 
@@ -12,10 +12,10 @@ public class EventDtoCreate {
     @NotBlank(message = "name must not be blank") @Size(max = 100, message = "size must between 1 - 100")
     private String bookingName;
 
-    @Email @NotNull
+    @NotBlank @Email @Size(max = 45)
     private String bookingEmail;
 
-    @Future
+    @Future(message = "must be future Date time")
     @NotNull
     private ZonedDateTime startTime;
 
@@ -24,5 +24,6 @@ public class EventDtoCreate {
     @Size(max = 500)
     private String note;
 
+    @NotNull
     private Integer eventCategoryId;
 }
