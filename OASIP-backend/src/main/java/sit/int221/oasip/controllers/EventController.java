@@ -1,16 +1,15 @@
 package sit.int221.oasip.controllers;
 
-import net.minidev.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import sit.int221.oasip.DTO.EventDtoCreate;
-import sit.int221.oasip.DTO.EventDtoDetail;
-import sit.int221.oasip.DTO.EventDtoEdit;
-import sit.int221.oasip.DTO.EventDtoList;
+import sit.int221.oasip.DTO.eventdto.EventDtoCreate;
+import sit.int221.oasip.DTO.eventdto.EventDtoDetail;
+import sit.int221.oasip.DTO.eventdto.EventDtoEdit;
+import sit.int221.oasip.DTO.eventdto.EventDtoList;
 import sit.int221.oasip.entities.Event;
 import sit.int221.oasip.repositories.EventRepository;
 import sit.int221.oasip.services.EventService;

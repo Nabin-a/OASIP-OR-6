@@ -2,6 +2,7 @@ package sit.int221.oasip.entities;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.ZonedDateTime;
 
 @Table(name = "user")
 @Entity
@@ -22,24 +23,24 @@ public class User {
     private String role;
 
     @Column(name = "createdOn", nullable = false)
-    private Instant createdOn;
+    private ZonedDateTime createdOn;
 
     @Column(name = "updatedOn", nullable = false)
-    private Instant updatedOn;
+    private ZonedDateTime updatedOn;
 
-    public Instant getUpdatedOn() {
+    public ZonedDateTime getUpdatedOn() {
         return updatedOn;
     }
 
-    public void setUpdatedOn(Instant updatedOn) {
+    public void setUpdatedOn(ZonedDateTime updatedOn) {
         this.updatedOn = updatedOn;
     }
 
-    public Instant getCreatedOn() {
+    public ZonedDateTime getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(Instant createdOn) {
+    public void setCreatedOn(ZonedDateTime createdOn) {
         this.createdOn = createdOn;
     }
 

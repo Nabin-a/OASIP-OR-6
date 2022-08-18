@@ -33,7 +33,7 @@ create table `user` (
 	userId int not null auto_increment,
     `name` varchar(100) not null unique, 
     email varchar(50) not null unique,
-    `role` enum('admin', 'lecturer', 'student') not null,
+    `role` enum('admin', 'lecturer', 'student') default 'student' not null,
     createdOn timestamp default '2000-01-01' not null, 
     updatedOn timestamp default '2000-01-01' not null,
     PRIMARY KEY (`userId`),

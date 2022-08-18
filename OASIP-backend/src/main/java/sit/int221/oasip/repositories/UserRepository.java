@@ -6,5 +6,4 @@ import sit.int221.oasip.entities.User;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-    
 }
