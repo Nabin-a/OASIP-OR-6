@@ -1,14 +1,16 @@
 package sit.int221.oasip.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import sit.int221.oasip.DTO.userdto.UserDtoCreate;
 import sit.int221.oasip.DTO.userdto.UserDtoDetail;
 import sit.int221.oasip.DTO.userdto.UserDtoList;
+import sit.int221.oasip.entities.User;
 import sit.int221.oasip.services.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -25,5 +27,11 @@ public class UserController {
     @GetMapping("/{id}")
     public UserDtoDetail getUserById(@PathVariable Integer id) {
         return userService.getUsertById(id);
+    }
+
+    @PostMapping("")
+    public User create(@Valid @RequestBody UserDtoCreate newUser){
+
+        return  userService.save(newUser);
     }
 }

@@ -1,5 +1,8 @@
 package sit.int221.oasip.entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -22,10 +25,12 @@ public class User {
     @Column(name = "role", nullable = false)
     private String role;
 
-    @Column(name = "createdOn", nullable = false)
+    @CreationTimestamp
+    @Column(name = "createdOn", nullable = false, insertable = false, updatable = false)
     private ZonedDateTime createdOn;
 
-    @Column(name = "updatedOn", nullable = false)
+    @UpdateTimestamp
+    @Column(name = "updatedOn", nullable = false, insertable = false, updatable = false)
     private ZonedDateTime updatedOn;
 
     public ZonedDateTime getUpdatedOn() {
