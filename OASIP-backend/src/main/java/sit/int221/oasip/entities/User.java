@@ -2,9 +2,9 @@ package sit.int221.oasip.entities;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.time.ZonedDateTime;
 
 @Table(name = "user")
@@ -25,11 +25,9 @@ public class User {
     @Column(name = "role", nullable = false)
     private String role;
 
-    @CreationTimestamp
     @Column(name = "createdOn", nullable = false, insertable = false, updatable = false)
     private ZonedDateTime createdOn;
 
-    @UpdateTimestamp
     @Column(name = "updatedOn", nullable = false, insertable = false, updatable = false)
     private ZonedDateTime updatedOn;
 
