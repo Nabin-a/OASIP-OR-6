@@ -88,11 +88,7 @@ const eventStartTimeEdit = computed(() => {
             ></button>
           </div>
           <div class="modal-body">
-<<<<<<< HEAD
             <form class="needs-validation" novalidate>
-=======
-            <form class="needs-validation" method="checkValidation" novalidate @submit.prevent="checkForm">
->>>>>>> e995019c9583be5cd38629c230db2de8a363ca6d
               <div>
                 <ul>
                   <li class="list-group-item">

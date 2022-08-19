@@ -8,11 +8,7 @@ const eventDetail = ref({});
 const eventCategory = ref([]);
 
 const getEvents = async () => {
-<<<<<<< HEAD
-  const res = await fetch(import.meta.env.BASE_URL+"api/event/");
-=======
-  const res = await fetch(`http://localhost:8080/api/event`);
->>>>>>> e995019c9583be5cd38629c230db2de8a363ca6d
+  const res = await fetch(`http://localhost:8080/api/events`);
   if (res.status === 200) {
     events.value = await res.json();
     console.log(events.value);
@@ -41,7 +37,7 @@ onBeforeMount(async () => {
 
 const getEventid = async (id) => {
   console.log(id);
-  const res = await fetch(`http://localhost:8080/api/event/${id}`);
+  const res = await fetch(`http://localhost:8080/api/events/${id}`);
   if (res.status === 200) {
     eventDetail.value = await res.json();
     console.log(eventDetail.value);
@@ -64,7 +60,7 @@ const createNewSchedule = async (
     newCategory,
     newNote
   );
-  const res = await fetch(`http://localhost:8080/api/event/`, {
+  const res = await fetch(`http://localhost:8080/api/events/`, {
     method: "POST",
     headers: {
       "content-type": "application/json;"
@@ -89,7 +85,7 @@ const createNewSchedule = async (
 const removeEvent = async (id) => {
   if (confirm("Delete this column?") == true) {
     console.log(id);
-    const res = await fetch(`http://localhost:8080/api/event/${id}`, {
+    const res = await fetch(`http://localhost:8080/api/events/${id}`, {
       method: "DELETE"
     });
     if (res.status === 200) {
@@ -102,7 +98,7 @@ const removeEvent = async (id) => {
 // PUT
 const updateEvent = async (id, editTime, editNote) => {
   console.log(id, editTime, editNote);
-  const res = await fetch(`http://localhost:8080/api/event/${id}`, {
+  const res = await fetch(`http://localhost:8080/api/events/${id}`, {
     method: "PUT",
     headers: {
       "content-type": "application/json;"
@@ -118,6 +114,11 @@ const updateEvent = async (id, editTime, editNote) => {
     console.log("edited successfully");
   } else console.log("error, cannot be edit");
 };
+
+
+
+
+
 
 
 
