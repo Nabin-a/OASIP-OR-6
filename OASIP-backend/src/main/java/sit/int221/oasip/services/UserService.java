@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 public class UserService {
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
@@ -25,13 +25,13 @@ public class UserService {
 
     //Method List User All
     public List<UserDtoList> getUsersAll() {
-        List<User> userList = repository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+        List<User> userList = userRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
         return listMapper.mapList(userList, UserDtoList.class, modelMapper);
     }
 
     //Method Show Detail User by ID
     public UserDtoDetail getUsertById(Integer id){
-        User user = repository.findById(id).orElseThrow(()->
+        User user = userRepository.findById(id).orElseThrow(()->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "User ID: "+id+" does not exist"));
         return modelMapper.map(user, UserDtoDetail.class);
     }
@@ -39,6 +39,6 @@ public class UserService {
     //Method Create User
     public User save(UserDtoCreate newUser){
         User user = modelMapper.map(newUser, User.class);
-        return repository.saveAndFlush(user);
+        return userRepository.saveAndFlush(user);
     }
 }

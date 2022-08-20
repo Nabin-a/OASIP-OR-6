@@ -1,10 +1,6 @@
 package sit.int221.oasip.entities;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
-import java.time.Instant;
 import java.time.ZonedDateTime;
 
 @Table(name = "user")
@@ -23,13 +19,12 @@ public class User {
 
     @Lob
     @Column(name = "role", nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private String role;
 
-    @CreationTimestamp
     @Column(name = "createdOn", nullable = false, insertable = false, updatable = false)
     private ZonedDateTime createdOn;
 
-    @UpdateTimestamp
     @Column(name = "updatedOn", nullable = false, insertable = false, updatable = false)
     private ZonedDateTime updatedOn;
 
@@ -80,4 +75,6 @@ public class User {
     public void setId(Integer id) {
         this.userId = id;
     }
+
+
 }

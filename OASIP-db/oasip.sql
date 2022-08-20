@@ -34,8 +34,8 @@ create table `user` (
     `name` varchar(100) not null unique, 
     email varchar(50) not null unique,
     `role` enum('admin', 'lecturer', 'student') default 'student' not null,
-    createdOn timestamp default '2000-01-01' not null, 
-    updatedOn timestamp default '2000-01-01' not null,
+    createdOn timestamp default current_timestamp not null, 
+    updatedOn timestamp default current_timestamp on UPDATE CURRENT_TIMESTAMP not null,
     PRIMARY KEY (`userId`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE
