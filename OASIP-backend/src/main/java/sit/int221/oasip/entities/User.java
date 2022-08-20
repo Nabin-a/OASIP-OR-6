@@ -1,9 +1,5 @@
 package sit.int221.oasip.entities;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.beans.factory.annotation.Value;
-
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 
@@ -23,6 +19,7 @@ public class User {
 
     @Lob
     @Column(name = "role", nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private String role;
 
     @Column(name = "createdOn", nullable = false, insertable = false, updatable = false)
@@ -78,4 +75,6 @@ public class User {
     public void setId(Integer id) {
         this.userId = id;
     }
+
+
 }

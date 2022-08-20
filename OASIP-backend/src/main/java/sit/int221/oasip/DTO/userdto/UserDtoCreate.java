@@ -1,9 +1,10 @@
 package sit.int221.oasip.DTO.userdto;
 
 import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
 
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -16,11 +17,19 @@ import java.time.ZonedDateTime;
 public class UserDtoCreate {
     @NotBlank @Size(max=100)
     private String name;
+
     @NotBlank @Email
     @Size(max=50)
     private String email;
-    @Value("${role: student}")
-    private String role;
+
+    @Enumerated(value = EnumType.STRING)
+    private Role role = Role.student;
+
     private ZonedDateTime createdOn;
     private ZonedDateTime updatedOn;
+
+    public enum Role{
+        student, admin, lecturer
+    }
+
 }
