@@ -1,4 +1,5 @@
 <script setup>
+defineEmits(["getUserid"])
 defineProps({
   userList: {
     type: Array,
@@ -31,7 +32,7 @@ defineProps({
               class="btn btn-primary"
               data-bs-toggle="modal"
               data-bs-target="#DetailModal"
-              @click="$emit('getEventId', event.id)"
+              @click="$emit('getUserid', user.userId)"
             >
               <i class="fa fa-info-circle"></i>
             </button>

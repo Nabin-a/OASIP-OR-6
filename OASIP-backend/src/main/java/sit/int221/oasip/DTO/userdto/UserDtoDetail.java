@@ -16,7 +16,7 @@ public class UserDtoDetail {
     private String name;
     private String email;
     private String role;
-    private ZonedDateTime createOn;
-    private ZonedDateTime updateOn;
+    private ZonedDateTime createdOn;
+    private ZonedDateTime updatedOn;
 
 }
