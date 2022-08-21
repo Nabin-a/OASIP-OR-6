@@ -1,5 +1,9 @@
 <script setup>
 import UserTable from './UserTable.vue';
+import {useRouter} from 'vue-router'
+
+const appRouter = useRouter()
+const goHome = () => appRouter.push({name: 'Home'})
 </script>
  
 <template>
@@ -7,6 +11,7 @@ import UserTable from './UserTable.vue';
         <UserTable/>
         
     </div>
+        <button @click="goHome">Home</button>
 </template>
  
 <style>

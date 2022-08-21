@@ -2,6 +2,7 @@
 import { ref, onBeforeMount } from "vue";
 import UserList from "../components/UserList.vue";
 import UserDetail from "../components/UserDetail.vue";
+import UserCreate from "../components/UserCreate.vue";
 
 const users = ref([]);
 const userDetail = ref({});
@@ -31,10 +32,42 @@ const getUserid = async (userId) => {
   } else console.log("error, cannot get data");
 };
 
+const createNewUser = async (
+  newUserName,
+  newUserEmail,
+  newUserRole
+) => {
+  console.log(
+    newUserName,
+    newUserEmail,
+    newUserRole
+  );
+  const res = await fetch(`http://localhost:8080/api/users`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json;"
+    },
+    body: JSON.stringify({
+      name: newUserName,
+      email: newUserEmail,
+      role: newUserRole,
+    })
+  });
+  if (res.status === 201) {
+    alert("Added sucessfully");
+    const addedUser = await res.json();
+    events.value.push(addedUser);
+  } else console.log("error, cannot be added");
+};
 
 </script>
  
 <template>
+    <UserCreate 
+    @createUser="createNewUser"
+    :userCreate="users"
+
+    />
     <UserList
     :userList="users"
     @getUserid="getUserid"/>

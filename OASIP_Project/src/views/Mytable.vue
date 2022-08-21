@@ -140,14 +140,7 @@ const updateEvent = async (id, editTime, editNote) => {
   />
   <EventDetail :eventDetail="eventDetail" />
 
-<div class="mt-1">
-        <div>
-          <router-link :to="{ name: 'User' }">About</router-link>
-        </div>
-        <div>
-          <router-view></router-view>
-        </div>
-      </div>
+
 </template>
 
 <style></style>
