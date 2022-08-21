@@ -10,7 +10,7 @@ const userDetail = ref({});
 
 
 const getUsers = async () => {
-  const res = await fetch(`http://localhost:8080/api/users`);
+  const res = await fetch(import.meta.env.BASE_URL+`api/users`);
   if (res.status === 200) {
     users.value = await res.json();
     console.log(users.value);
@@ -25,7 +25,7 @@ onBeforeMount(async () => {
 
 const getUserid = async (userId) => {
   console.log(userId);
-  const res = await fetch(`http://localhost:8080/api/users/${userId}`);
+  const res = await fetch(import.meta.env.BASE_URL+`api/users/${userId}`);
   if (res.status === 200) {
     userDetail.value = await res.json();
     console.log(userDetail.value);
@@ -42,7 +42,7 @@ const createNewUser = async (
     newUserEmail,
     newUserRole
   );
-  const res = await fetch(`http://localhost:8080/api/users`, {
+  const res = await fetch(import.meta.env.BASE_URL+`api/users`, {
     method: "POST",
     headers: {
       "content-type": "application/json;"
