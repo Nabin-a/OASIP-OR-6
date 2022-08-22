@@ -11,8 +11,9 @@ defineProps({
 <template>
   <div class="container pt-3 pb-5">
     <h2 style="color: white">Scheduled Events</h2>
-
-    <table class="table table-light table-striped table-hover">
+    &nbsp
+    <h1 v-if="userList.length < 1" class="forusl">No users</h1>
+    <table class="table table-light table-striped table-hover" v-else>
       <thead>
         <tr>
           <th scope="col">Name</th>
@@ -43,4 +44,9 @@ defineProps({
   </div>
 </template>
 
-<style></style>
+<style>
+ .forusl{
+  margin-left: 42%;
+  color: white;
+ }
+</style>

@@ -5,26 +5,25 @@ const props = defineProps({
   userCreate: {
     type: Object,
     default: {}
-  },
-  userRole: {
-    type: Array
   }
 })
 
-const UserRoleName = ref({});
+const roles = ref(['student', 'admin', 'lecturer'])
+
+const userRoleSelect = ref({})
+
 const newUser = computed(() => {
   return {
-    id: props.userCreate.userid,
+    userId: props.userCreate.userId,
     name: props.userCreate.name,
-    email: props.userCreate.email,
-    role: props.userCreate.role
+    email: props.userCreate.email
   };
 });
 </script>
  
 <template>
     <div class="container pt-3 pb-5">
-    <h2 style="color: white">Create Schudule</h2>
+    <h2 style="color: white">Create User</h2>
     <br/>
     <button
       type="button"
@@ -45,7 +44,7 @@ const newUser = computed(() => {
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header bg-dark">
-            <h5 class="modal-title" id="CreateModalLabel">Create Schedule</h5>
+            <h5 class="modal-title" id="CreateModalLabel">Create User</h5>
             <button
               type="button"
               class="btn-close"
@@ -103,19 +102,11 @@ const newUser = computed(() => {
                   </li>
                   <br />
                   <li class="list-group-item">
-                    Choose event category:
-                    <select
-                      class="form-select form-select-lg mb-3"
-                      v-model="userRoleSelect"                   >
-                      <option
-                        v-for="userRole in props.userCreate"
-                        :value="{
-                          role: userRole.role
-                        }"
-                      >
-                        {{ userRole.role }}
-                      </option>
-                    </select>
+                    Choose user role:
+                    <br />
+                        <div v-for="role in roles">
+                              <input type="radio" v-model="userRoleSelect" name="role" :value="role"> {{role}}
+                        </div>
                   </li>
                   <br />
                 </ul>
@@ -136,7 +127,7 @@ const newUser = computed(() => {
                   'createUser',
                   newUser.name,
                   newUser.email,
-                  newUser.role,
+                  userRoleSelect
                 )
               "
             >

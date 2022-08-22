@@ -1,10 +1,10 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import EventDetail from "../components/EventDetail.vue";
 import EventList from "../components/EventList.vue";
 import Home from "../views/Home.vue";
 import User from "../views/User.vue"
 
-const history = createWebHistory(import.meta.env.BASE_URL);
+const history = createWebHashHistory(import.meta.env.BASE_URL);
 const routes = [
   {
     path: "/",

@@ -22,7 +22,7 @@ const checkValidation = (e)=>{
 
 const newSchedule = computed(() => {
   return {
-    id: props.eventCreate.id,
+    eventId: props.eventCreate.eventId,
     bookingName: props.eventCreate.bookingName,
     bookingEmail: props.eventCreate.bookingEmail,
     note: props.eventCreate.note
