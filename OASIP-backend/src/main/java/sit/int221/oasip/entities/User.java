@@ -1,11 +1,13 @@
 package sit.int221.oasip.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.regex.Matcher;
 
 @Table(name = "user")
 @Entity
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "userId", nullable = false)
@@ -19,7 +21,6 @@ public class User {
 
     @Lob
     @Column(name = "role", nullable = false)
-    @Enumerated(value = EnumType.STRING)
     private String role;
 
     @Column(name = "createdOn", nullable = false, insertable = false, updatable = false)
@@ -75,6 +76,5 @@ public class User {
     public void setId(Integer id) {
         this.userId = id;
     }
-
 
 }

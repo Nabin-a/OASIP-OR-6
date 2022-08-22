@@ -1,8 +1,11 @@
-package sit.int221.oasip.DTO.userdto;
+package sit.int221.oasip.dto.userdto;
 
 import lombok.*;
+import sit.int221.oasip.entities.Roles;
+import sit.int221.oasip.validators.Name;
+import sit.int221.oasip.validators.Role;
 
-
+import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
@@ -15,21 +18,24 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDtoCreate {
-    @NotBlank @Size(max=100)
+    @NotBlank
+    @Name
+    @Column(unique = true)
+    @Size(max=100)
     private String name;
 
+    @sit.int221.oasip.validators.Email
+    @Column(unique = true)
     @NotBlank @Email
     @Size(max=50)
     private String email;
 
+
     @Enumerated(value = EnumType.STRING)
-    private Role role = Role.student;
+    @Role(enumClass = Roles.class)
+    private String role;
 
     private ZonedDateTime createdOn;
     private ZonedDateTime updatedOn;
-
-    public enum Role{
-        student, admin, lecturer
-    }
 
 }

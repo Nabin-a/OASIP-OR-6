@@ -1,4 +1,4 @@
-package sit.int221.oasip.DTO.eventdto;
+package sit.int221.oasip.dto.eventdto;
 
 import lombok.*;
 

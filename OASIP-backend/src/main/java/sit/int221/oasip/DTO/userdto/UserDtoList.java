@@ -1,4 +1,4 @@
-package sit.int221.oasip.DTO.userdto;
+package sit.int221.oasip.dto.userdto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
