@@ -10,7 +10,7 @@ import sit.int221.oasip.repositories.CategoryRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("api/category")
 public class EventCategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
