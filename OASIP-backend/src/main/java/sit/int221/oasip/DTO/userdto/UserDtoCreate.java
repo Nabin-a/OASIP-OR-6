@@ -3,6 +3,7 @@ package sit.int221.oasip.dto.userdto;
 import lombok.*;
 import sit.int221.oasip.entities.Roles;
 import sit.int221.oasip.validators.Name;
+import sit.int221.oasip.validators.Role;
 
 import javax.persistence.Column;
 import javax.persistence.EnumType;
@@ -31,7 +32,8 @@ public class UserDtoCreate {
 
 
     @Enumerated(value = EnumType.STRING)
-    private Roles role;
+    @Role(enumClass = Roles.class)
+    private String role;
 
     private ZonedDateTime createdOn;
     private ZonedDateTime updatedOn;
