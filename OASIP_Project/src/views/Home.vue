@@ -11,7 +11,7 @@ const goUser = () => appRouter.push({name: 'User'})
         <Mytable/>
         
     </div>
-    <button @click="goUser">User</button>
+    <button @click="goUser" class="btn btn-primary btn-lg active">User</button>
 </template>
  
 <style>

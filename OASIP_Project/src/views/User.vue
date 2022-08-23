@@ -11,7 +11,7 @@ const goHome = () => appRouter.push({name: 'Home'})
         <UserTable/>
         
     </div>
-        <button @click="goHome">Home</button>
+        <button @click="goHome" class="btn btn-primary btn-lg active">Home</button>
 </template>
  
 <style>

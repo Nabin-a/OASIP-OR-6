@@ -10,7 +10,7 @@ defineProps({
 
 <template>
   <div class="container pt-3 pb-5">
-    <h2 style="color: white">Scheduled Events</h2>
+    <h2 style="color: white">User List</h2>
     &nbsp
     <h1 v-if="userList.length < 1" class="forusl">No users</h1>
     <table class="table table-light table-striped table-hover" v-else>

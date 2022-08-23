@@ -74,6 +74,8 @@ const createNewUser = async (
     @getUserid="getUserid"/>
 
     <UserDetail :userDetail="userDetail" />
+
+    
 </template>
  
 <style>

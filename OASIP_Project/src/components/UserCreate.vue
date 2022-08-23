@@ -1,5 +1,6 @@
 <script setup>
 import { ref,computed } from "vue";
+
 defineEmits(["createUser"])
 const props = defineProps({
   userCreate: {
@@ -10,7 +11,7 @@ const props = defineProps({
 
 const roles = ref(['student', 'admin', 'lecturer'])
 
-const userRoleSelect = ref({})
+const userRoleSelect = ref()
 
 const newUser = computed(() => {
   return {
@@ -19,6 +20,7 @@ const newUser = computed(() => {
     email: props.userCreate.email
   };
 });
+
 
 
 
@@ -56,6 +58,7 @@ const newUser = computed(() => {
             ></button>
           </div>
           <div class="modal-body">
+            <validation-observer>
             <form class="needs-validation" novalidate>
               <div>
                 <ul>
@@ -72,6 +75,7 @@ const newUser = computed(() => {
                       required
                     />
                     <div class="invalid-feedback">Name must not be blank.</div>
+                    
                     <small>
                       <div class="form-text">
                         <span id="current_count">0</span>
@@ -139,7 +143,9 @@ const newUser = computed(() => {
             </button>
             </div>
               </div>
+              
             </form> 
+            </validation-observer>
           </div>
         </div>
       </div>
