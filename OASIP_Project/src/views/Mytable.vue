@@ -3,9 +3,11 @@ import { ref, onBeforeMount } from "vue";
 import EventList from "../components/EventList.vue";
 import EventDetail from "../components/EventDetail.vue";
 import EventCreate from "../components/EventCreate.vue";
+
 const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
+
 
 const getEvents = async () => {
   const res = await fetch(`http://localhost:8080/api/events`);
@@ -95,7 +97,7 @@ const removeEvent = async (id) => {
   }
 };
 
-// PUT http://localhost:8080/api/event/${id}
+// PUT
 const updateEvent = async (id, editTime, editNote) => {
   console.log(id, editTime, editNote);
   const res = await fetch(`http://localhost:8080/api/events/${id}`, {
@@ -114,6 +116,14 @@ const updateEvent = async (id, editTime, editNote) => {
     console.log("edited successfully");
   } else console.log("error, cannot be edit");
 };
+
+
+
+
+
+
+
+
 </script>
 
 <template>
@@ -131,6 +141,7 @@ const updateEvent = async (id, editTime, editNote) => {
     @removeEvent="removeEvent"
   />
   <EventDetail :eventDetail="eventDetail" />
+
 
 </template>
 

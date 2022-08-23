@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import java.time.ZonedDateTime;
 
 @Table(name = "event", indexes = {
@@ -26,6 +27,7 @@ public class Event {
     @Column(name = "bookingEmail", length = 45)
     private String bookingEmail;
 
+    @Future
     @Column(name = "startTime", nullable = false)
     private ZonedDateTime startTime;
 
