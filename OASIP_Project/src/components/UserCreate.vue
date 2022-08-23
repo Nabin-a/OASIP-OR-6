@@ -1,5 +1,7 @@
 <script setup>
 import { ref,computed } from "vue";
+import { Field, Form } from 'vee-validate';
+
 
 defineEmits(["createUser"])
 const props = defineProps({
@@ -58,7 +60,6 @@ const newUser = computed(() => {
             ></button>
           </div>
           <div class="modal-body">
-            <validation-observer>
             <form class="needs-validation" novalidate>
               <div>
                 <ul>
@@ -66,10 +67,12 @@ const newUser = computed(() => {
                     <label for="countChar" class="form-label">Name:</label>
                     <input
                       type="text"
+                      vee-validate="'required|unique'"
                       class="form-control"
                       id="countChar"
                       placeholder="Enter your name"
                       v-model="newUser.name"
+                      
                       minlength="1"
                       maxlength="100"
                       required
@@ -145,7 +148,6 @@ const newUser = computed(() => {
               </div>
               
             </form> 
-            </validation-observer>
           </div>
         </div>
       </div>
