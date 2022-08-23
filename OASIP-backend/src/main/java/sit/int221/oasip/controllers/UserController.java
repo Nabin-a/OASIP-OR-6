@@ -38,9 +38,6 @@ public class UserController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public User create(@Valid @RequestBody UserDtoCreate newUser){
-        if(newUser.getRole() == null){
-            newUser.setRole(String.valueOf(Roles.student));
-        }
         return  userService.save(newUser);
     }
 
