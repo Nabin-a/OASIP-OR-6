@@ -3,9 +3,11 @@ import { ref, onBeforeMount } from "vue";
 import EventList from "../components/EventList.vue";
 import EventDetail from "../components/EventDetail.vue";
 import EventCreate from "../components/EventCreate.vue";
+
 const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
+
 
 const getEvents = async () => {
   const res = await fetch(`http://localhost:8080/api/events`);

@@ -19,6 +19,9 @@ const newUser = computed(() => {
     email: props.userCreate.email
   };
 });
+
+
+
 </script>
  
 <template>
@@ -88,7 +91,8 @@ const newUser = computed(() => {
                       v-model="newUser.email"
                       minlength="1"
                       maxlength="50"
-                      required
+                      required 
+                      
                     />
                     <div class="invalid-feedback">
                       Your pattern not correctly.
