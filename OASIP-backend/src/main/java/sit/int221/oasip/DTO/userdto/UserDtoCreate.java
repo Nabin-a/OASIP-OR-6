@@ -38,4 +38,11 @@ public class UserDtoCreate {
     private ZonedDateTime createdOn;
     private ZonedDateTime updatedOn;
 
+    public void setName(String name) {
+        this.name = name.trim();
+    }
+
+    public void setEmail(String email) {
+        this.email = email.trim();
+    }
 }

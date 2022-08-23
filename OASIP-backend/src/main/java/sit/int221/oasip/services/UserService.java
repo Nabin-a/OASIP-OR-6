@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import sit.int221.oasip.dto.userdto.UserDtoCreate;
 import sit.int221.oasip.dto.userdto.UserDtoDetail;
 import sit.int221.oasip.dto.userdto.UserDtoList;
+import sit.int221.oasip.entities.Roles;
 import sit.int221.oasip.entities.User;
 import sit.int221.oasip.repositories.UserRepository;
 
@@ -40,6 +41,9 @@ public class UserService {
 
     //Method Create User
     public User save(UserDtoCreate newUser){
+        if(newUser.getRole() == null){
+            newUser.setRole(String.valueOf(Roles.student));
+        }
         User user = modelMapper.map(newUser, User.class);
         return userRepository.saveAndFlush(user);
     }

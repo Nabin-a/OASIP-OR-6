@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Name {
-    String message() default "Name address is already registered";
+    String message() default "Name is already exist";
     Class<?>[] groups() default { };
     Class<? extends Payload>[] payload() default { };
 }
