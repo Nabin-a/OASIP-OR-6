@@ -61,6 +61,19 @@ const createNewUser = async (
   } else console.log("error, cannot be added");
 };
 
+const removeUser = async (userId) => {
+  if (confirm("Delete this user?") == true) {
+    console.log(userId);
+    const res = await fetch(`http://localhost:8080/api/users/${userId}`, {
+      method: "DELETE"
+    });
+    if (res.status === 200) {
+      users.value = users.value.filter((user) => user.userId !== userId);
+      console.log("deleted successfully");
+    } else console.log("error, cannot delete data");
+  }
+};
+
 </script>
  
 <template>
@@ -71,7 +84,9 @@ const createNewUser = async (
     />
     <UserList
     :userList="users"
-    @getUserid="getUserid"/>
+    @getUserid="getUserid"
+    @removeUser="removeUser"
+    />
 
     <UserDetail :userDetail="userDetail" />
 

@@ -1,5 +1,5 @@
 <script setup>
-defineEmits(["getUserid"])
+defineEmits(["getUserid","removeUser"])
 defineProps({
   userList: {
     type: Array,
@@ -36,6 +36,14 @@ defineProps({
               @click="$emit('getUserid', user.userId)"
             >
               <i class="fa fa-info-circle"></i>
+            </button>
+            &nbsp
+            <button
+              type="button"
+              class="btn btn-danger"
+              @click="$emit('removeUser', user.userId)"
+            >
+              <i class="fa fa-trash"></i>
             </button>
           </td>
         </tr>
