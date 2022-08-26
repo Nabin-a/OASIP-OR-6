@@ -52,10 +52,13 @@ public class EventService {
         return repository.saveAndFlush(event);
     }
 
-    public Event edit(EventDtoEdit editEvent, Integer bookingId){
-        Event event = repository.findById(bookingId).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: "+bookingId+" does not exist"));
+    public Event edit(EventDtoEdit editEvent, Integer eventId){
+        Event event = repository.findById(eventId).orElseThrow(()->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: "+eventId+" does not exist"));
         event.setStartTime(editEvent.getStartTime());
+        if (editEvent.getNote()==null){
+            editEvent.setNote(event.getNote());
+        }
         event.setNote(editEvent.getNote());
         modelMapper.map(editEvent, event);
         Event mapEvent = modelMapper.map(event, Event.class);

@@ -18,6 +18,7 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDtoCreate {
+
     @NotBlank
     @Name
     @Column(unique = true)
@@ -34,9 +35,6 @@ public class UserDtoCreate {
     @Enumerated(value = EnumType.STRING)
     @Role(enumClass = Roles.class)
     private String role;
-
-    private ZonedDateTime createdOn;
-    private ZonedDateTime updatedOn;
 
     public void setName(String name) {
         this.name = name.trim();
