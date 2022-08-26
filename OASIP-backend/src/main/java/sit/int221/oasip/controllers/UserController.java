@@ -2,13 +2,12 @@ package sit.int221.oasip.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import sit.int221.oasip.dto.userdto.UserDtoCreate;
 import sit.int221.oasip.dto.userdto.UserDtoDetail;
+import sit.int221.oasip.dto.userdto.UserDtoEdit;
 import sit.int221.oasip.dto.userdto.UserDtoList;
-import sit.int221.oasip.entities.Roles;
 import sit.int221.oasip.entities.User;
 import sit.int221.oasip.repositories.UserRepository;
 import sit.int221.oasip.services.UserService;
@@ -20,10 +19,10 @@ import java.util.List;
 @RequestMapping("api/users")
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserRepository repository;
 
     @Autowired
-    private UserRepository repository;
+    private UserService userService;
 
     @GetMapping("")
     public List<UserDtoList> getUserDTO() {
@@ -46,5 +45,10 @@ public class UserController {
         repository.findById(id).orElseThrow(()->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, id + "Can not found this id"));
         repository.deleteById(id);
+    }
+
+    @PatchMapping("/{id}")
+    public User update(@Valid @RequestBody UserDtoEdit update, @PathVariable Integer id){
+        return userService.edit(update, id);
     }
 }

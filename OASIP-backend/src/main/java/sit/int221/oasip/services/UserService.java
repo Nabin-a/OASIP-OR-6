@@ -5,16 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.server.ResponseStatusException;
 import sit.int221.oasip.dto.userdto.UserDtoCreate;
 import sit.int221.oasip.dto.userdto.UserDtoDetail;
+import sit.int221.oasip.dto.userdto.UserDtoEdit;
 import sit.int221.oasip.dto.userdto.UserDtoList;
 import sit.int221.oasip.entities.Roles;
 import sit.int221.oasip.entities.User;
 import sit.int221.oasip.repositories.UserRepository;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -47,4 +47,26 @@ public class UserService {
         User user = modelMapper.map(newUser, User.class);
         return userRepository.saveAndFlush(user);
     }
+
+    //Method Edit User
+    public User edit(UserDtoEdit editUser, Integer userId){
+        User user = userRepository.findById(userId).orElseThrow(()->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "User id "+userId+" does not exist"));
+        if (editUser.getName().equals(user.getName() ) && editUser.getEmail().equals(user.getEmail())
+                && editUser.getRole().equals(String.valueOf(user.getRole())) ){
+            return modelMapper.map(user, User.class);
+        }
+        if(editUser.getName() != null && userRepository.existsByNameAndUserIdNot(editUser.getName(), userId)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Name is already registered");
+        }
+        user.setName(editUser.getName());
+        if(editUser.getEmail() != null && userRepository.existsByEmailAndUserIdNot(editUser.getEmail(), userId)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email address is already registered");
+        }
+        user.setEmail(editUser.getEmail());
+        user.setRole(editUser.getRole());
+
+        return modelMapper.map(userRepository.saveAndFlush(user), User.class);
+    }
+
 }
