@@ -14,7 +14,6 @@ import sit.int221.oasip.entities.Roles;
 import sit.int221.oasip.entities.User;
 import sit.int221.oasip.repositories.UserRepository;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -25,6 +24,10 @@ public class UserService {
     private ModelMapper modelMapper;
     @Autowired
     private ListMapperService listMapper;
+    @Autowired
+    private PasswordService passwordService;
+
+
 
     //Method List User All
     public List<UserDtoList> getUsersAll() {
@@ -44,8 +47,12 @@ public class UserService {
         if(newUser.getRole() == null){
             newUser.setRole(String.valueOf(Roles.student));
         }
+        newUser.setPassword(passwordService.securePassword(newUser.getPassword()));
+
         User user = modelMapper.map(newUser, User.class);
-        return userRepository.saveAndFlush(user);
+        User saveUser = userRepository.saveAndFlush(user);
+        saveUser.setPassword("*******");
+        return saveUser;
     }
 
     //Method Edit User
@@ -59,14 +66,14 @@ public class UserService {
         if(editUser.getName() != null && userRepository.existsByNameAndUserIdNot(editUser.getName(), userId)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Name is already registered");
         }
-        user.setName(editUser.getName());
         if(editUser.getEmail() != null && userRepository.existsByEmailAndUserIdNot(editUser.getEmail(), userId)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email address is already registered");
         }
+        user.setName(editUser.getName());
         user.setEmail(editUser.getEmail());
         user.setRole(editUser.getRole());
-
         return modelMapper.map(userRepository.saveAndFlush(user), User.class);
     }
+
 
 }

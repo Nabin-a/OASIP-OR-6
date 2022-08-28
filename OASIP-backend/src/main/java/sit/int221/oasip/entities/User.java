@@ -19,6 +19,9 @@ public class User implements Serializable {
     @Column(name = "email", nullable = false, length = 50)
     private String email;
 
+    @Column(name = "password", nullable = false)
+    private String password;
+
     @Lob
     @Column(name = "role", nullable = false)
     private String role;
@@ -77,4 +80,11 @@ public class User implements Serializable {
         this.userId = id;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

@@ -28,5 +28,6 @@ public class UserDtoEdit {
     private String email;
 
     @Enumerated(EnumType.STRING)
+    @Role(enumClass = Roles.class)
     private String role;
 }

@@ -11,7 +11,7 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.time.ZonedDateTime;
+
 
 @Getter
 @Setter
@@ -31,6 +31,8 @@ public class UserDtoCreate {
     @Size(max=50)
     private String email;
 
+    @Size(max = 14, min = 8)
+    private String password;
 
     @Enumerated(value = EnumType.STRING)
     @Role(enumClass = Roles.class)
