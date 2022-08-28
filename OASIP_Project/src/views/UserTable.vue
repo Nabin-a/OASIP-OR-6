@@ -74,13 +74,38 @@ const removeUser = async (userId) => {
   }
 };
 
+// PUT
+const updateUser = async (userId, editName, editEmail, editRole) => {
+  console.log(userId, editName, editEmail, editRole);
+  const res = await fetch(`http://localhost:8080/api/users/${userId}`, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json;"
+    },
+    body: JSON.stringify({
+      name: editName,
+      email: editEmail,
+      role: editRole
+    })
+  });
+  if (res.status === 200) {
+    location.reload();
+    alert("Edit Success");
+    console.log("edited successfully");
+  } else console.log("error, cannot be edit");
+};
+
+
+
+
 </script>
  
 <template>
     <UserCreate 
     @createUser="createNewUser"
     :userCreate="users"
-
+    :currentUser="userDetail"
+    @updateUser="updateUser"
     />
     <UserList
     :userList="users"

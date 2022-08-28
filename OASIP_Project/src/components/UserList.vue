@@ -39,6 +39,15 @@ defineProps({
             </button>
             &nbsp
             <button
+              class="btn btn-success"
+              data-bs-target="#EditModal"
+              data-bs-toggle="modal"
+              @click="$emit('getUserid', user.userId)"
+            >
+              <i class="fa fa-edit"></i>
+            </button>
+            &nbsp
+            <button
               type="button"
               class="btn btn-danger"
               @click="$emit('removeUser', user.userId)"
