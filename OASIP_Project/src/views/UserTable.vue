@@ -4,9 +4,9 @@ import UserList from "../components/UserList.vue";
 import UserDetail from "../components/UserDetail.vue";
 import UserCreate from "../components/UserCreate.vue";
 
+
 const users = ref([]);
 const userDetail = ref({});
-
 
 
 const getUsers = async () => {
@@ -35,11 +35,15 @@ const getUserid = async (userId) => {
 const createNewUser = async (
   newUserName,
   newUserEmail,
+  newUserPassword,
+  confirmPassword,
   newUserRole
 ) => {
   console.log(
     newUserName,
     newUserEmail,
+    newUserPassword,
+    confirmPassword,
     newUserRole
   );
   const res = await fetch(`http://localhost:8080/api/users`, {
@@ -50,7 +54,8 @@ const createNewUser = async (
     body: JSON.stringify({
       name: newUserName,
       email: newUserEmail,
-      role: newUserRole,
+      password: newUserPassword,
+      role: newUserRole
     })
   });
   if (res.status === 201) {
@@ -58,7 +63,11 @@ const createNewUser = async (
     alert("Added sucessfully");
     const addedUser = await res.json();
     events.value.push(addedUser);
-  } else console.log("error, cannot be added");
+  } else if (newUserPassword !== confirmPassword) {
+    return false;''
+      
+  } else
+        console.log("error, cannot be added");
 };
 
 const removeUser = async (userId) => {
@@ -97,7 +106,6 @@ const updateUser = async (userId, editName, editEmail, editRole) => {
 
 
 
-
 </script>
  
 <template>
@@ -116,6 +124,8 @@ const updateUser = async (userId, editName, editEmail, editRole) => {
     <UserDetail :userDetail="userDetail" />
 
     
+  
+
 </template>
  
 <style>

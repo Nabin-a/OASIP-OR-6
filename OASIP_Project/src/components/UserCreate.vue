@@ -1,9 +1,6 @@
 <script setup>
 import { ref,computed } from "vue";
 import moment from "moment"
-import { Field, Form } from 'vee-validate';
-
-
 defineEmits(["createUser","updateUser"])
 const props = defineProps({
   userCreate: {
@@ -24,12 +21,20 @@ const newUser = computed(() => {
   return {
     userId: props.userCreate.userId,
     name: props.userCreate.name,
-    email: props.userCreate.email
+    email: props.userCreate.email,
+    password: props.userCreate.password
   };
 });
 
 const nameEdit = ref();
 const emailEdit = ref();
+
+const showPassword1 = ref(false)
+const showPassword = ref(false)
+
+const confirmPassword = ref()
+
+
 
 </script>
  
@@ -65,14 +70,15 @@ const emailEdit = ref();
             ></button>
           </div>
           <div class="modal-body">
-            <form class="needs-validation" novalidate>
+            <form class="needs-validation" method="post" @submit.prevent="submit" 
+            oninput='pwsd2.setCustomValidity(pwsd2.value != pwsd1.value ? "Passwords do not match." : "")' novalidate >
+            
               <div>
                 <ul>
                   <li class="list-group-item">
                     <label for="countChar" class="form-label">Name:</label>
                     <input
                       type="text"
-                      vee-validate="'required|unique'"
                       class="form-control"
                       id="countChar"
                       placeholder="Enter your name"
@@ -103,8 +109,7 @@ const emailEdit = ref();
                       v-model="newUser.email"
                       minlength="1"
                       maxlength="50"
-                      required 
-                      
+                      required               
                     />
                     <div class="invalid-feedback">
                       Your pattern not correctly.
@@ -116,7 +121,41 @@ const emailEdit = ref();
                       </div>
                     </small>
                   </li>
+                  <br/>
+                  <li class="list-group-item">
+                    <label class="form-label">Password:</label>
+                    
+                    <input
+                      :type=" showPassword ? ' text ' : 'password'"
+                      class="form-control"
+                      name="pwsd1"
+                      id="pwsd1"
+                      placeholder="need character 8 to 14"
+                      v-model="newUser.password"
+                      minlength="8"
+                      maxlength="14"
+                      required
+                    />
+                    <i class="fa fa-eye" aria-hidden="true" @click="showPassword = !showPassword"></i>
+                    <div class="invalid-feedback">need character 8 to 14.</div>
+                    </li>
                   <br />
+                  <li class="list-group-item">
+                    <label class="form-label">Confirm Password:</label>                      <input
+                      :type=" showPassword1 ? ' text ' : 'password'"
+                      name="pwsd2"
+                      class="form-control"              
+                      placeholder="Confirm password"
+                      v-model="confirmPassword"
+                      minlength="8"
+                      maxlength="14"
+                      required
+                    />
+                 
+                    <i class="fa fa-eye" aria-hidden="true" @click="showPassword1 = !showPassword1"></i>
+                    <div class="invalid-feedback">Password not match!.</div>
+                    </li>
+                    <br/>
                   <li class="list-group-item">
                     Choose user role:
                     <br />
@@ -135,16 +174,23 @@ const emailEdit = ref();
               Close
             </button>
              &nbsp
+             <!-- disabled="newUser.password == 8  || newUser.password !== confirmPassword" -->
             <button
               type="submit"
               class="btn btn-success"
+              :disabled="confirmPassword == null  || confirmPassword !== newUser.password"
               @click="
                 $emit(
                   'createUser',
                   newUser.name,
                   newUser.email,
+                  newUser.password,
+                  confirmPassword,
                   userRoleSelect
-                )
+                 
+                  
+                );
+              
               "
             >
               Create
@@ -178,7 +224,7 @@ const emailEdit = ref();
           ></button>
         </div>
         <div class="modal-body">
-          <form class="was-validated">
+          <form class="was-validated" @submit.prevent="submit">
             <ul class="list-group">
               <li class="list-group-item">
                 Name:
@@ -223,7 +269,7 @@ const emailEdit = ref();
                     Choose user role:
                     <br />
                         <div v-for="role in roles">
-                              <input type="radio" v-model="currentUser.role" name="role" :value="role"> {{role}}
+                              <input type="radio" v-model="currentUser.role" name="roleEdit" :value="role"> {{role}}
                         </div>
               </li>
               <br />
@@ -240,6 +286,7 @@ const emailEdit = ref();
         <div class="modal-footer">
           <button
             type="submit"
+            value="submit"
             class="btn btn-success"
             @click="
               $emit('updateUser', currentUser.userId, nameEdit, emailEdit, currentUser.role)
