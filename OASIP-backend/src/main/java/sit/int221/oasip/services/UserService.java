@@ -6,10 +6,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import sit.int221.oasip.dto.userdto.UserDtoCreate;
-import sit.int221.oasip.dto.userdto.UserDtoDetail;
-import sit.int221.oasip.dto.userdto.UserDtoEdit;
-import sit.int221.oasip.dto.userdto.UserDtoList;
+import sit.int221.oasip.dto.userdto.*;
 import sit.int221.oasip.entities.Roles;
 import sit.int221.oasip.entities.User;
 import sit.int221.oasip.repositories.UserRepository;
@@ -74,6 +71,5 @@ public class UserService {
         user.setRole(editUser.getRole());
         return modelMapper.map(userRepository.saveAndFlush(user), User.class);
     }
-
 
 }
