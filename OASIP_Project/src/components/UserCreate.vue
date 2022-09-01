@@ -178,14 +178,13 @@ const confirmPassword = ref()
             <button
               type="submit"
               class="btn btn-success"
-              :disabled="confirmPassword == null  || confirmPassword !== newUser.password"
-              @click="
+              :disabled="confirmPassword == null  || newUser.password !== confirmPassword  "
+              @click=" 
                 $emit(
                   'createUser',
                   newUser.name,
                   newUser.email,
                   newUser.password,
-                  confirmPassword,
                   userRoleSelect
                  
                   

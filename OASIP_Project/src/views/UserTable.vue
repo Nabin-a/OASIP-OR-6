@@ -36,14 +36,11 @@ const createNewUser = async (
   newUserName,
   newUserEmail,
   newUserPassword,
-  confirmPassword,
   newUserRole
 ) => {
   console.log(
     newUserName,
     newUserEmail,
-    newUserPassword,
-    confirmPassword,
     newUserRole
   );
   const res = await fetch(`http://localhost:8080/api/users`, {
