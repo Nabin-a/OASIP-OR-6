@@ -2,14 +2,14 @@ package sit.int221.oasip.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import sit.int221.oasip.dto.userdto.UserDtoCreate;
-import sit.int221.oasip.dto.userdto.UserDtoDetail;
-import sit.int221.oasip.dto.userdto.UserDtoEdit;
-import sit.int221.oasip.dto.userdto.UserDtoList;
+import sit.int221.oasip.dto.userdto.*;
 import sit.int221.oasip.entities.User;
 import sit.int221.oasip.repositories.UserRepository;
+import sit.int221.oasip.services.PasswordService;
 import sit.int221.oasip.services.UserService;
 
 import javax.validation.Valid;
@@ -23,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PasswordService passwordService;
 
     @GetMapping("")
     public List<UserDtoList> getUserDTO() {
@@ -48,7 +51,12 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public User update(@Valid @RequestBody UserDtoEdit update, @PathVariable Integer id){
+    public User update(@RequestBody UserDtoEdit update, @PathVariable Integer id, BindingResult result){
         return userService.edit(update, id);
+    }
+
+    @PostMapping("/match")
+    public User checkPassword(@RequestBody UserDtoLogin login){
+        return passwordService.checkPassword(login);
     }
 }
