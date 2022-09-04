@@ -71,7 +71,7 @@ const confirmPassword = ref()
           </div>
           <div class="modal-body">
             <form class="needs-validation" method="post" @submit.prevent="submit" 
-            oninput='pwsd2.setCustomValidity(pwsd2.value != pwsd1.value ? "Passwords do not match." : "")' novalidate >
+            onsubmit='pwsd2.setCustomValidity(pwsd2.value != pwsd1.value ? "Passwords do not match." : "")' novalidate >
             
               <div>
                 <ul>
@@ -178,7 +178,7 @@ const confirmPassword = ref()
             <button
               type="submit"
               class="btn btn-success"
-              :disabled="confirmPassword == null  || newUser.password !== confirmPassword  "
+              :disabled="confirmPassword == null || newUser.password !== confirmPassword  "
               @click=" 
                 $emit(
                   'createUser',
