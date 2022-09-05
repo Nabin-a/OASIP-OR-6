@@ -43,7 +43,6 @@ const validatePassword = () => {
 </script>
 
 <template>
-  
   <div
     class="modal fade"
     id="EditModal"
@@ -63,7 +62,7 @@ const validatePassword = () => {
           ></button>
         </div>
         <div class="modal-body">
-          <form class="was-validated" @submit.prevent="submit">
+          <form @submit.prevent="submit">
             <ul class="list-group">
               <li class="list-group-item">
                 Name:
@@ -77,7 +76,14 @@ const validatePassword = () => {
               <br />
               <li class="list-group-item">
                 Name:
-                <input type="text" class="form-control" v-model="nameEdit" />
+                <input
+                  type="text"
+                  class="form-control"
+                  minlength="1"
+                  maxlength="100"
+                  required
+                  v-model="nameEdit"
+                />
               </li>
               <br />
               <li class="list-group-item">
@@ -92,7 +98,15 @@ const validatePassword = () => {
               <br />
               <li class="list-group-item">
                 Booker Email:
-                <input type="text" class="form-control" v-model="emailEdit" />
+                <input
+                  type="email"
+                  class="form-control"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                  v-model="emailEdit"
+                  minlength="1"
+                  maxlength="50"
+                  required
+                />
               </li>
               <br />
 
