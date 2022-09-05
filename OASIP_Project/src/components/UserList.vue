@@ -19,7 +19,7 @@ defineProps({
           <th scope="col">Name</th>
           <th scope="col">Email</th>
           <th scope="col">Role</th>
-          <th scope="col" style="padding-left: 2.5%">ooo</th>
+          <th scope="col" style="padding-left: 7.5%">ooo</th>
         </tr>
       </thead>
       <tbody v-for="(user, index) in userList" :key="index">
@@ -46,7 +46,7 @@ defineProps({
             >
               <i class="fa fa-edit"></i>
             </button>
-            &nbsp
+            &nbsp;
             <button
               type="button"
               class="btn btn-danger"

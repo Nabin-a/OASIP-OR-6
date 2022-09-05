@@ -1,19 +1,17 @@
 <script setup>
-import Mytable from '../views/Mytable.vue'
-import UserTable from './UserTable.vue';
-import Login from './Login.vue';
-import {useRouter} from 'vue-router'
+import Mytable from "../views/Mytable.vue";
+import { useRouter } from "vue-router";
 
-const appRouter = useRouter()
-const goHome = () => appRouter.push({name: 'Home'})
-const goUser = () => appRouter.push({name: 'User'})
-const goEvent = () => appRouter.push({name: 'Event'})
-const goLogin = () => appRouter.push({name: 'Login'})
+const appRouter = useRouter();
+const goHome = () => appRouter.push({ name: "Home" });
+const goUser = () => appRouter.push({ name: "User" });
+const goEvent = () => appRouter.push({ name: "Event" });
+const goLogin = () => appRouter.push({ name: "Login" });
 const goRegister = () => appRouter.push({name: 'Register'})
 </script>
- 
+
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <button @click="goHome" class="btn btn-light rounded-pill">Home</button>
 
@@ -42,18 +40,9 @@ const goRegister = () => appRouter.push({name: 'Register'})
       </div>
     </div>
   </nav>
-<br />
-    <div>
-        
-        Welcome to my project_OR6
-    </div>
+  <div>
+    <Mytable />
+  </div>
 </template>
- 
-<style>
-   .btn:hover{ 
-    background-color: rgb(209, 209, 209)
-   }
 
-   
-   
-</style>
+<style></style>

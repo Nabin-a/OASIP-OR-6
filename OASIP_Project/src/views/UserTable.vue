@@ -8,7 +8,7 @@ import UserCreate from "../components/UserCreate.vue";
 const users = ref([]);
 const userDetail = ref({});
 
-
+ 
 const getUsers = async () => {
   const res = await fetch(`http://localhost:8080/api/users`);
   if (res.status === 200) {
@@ -36,12 +36,10 @@ const createNewUser = async (
   newUserName,
   newUserEmail,
   newUserPassword,
-  newUserRole
+  newUserRole,
+  confirmPassword
 ) => {
-  console.log(
-    newUserName,
-    newUserEmail,
-    newUserRole
+  if(newUserPassword === confirmPassword 
   );
   const res = await fetch(`http://localhost:8080/api/users`, {
     method: "POST",
@@ -59,11 +57,10 @@ const createNewUser = async (
     location.reload();
     alert("Added sucessfully");
     const addedUser = await res.json();
-    events.value.push(addedUser);
-  } else if (newUserPassword !== confirmPassword) {
-    return false;''
-      
-  } else
+    events.value.push(addedUser);      
+  } else if (res.status === 400) {
+    alert("Name and email must be unique")
+  }
         console.log("error, cannot be added");
 };
 
