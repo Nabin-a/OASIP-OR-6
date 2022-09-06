@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public User update(@RequestBody UserDtoEdit update, @PathVariable Integer id, BindingResult result){
+    public User update(@Valid @RequestBody UserDtoEdit update, @PathVariable Integer id, BindingResult result){
         return userService.edit(update, id);
     }
 

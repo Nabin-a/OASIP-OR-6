@@ -4,11 +4,10 @@ import UserList from "../components/UserList.vue";
 import UserDetail from "../components/UserDetail.vue";
 import UserCreate from "../components/UserCreate.vue";
 
-
 const users = ref([]);
 const userDetail = ref({});
+const validateUnique = ref(false);
 
- 
 const getUsers = async () => {
   const res = await fetch(`http://localhost:8080/api/users`);
   if (res.status === 200) {
@@ -31,7 +30,6 @@ const getUserid = async (userId) => {
     console.log(userDetail.value);
   } else console.log("error, cannot get data");
 };
-
 
 const removeUser = async (userId) => {
   if (confirm("Delete this user?") == true) {
@@ -64,33 +62,23 @@ const updateUser = async (userId, editName, editEmail, editRole) => {
     location.reload();
     alert("Edit Success");
     console.log("edited successfully");
+  } else if (res.status === 400) {
+    validateUnique.value = true;
   } else {
-  console.log("Error, cannot edit user")
+    console.log("error, cannot be added");
   }
 };
-
-
-
 </script>
- 
+
 <template>
-    <UserCreate 
+  <UserCreate
     :currentUser="userDetail"
+    :validateUnique="validateUnique"
     @updateUser="updateUser"
-    />
-    <UserList
-    :userList="users"
-    @getUserid="getUserid"
-    @removeUser="removeUser"
-    />
+  />
+  <UserList :userList="users" @getUserid="getUserid" @removeUser="removeUser" />
 
-    <UserDetail :userDetail="userDetail" />
-
-    
-  
-
+  <UserDetail :userDetail="userDetail" />
 </template>
- 
-<style>
 
-</style>
+<style></style>

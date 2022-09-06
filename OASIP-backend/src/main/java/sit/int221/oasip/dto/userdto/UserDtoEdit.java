@@ -12,7 +12,7 @@ import sit.int221.oasip.validators.Role;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-
+import javax.validation.constraints.Email;
 
 
 @Getter
@@ -26,6 +26,7 @@ public class UserDtoEdit {
     @Column(unique = true)
     private String name;
 
+    @Email
     @Column(unique = true)
     private String email;
 

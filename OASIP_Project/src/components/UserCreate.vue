@@ -10,6 +10,10 @@ const props = defineProps({
   currentUser: {
     type: Object,
     default: {}
+  },
+  validateUnique: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -22,11 +26,6 @@ const editUser = computed(() => {
     email: props.userCreate.email
   };
 });
-
-
-
-
-
 </script>
 
 <template>
@@ -49,7 +48,7 @@ const editUser = computed(() => {
           ></button>
         </div>
         <div class="modal-body">
-          <form class="was-validated" @submit.prevent="submit">
+          <form @submit.prevent="submit">
             <ul class="list-group">
               <li class="list-group-item">
                 Name:
@@ -58,7 +57,6 @@ const editUser = computed(() => {
                   class="form-control"
                   disabled
                   v-model="currentUser.name"
-                  required
                 />
               </li>
               <br />
@@ -72,9 +70,11 @@ const editUser = computed(() => {
                   v-model="editUser.name"
                   required
                 />
-                <div class="invalid-feedback">Name must not be blank.</div>
+                <p class="text-danger" v-show="validateUnique">
+                  Name must be unique
+                </p>
               </li>
-              
+
               <br />
               <li class="list-group-item">
                 User Email:
@@ -85,7 +85,6 @@ const editUser = computed(() => {
                   disabled
                   v-model="currentUser.email"
                 />
-  
               </li>
               <br />
               <li class="list-group-item">
@@ -99,9 +98,11 @@ const editUser = computed(() => {
                   maxlength="50"
                   required
                 />
-                <div class="invalid-feedback">Pattern not correctly.</div>
+                <p class="text-danger" v-show="validateUnique">
+                  Email must be unique and checking well-formed.
+                </p>
               </li>
-          
+
               <br />
 
               <li class="list-group-item">
@@ -113,7 +114,6 @@ const editUser = computed(() => {
                     v-model="currentUser.role"
                     name="roleEdit"
                     :value="role"
-                    
                   />
                   {{ role }}
                 </div>
@@ -129,24 +129,24 @@ const editUser = computed(() => {
                 {{ moment(currentUser.updatedOn).format("YYYY/MM/DD HH:mm") }}
               </li>
             </ul>
+            <div class="modal-footer">
+              <button
+                type="submit"
+                class="btn btn-success"
+                @click="
+                  $emit(
+                    'updateUser',
+                    currentUser.userId,
+                    editUser.name,
+                    editUser.email,
+                    currentUser.role
+                  )
+                "
+              >
+                Edit
+              </button>
+            </div>
           </form>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="submit"
-            class="btn btn-success"
-            @click="
-              $emit(
-                'updateUser',
-                currentUser.userId,
-                editUser.name,
-                editUser.email,
-                currentUser.role
-              )
-            "
-          >
-            Edit
-          </button>
         </div>
       </div>
     </div>
