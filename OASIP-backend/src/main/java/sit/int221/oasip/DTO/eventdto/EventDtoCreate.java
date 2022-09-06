@@ -24,6 +24,6 @@ public class EventDtoCreate {
     @Size(max = 500)
     private String note;
 
-    @NotNull
+
     private Integer eventCategoryId;
 }
