@@ -5,9 +5,12 @@
         userRegister: {
     type: Object,
     default: {}
-  }
-      
-    });
+  },
+        validate: {
+          type:Boolean,
+          default: false
+        }
+  });
     const newUser = computed(() => {
   return {
     userId: props.userRegister.userId,
@@ -44,8 +47,8 @@ const validatePassword = () => {
                 <div class="col-md-6 d-none d-md-block"></div>
                 <div class="col-md-6 col-lg-12 d-flex">
                   <div class="card-body p-4 p-lg-5 text-black">
-                    <form  @submit.prevent="submit" oninput='pwsd2.setCustomValidity(pwsd2.value != pwsd1.value ? "Passwords do not match." : "")'
-              novalidate>
+                    <form  @submit.prevent="submit">
+             >
                       <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px">
                         Sign into your account
                       </h5>
@@ -65,7 +68,7 @@ const validatePassword = () => {
                       maxlength="100"
                       required
                     />
-                    <div class="invalid-feedback">Name must not be blank.</div>
+                    <p class="text-danger" v-show="validate">Name must be unique</p>
 
                     <small>
                       <div class="form-text">
@@ -91,9 +94,7 @@ const validatePassword = () => {
                       maxlength="50"
                       required
                     />
-                    <div class="invalid-feedback">
-                      Your pattern not correctly.
-                    </div>
+                    <p class="text-danger" v-show="validate">Email must be unique</p>
                     <small>
                       <div class="form-text">
                         <span id="current_email">0</span>

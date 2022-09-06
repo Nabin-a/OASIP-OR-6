@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 import moment from "moment";
-defineEmits(["createUser", "updateUser"]);
+defineEmits(["updateUser"]);
 const props = defineProps({
   userCreate: {
     type: Object,
@@ -15,31 +15,18 @@ const props = defineProps({
 
 const roles = ref(["student", "admin", "lecturer"]);
 
-const userRoleSelect = ref();
-
-const newUser = computed(() => {
+const editUser = computed(() => {
   return {
     userId: props.userCreate.userId,
     name: props.userCreate.name,
-    email: props.userCreate.email,
-    password: props.userCreate.password
+    email: props.userCreate.email
   };
 });
 
-const nameEdit = ref();
-const emailEdit = ref();
 
-const showPassword1 = ref(false);
-const showPassword = ref(false);
 
-const confirmPassword = ref();
 
-const checkPasswordMatch = ref(true);
-const validatePassword = () => {
-  if (confirmPassword.value != newUser.value.password) {
-    checkPasswordMatch.value = false;
-  } else checkPasswordMatch.value = true;
-};
+
 </script>
 
 <template>
@@ -62,7 +49,7 @@ const validatePassword = () => {
           ></button>
         </div>
         <div class="modal-body">
-          <form @submit.prevent="submit">
+          <form class="was-validated" @submit.prevent="submit">
             <ul class="list-group">
               <li class="list-group-item">
                 Name:
@@ -71,6 +58,7 @@ const validatePassword = () => {
                   class="form-control"
                   disabled
                   v-model="currentUser.name"
+                  required
                 />
               </li>
               <br />
@@ -81,33 +69,39 @@ const validatePassword = () => {
                   class="form-control"
                   minlength="1"
                   maxlength="100"
+                  v-model="editUser.name"
                   required
-                  v-model="nameEdit"
                 />
+                <div class="invalid-feedback">Name must not be blank.</div>
               </li>
+              
               <br />
               <li class="list-group-item">
-                Booker Email:
-                <input
-                  type="text"
-                  class="form-control"
-                  disabled
-                  v-model="currentUser.email"
-                />
-              </li>
-              <br />
-              <li class="list-group-item">
-                Booker Email:
+                User Email:
                 <input
                   type="email"
                   class="form-control"
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                  v-model="emailEdit"
+                  disabled
+                  v-model="currentUser.email"
+                />
+  
+              </li>
+              <br />
+              <li class="list-group-item">
+                User Email:
+                <input
+                  type="email"
+                  class="form-control"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                  v-model="editUser.email"
                   minlength="1"
                   maxlength="50"
                   required
                 />
+                <div class="invalid-feedback">Pattern not correctly.</div>
               </li>
+          
               <br />
 
               <li class="list-group-item">
@@ -119,6 +113,7 @@ const validatePassword = () => {
                     v-model="currentUser.role"
                     name="roleEdit"
                     :value="role"
+                    
                   />
                   {{ role }}
                 </div>
@@ -139,14 +134,13 @@ const validatePassword = () => {
         <div class="modal-footer">
           <button
             type="submit"
-            value="submit"
             class="btn btn-success"
             @click="
               $emit(
                 'updateUser',
                 currentUser.userId,
-                nameEdit,
-                emailEdit,
+                editUser.name,
+                editUser.email,
                 currentUser.role
               )
             "

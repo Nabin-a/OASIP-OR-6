@@ -64,8 +64,9 @@ const updateUser = async (userId, editName, editEmail, editRole) => {
     location.reload();
     alert("Edit Success");
     console.log("edited successfully");
-  } else if (res.status === 400) {
-    alert("Name and email must be unique")
+  } else {
+  console.log("Error, cannot edit user")
+  }
 };
 
 
@@ -74,8 +75,6 @@ const updateUser = async (userId, editName, editEmail, editRole) => {
  
 <template>
     <UserCreate 
-    @createUser="createNewUser"
-    :userCreate="users"
     :currentUser="userDetail"
     @updateUser="updateUser"
     />

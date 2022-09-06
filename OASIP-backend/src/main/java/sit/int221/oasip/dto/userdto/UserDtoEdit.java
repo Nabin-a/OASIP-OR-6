@@ -7,9 +7,12 @@ import lombok.Setter;
 import sit.int221.oasip.entities.Roles;
 import sit.int221.oasip.validators.Role;
 
+
+
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+
 
 
 @Getter
@@ -18,6 +21,7 @@ import javax.persistence.Enumerated;
 @AllArgsConstructor
 public class UserDtoEdit {
     private Integer userId;
+
 
     @Column(unique = true)
     private String name;
