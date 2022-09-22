@@ -3,7 +3,7 @@ package sit.int221.oasip.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-import java.util.regex.Matcher;
+
 
 @Table(name = "user")
 @Entity
