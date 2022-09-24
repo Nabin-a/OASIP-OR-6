@@ -2,6 +2,7 @@ package sit.int221.oasip.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import sit.int221.oasip.dto.userdto.*;
@@ -24,6 +25,7 @@ public class UserController {
 
     @Autowired
     private PasswordService passwordService;
+
 
     @GetMapping("")
     public List<UserDtoList> getUserDTO() {
@@ -56,5 +58,10 @@ public class UserController {
     @PostMapping("/match")
     public User checkPassword(@RequestBody UserDtoLogin login){
         return passwordService.checkPassword(login);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest login) throws Exception {
+        return passwordService.login(login);
     }
 }
