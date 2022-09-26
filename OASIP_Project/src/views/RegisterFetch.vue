@@ -34,7 +34,8 @@ const createNewUser = async (
     goUser();
     alert("Added sucessfully");
     const addedUser = await res.json();
-    events.value.push(addedUser);      
+    users1.value.push(addedUser)
+
   } else if (res.status === 400) {
     validate.value = true
   } else {

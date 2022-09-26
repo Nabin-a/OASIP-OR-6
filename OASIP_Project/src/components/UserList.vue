@@ -1,4 +1,5 @@
 <script setup>
+import {useRouter} from 'vue-router'
 defineEmits(["getUserid","removeUser"])
 defineProps({
   userList: {
@@ -6,13 +7,17 @@ defineProps({
     require: true
   }
 });
+const appRouter = useRouter()
+const goLogin = () => appRouter.push({name: 'Login'})
+let token = localStorage.getItem('token')
 </script>
 
 <template>
   <div class="container pt-3 pb-5">
     <h2 style="color: white">User List</h2>
     &nbsp
-    <h1 v-if="userList.length < 1" class="forusl">No users</h1>
+    <h1 v-if="token === null">Please <a class="link-blue" @click="goLogin">login</a>  before.</h1>
+    <h1 v-else-if="userList.length < 1" class="forusl">No users</h1>
     <table class="table table-light table-striped table-hover" v-else>
       <thead>
         <tr>

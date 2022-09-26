@@ -16,14 +16,13 @@ const validateUnique = ref(false);
 let token = localStorage.getItem('token')
 
 const getUsers = async () => {
-  console.log(token)
-  console.log(`${token}`)
-
+  
   const res = await fetch(`http://localhost:8080/api/users` , {
     method: 'GET',
     headers: {
-      "Authorization" : token
+      'Authorization': `Bearer ${token}`
     }
+    
   })
   if (res.status === 200) {
     users.value = await res.json();
@@ -36,7 +35,13 @@ const getUsers = async () => {
 
 const getUserid = async (userId) => {
   console.log(userId);
-  const res = await fetch(`http://localhost:8080/api/users/${userId}`);
+  const res = await fetch(`http://localhost:8080/api/users/${userId}`, 
+  {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
   if (res.status === 200) {
     userDetail.value = await res.json();
     console.log(userDetail.value);
@@ -47,7 +52,10 @@ const removeUser = async (userId) => {
   if (confirm("Delete this user?") == true) {
     console.log(userId);
     const res = await fetch(`http://localhost:8080/api/users/${userId}`, {
-      method: "DELETE"
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
     });
     if (res.status === 200) {
       users.value = users.value.filter((user) => user.userId !== userId);
@@ -63,7 +71,7 @@ const updateUser = async (userId, editName, editEmail, editRole) => {
     method: "PATCH",
     headers: {
       "content-type": "application/json;",
-      "Authorization": token
+      'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify({
       name: editName,

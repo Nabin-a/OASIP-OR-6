@@ -10,10 +10,17 @@ const appRouter = useRouter();
 const goUser = () => appRouter.push({name: 'User'})
 
 
+const LocalStorage = (name, token) => {
+  console.log(token)
+  localStorage.setItem(name, `${token}`)
+}
+
+
+
 const userLogin = async (UserEmail, UserPassword) => {
   console.log(UserEmail);
   emailNotfound.value = false
-  const res = await fetch(`http://localhost:8080/api/users/match`, {
+  const res = await fetch(`http://localhost:8080/api/users/login`, {
     method: "POST",
     headers: {
       "content-type": "application/json;"
@@ -22,13 +29,15 @@ const userLogin = async (UserEmail, UserPassword) => {
       email: UserEmail,
       password: UserPassword
       
-    })
+    },
+    localStorage.setItem('email',`${UserEmail}`))
     
-  },
-  localStorage.setItem('key',UserEmail,UserPassword));
+  });
  
-  if (res.status === 200) {
+  if (res.status === 200 || res.status === 201) {
     alert("Password Matched");
+    const jwttoken = await res.json()
+    LocalStorage('token',jwttoken.token)
     goUser();
     // window.open("http://localhost:3000/or6/#/user");
   } else if (res.status === 404) {
