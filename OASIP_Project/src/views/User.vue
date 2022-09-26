@@ -8,6 +8,7 @@ const goUser = () => appRouter.push({name: 'User'})
 const goEvent = () => appRouter.push({name: 'Event'})
 const goLogin = () => appRouter.push({name: 'Login'})
 const goRegister = () => appRouter.push({name: 'Register'})
+const clear = () => localStorage.clear()
 </script>
  
 <template>
@@ -26,6 +27,10 @@ const goRegister = () => appRouter.push({name: 'Register'})
           <li class="nav-item">
             <button @click="goEvent" class="btn btn-light rounded-pill">
               Event
+            </button>
+          </li>
+          <li>
+            <button class="btn " @click="clear">clear
             </button>
           </li>
         </ul>

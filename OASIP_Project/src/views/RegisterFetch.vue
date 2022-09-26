@@ -1,9 +1,12 @@
 <script setup>
 import { ref, onBeforeMount } from "vue";
+import { useRouter } from "vue-router"
 import UserRegister from "../components/UserRegister.vue";
 
 const users1 = ref([]);
 const validate = ref(false)
+const appRouter = useRouter();
+const goUser = () => appRouter.push({name: 'User'})
 
 const createNewUser = async (
   newUserName,
@@ -26,8 +29,9 @@ const createNewUser = async (
       role: newUserRole
     })
   });
+ 
   if (res.status === 201) {
-    location.reload();
+    goUser();
     alert("Added sucessfully");
     const addedUser = await res.json();
     events.value.push(addedUser);      

@@ -47,7 +47,7 @@ const validatePassword = () => {
             <div class="col-md-6 col-lg-12 d-flex">
               <div class="card-body p-4 p-lg-5 text-black">
                 <form @submit.prevent="submit">
-                  >
+                  
                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px">
                     Sign into your account
                   </h5>

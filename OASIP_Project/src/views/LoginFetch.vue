@@ -1,10 +1,14 @@
 <script setup>
 import { ref } from "vue";
 import UserLogin from "../components/UserLogin.vue";
+import { useRouter } from "vue-router"
 
 const emailNotfound = ref(false);
 const emailNotMatch = ref(false);
 const userStore = ref({});
+const appRouter = useRouter();
+const goUser = () => appRouter.push({name: 'User'})
+
 
 const userLogin = async (UserEmail, UserPassword) => {
   console.log(UserEmail);
@@ -17,17 +21,22 @@ const userLogin = async (UserEmail, UserPassword) => {
     body: JSON.stringify({
       email: UserEmail,
       password: UserPassword
+      
     })
-  });
+    
+  },
+  localStorage.setItem('key',UserEmail,UserPassword));
+ 
   if (res.status === 200) {
     alert("Password Matched");
-    location.reload()
+    goUser();
     // window.open("http://localhost:3000/or6/#/user");
   } else if (res.status === 404) {
     emailNotfound.value = true
   } else if (res.status === 401) {
     emailNotMatch.value = true
   }
+  
 };
 </script>
 

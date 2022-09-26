@@ -4,12 +4,27 @@ import UserList from "../components/UserList.vue";
 import UserDetail from "../components/UserDetail.vue";
 import UserCreate from "../components/UserCreate.vue";
 
+onBeforeMount(async () => {
+  await getUsers();
+});
+
+
 const users = ref([]);
 const userDetail = ref({});
 const validateUnique = ref(false);
 
+let token = localStorage.getItem('token')
+
 const getUsers = async () => {
-  const res = await fetch(`http://localhost:8080/api/users`);
+  console.log(token)
+  console.log(`${token}`)
+
+  const res = await fetch(`http://localhost:8080/api/users` , {
+    method: 'GET',
+    headers: {
+      "Authorization" : token
+    }
+  })
   if (res.status === 200) {
     users.value = await res.json();
     console.log(users.value);
@@ -17,10 +32,7 @@ const getUsers = async () => {
   } else console.log("error, cannot get notes");
 };
 
-onBeforeMount(async () => {
-  await getUsers();
-  console.log(users.value);
-});
+
 
 const getUserid = async (userId) => {
   console.log(userId);
@@ -44,13 +56,14 @@ const removeUser = async (userId) => {
   }
 };
 
-// PUT
+// PATCH
 const updateUser = async (userId, editName, editEmail, editRole) => {
   console.log(userId, editName, editEmail, editRole);
   const res = await fetch(`http://localhost:8080/api/users/${userId}`, {
     method: "PATCH",
     headers: {
-      "content-type": "application/json;"
+      "content-type": "application/json;",
+      "Authorization": token
     },
     body: JSON.stringify({
       name: editName,
@@ -59,7 +72,7 @@ const updateUser = async (userId, editName, editEmail, editRole) => {
     })
   });
   if (res.status === 200) {
-    location.reload();
+    location.reload()
     alert("Edit Success");
     console.log("edited successfully");
   } else if (res.status === 400) {
