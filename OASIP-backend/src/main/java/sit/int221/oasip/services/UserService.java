@@ -4,13 +4,18 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import sit.int221.oasip.configs.JwtTokenUtil;
 import sit.int221.oasip.dto.userdto.*;
 import sit.int221.oasip.entities.Roles;
 import sit.int221.oasip.entities.User;
 import sit.int221.oasip.repositories.UserRepository;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
@@ -23,8 +28,11 @@ public class UserService {
     private ListMapperService listMapper;
     @Autowired
     private PasswordService passwordService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
-
+    @Autowired
+    private JwtTokenUtil jwtUtil;
 
     //Method List User All
     public List<UserDtoList> getUsersAll() {
@@ -73,5 +81,21 @@ public class UserService {
         user.setRole(editUser.getRole());
         return modelMapper.map(userRepository.saveAndFlush(user), UserDtoList.class);
     }
+
+    public ResponseEntity<?> refresh(HttpServletRequest request){
+        String authToken = request.getHeader("Authorization");
+        final String token = authToken.substring(7);
+        String username = jwtUtil.getUsernameFromToken(token);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+        if (jwtUtil.canTokenBeRefreshed(token)) {
+            String accessToken = jwtUtil.generateToken(userDetails);
+            String refreshedToken = jwtUtil.refreshToken(accessToken);
+            return ResponseEntity.ok(new JwtResponse(accessToken, refreshedToken));
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
 
 }
