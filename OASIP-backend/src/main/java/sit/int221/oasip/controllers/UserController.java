@@ -11,6 +11,7 @@ import sit.int221.oasip.repositories.UserRepository;
 import sit.int221.oasip.services.PasswordService;
 import sit.int221.oasip.services.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -55,13 +56,13 @@ public class UserController {
         return userService.edit(update, id);
     }
 
-    @PostMapping("/match")
-    public User checkPassword(@RequestBody UserDtoLogin login){
-        return passwordService.checkPassword(login);
-    }
-
     @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest login) throws Exception {
         return passwordService.login(login);
+    }
+
+    @GetMapping("/refresh")
+    public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception{
+        return userService.refresh(request);
     }
 }

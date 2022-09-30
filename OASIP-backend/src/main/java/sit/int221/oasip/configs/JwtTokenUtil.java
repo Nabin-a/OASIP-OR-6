@@ -18,10 +18,14 @@ public class JwtTokenUtil implements Serializable {
 
     private static final long serialVersionUID = -2550185165626007488L;
 
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+    public static final long JWT_TOKEN_VALIDITY = 60 * 30;
+
 
     @Value("${jwt.secret}")
     private String secret;
+
+    @Value("${jwt.token.expiration.in.seconds}")
+    private Long expiration;
 
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
@@ -60,5 +64,28 @@ public class JwtTokenUtil implements Serializable {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsernameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+
+    public String refreshToken(String token) {
+        final Date createdDate = new Date();
+        final Date expirationDate = calculateExpirationDate(createdDate);
+
+        final Claims claims = getAllClaimsFromToken(token);
+        claims.setIssuedAt(createdDate);
+        claims.setExpiration(expirationDate);
+
+        return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret).compact();
+    }
+
+    private Date calculateExpirationDate(Date createdDate) {
+        return new Date(createdDate.getTime() + expiration * 1000);
+    }
+
+    public Boolean canTokenBeRefreshed(String token) {
+        return (!isTokenExpired(token) || ignoreTokenExpiration(token));
+    }
+
+    private Boolean ignoreTokenExpiration(String token) {
+        return false;
     }
 }
