@@ -32,7 +32,12 @@ const getEvents = async () => {
 };
 
 const getEventCategory = async () => {
-  const res = await fetch(`http://localhost:8080/api/category`);
+  const res = await fetch(`http://localhost:8080/api/category`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
   if (res.status === 200) {
     eventCategory.value = await res.json();
     console.log(eventCategory.value);
@@ -42,7 +47,12 @@ const getEventCategory = async () => {
 
 const getEventid = async (id) => {
   console.log(id);
-  const res = await fetch(`http://localhost:8080/api/events/${id}`);
+  const res = await fetch(`http://localhost:8080/api/events/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
   if (res.status === 200) {
     eventDetail.value = await res.json();
     console.log(eventDetail.value);
@@ -68,7 +78,8 @@ const createNewSchedule = async (
   const res = await fetch(`http://localhost:8080/api/events/`, {
     method: "POST",
     headers: {
-      "content-type": "application/json;"
+      "content-type": "application/json;",
+      'Authorization' : `Bearer ${token}`
     },
     body: JSON.stringify({
       bookingName: newBookingName,
@@ -91,7 +102,10 @@ const removeEvent = async (id) => {
   if (confirm("Delete this column?") == true) {
     console.log(id);
     const res = await fetch(`http://localhost:8080/api/events/${id}`, {
-      method: "DELETE"
+      method: "DELETE",
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
     });
     if (res.status === 200) {
       events.value = events.value.filter((event) => event.id !== id);
@@ -106,7 +120,8 @@ const updateEvent = async (id, editTime, editNote) => {
   const res = await fetch(`http://localhost:8080/api/events/${id}`, {
     method: "PUT",
     headers: {
-      "content-type": "application/json;"
+      "content-type": "application/json;",
+      'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify({
       startTime: editTime,

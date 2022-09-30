@@ -7,9 +7,10 @@ const goUser = () => appRouter.push({ name: "User" });
 const goEvent = () => appRouter.push({ name: "Event" });
 const goLogin = () => appRouter.push({ name: "Login" });
 const goRegister = () => appRouter.push({ name: "Register" });
-const clear = () => localStorage.clear();
+
 
 let token = localStorage.getItem("token");
+let name = localStorage.getItem("email")
 
 const clearData = () => localStorage.clear();
 const reload = () => location.reload();
@@ -34,7 +35,10 @@ const reload = () => location.reload();
             </button>
           </li>
         </ul>
-
+        
+          <li v-if="name !== null" class="list-group item text-dark" >{{name}} |
+          </li>
+       
         <button
           v-if="token === null"
           class="btn btn-outline-dark rounded-pill"

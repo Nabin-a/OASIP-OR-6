@@ -1,5 +1,4 @@
 <script setup>
-
 import NavBar from './NavBar.vue';
 
 
