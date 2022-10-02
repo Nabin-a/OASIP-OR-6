@@ -8,11 +8,10 @@ const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
 
-let token = localStorage.getItem('token')
+let token = localStorage.getItem('accessToken')
 
 onBeforeMount(async () => {
-  token = localStorage.getItem('token');
-  token = "Bearer " + token;
+
   await getEvents();
   await getEventCategory();
 });

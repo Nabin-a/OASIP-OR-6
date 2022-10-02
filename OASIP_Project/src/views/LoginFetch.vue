@@ -9,10 +9,9 @@ const userStore = ref({});
 const appRouter = useRouter();
 const goUser = () => appRouter.push({name: 'User'})
 
-
-const LocalStorage = (name, token) => {
-  console.log(token)
-  localStorage.setItem(name, `${token}`)
+const LocalStorage = (name, accessToken) => {
+  console.log(accessToken)
+  localStorage.setItem(name, `${accessToken}`)
 }
 
 
@@ -37,7 +36,8 @@ const userLogin = async (UserEmail, UserPassword) => {
   if (res.status === 200 || res.status === 201) {
     alert("Password Matched");
     const jwttoken = await res.json()
-    LocalStorage('token',jwttoken.token)
+    LocalStorage('token',jwttoken.accessToken)
+    LocalStorage('refreshToken',jwttoken.refreshToken)
     goUser();
     // window.open("http://localhost:3000/or6/#/user");
   } else if (res.status === 404) {

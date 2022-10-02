@@ -12,6 +12,7 @@ onBeforeMount(async () => {
 const users = ref([]);
 const userDetail = ref({});
 const validateUnique = ref(false);
+const goLogin = () => appRouter.push({ name: "Login" });
 
 let token = localStorage.getItem('token')
 
@@ -28,7 +29,19 @@ const getUsers = async () => {
     users.value = await res.json();
     console.log(users.value);
     return users.value;
-  } else console.log("error, cannot get notes");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    }
+  };
 };
 
 
@@ -45,7 +58,17 @@ const getUserid = async (userId) => {
   if (res.status === 200) {
     userDetail.value = await res.json();
     console.log(userDetail.value);
-  } else console.log("error, cannot get data");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('refreshToken')}`
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    }
+  }
 };
 
 const removeUser = async (userId) => {
@@ -60,9 +83,20 @@ const removeUser = async (userId) => {
     if (res.status === 200) {
       users.value = users.value.filter((user) => user.userId !== userId);
       console.log("deleted successfully");
-    } else console.log("error, cannot delete data");
+    } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('refreshToken')}`
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+      }
+      }
   }
-};
+}
+;
 
 // PATCH
 const updateUser = async (userId, editName, editEmail, editRole) => {
@@ -85,10 +119,19 @@ const updateUser = async (userId, editName, editEmail, editRole) => {
     console.log("edited successfully");
   } else if (res.status === 400) {
     validateUnique.value = true;
-  } else {
-    console.log("error, cannot be added");
+  }  else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('refreshToken')}`
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    }
   }
-};
+}
+;
 </script>
 
 <template>

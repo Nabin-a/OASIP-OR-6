@@ -36,7 +36,7 @@ const reload = () => location.reload();
           </li>
         </ul>
         
-          <li v-if="name !== null" class="list-group item text-dark" >{{name}} |
+          <li v-if="token !== null" class="list-group item text-dark" >{{name}} |
           </li>
        
         <button
