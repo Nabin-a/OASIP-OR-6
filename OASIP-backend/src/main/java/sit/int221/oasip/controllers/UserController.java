@@ -56,6 +56,11 @@ public class UserController {
         return userService.edit(update, id);
     }
 
+    @PostMapping("/match")
+    public User checkPassword(@RequestBody UserDtoLogin login){
+        return passwordService.checkPassword(login);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest login) throws Exception {
         return passwordService.login(login);
