@@ -12,17 +12,26 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: "/user",
     name: "User",
-    component: User
+    component: User,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/event",
     name: "Event",
-    component: Event
+    component: Event,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/login",
@@ -38,4 +47,17 @@ const routes = [
 ];
 
 const router = createRouter({ history, routes });
+
+router.beforeEach((to,from,next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!localStorage.getItem('token')) {
+      next({ name: 'Login' })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
 export default router;
