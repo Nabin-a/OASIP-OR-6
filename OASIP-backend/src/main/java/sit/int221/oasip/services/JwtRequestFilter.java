@@ -2,12 +2,14 @@ package sit.int221.oasip.services;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ResponseStatusException;
 import sit.int221.oasip.configs.JwtTokenUtil;
 
 import javax.servlet.FilterChain;
@@ -39,13 +41,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             } catch (IllegalArgumentException e) {
                 System.out.println("Unable to get JWT Token");
             } catch (ExpiredJwtException e) {
-                String isRefreshToken = request.getHeader("isRefreshToken");
+               String isRefreshToken = request.getHeader("isRefreshToken");
                 String requestURL = request.getRequestURL().toString();
                 if (isRefreshToken != null && isRefreshToken.equals("true") && requestURL.contains("refreshtoken")) {
                     allowForRefreshToken(e, request);
                 } else
                     request.setAttribute("exception", e);
-
             }
         }
         else {

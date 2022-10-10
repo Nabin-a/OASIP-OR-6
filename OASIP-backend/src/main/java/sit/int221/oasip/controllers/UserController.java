@@ -67,7 +67,7 @@ public class UserController {
     }
 
     @GetMapping("/refresh")
-    public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception{
+    public ResponseEntity<?> refreshToken(HttpServletRequest request) throws Exception {
         return userService.refresh(request);
     }
 }
