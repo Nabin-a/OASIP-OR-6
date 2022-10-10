@@ -33,7 +33,7 @@ create table `user` (
 	userId int not null auto_increment,
     `name` varchar(100) not null unique, 
     email varchar(50) not null unique,
-    password varchar(90) not null,
+    password varchar(100) not null,
     `role` enum('admin', 'lecturer', 'student') default 'student' not null,
 	createdOn timestamp default current_timestamp not null, 
     updatedOn timestamp default current_timestamp on UPDATE CURRENT_TIMESTAMP not null,

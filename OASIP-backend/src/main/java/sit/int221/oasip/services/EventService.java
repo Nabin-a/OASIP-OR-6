@@ -4,6 +4,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import sit.int221.oasip.dto.eventdto.EventDtoCreate;
@@ -30,6 +32,13 @@ public class EventService {
 
     //Method list all event
     public List<EventDtoList> getEventsAll() {
+        Authentication role = SecurityContextHolder.getContext().getAuthentication();
+        //role student
+        if (role.getAuthorities().toString().equals("[student]")){
+            List<Event> eventList = repository.findAllByBookingEmail(role.getName());
+            return listMapper.mapList(eventList, EventDtoList.class, modelMapper);
+        }
+
         List<Event> eventList = repository.findAll(Sort.by(Sort.Direction.DESC, "startTime"));
         return listMapper.mapList(eventList, EventDtoList.class, modelMapper);
     }
