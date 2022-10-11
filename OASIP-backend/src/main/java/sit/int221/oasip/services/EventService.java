@@ -32,12 +32,12 @@ public class EventService {
 
     //Method list all event
     public List<EventDtoList> getEventsAll() {
-        Authentication role = SecurityContextHolder.getContext().getAuthentication();
-        //role student
-        if (role.getAuthorities().toString().equals("[student]")){
-            List<Event> eventList = repository.findAllByBookingEmail(role.getName());
-            return listMapper.mapList(eventList, EventDtoList.class, modelMapper);
-        }
+//        Authentication role = SecurityContextHolder.getContext().getAuthentication();
+//        //role student
+//        if (role.getAuthorities().toString().equals("[student]")){
+//            List<Event> eventList = repository.findAllByBookingEmail(role.getName());
+//            return listMapper.mapList(eventList, EventDtoList.class, modelMapper);
+//        }
 
         List<Event> eventList = repository.findAll(Sort.by(Sort.Direction.DESC, "startTime"));
         return listMapper.mapList(eventList, EventDtoList.class, modelMapper);

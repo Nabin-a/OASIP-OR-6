@@ -28,6 +28,12 @@ function parseJwt(token) {
   return JSON.parse(jsonPayload)
 }
 
+// const pushRole = (accessToken) => {
+//   let role = null
+//   role = parseJwt(accessToken)
+//   localStorage.setItem('role', `${role.Roles}`
+//   )
+// }
 
 
 const userLogin = async (UserEmail, UserPassword) => {
@@ -52,6 +58,7 @@ const userLogin = async (UserEmail, UserPassword) => {
     const jwttoken = await res.json()
     LocalStorage('token',jwttoken.accessToken)
     LocalStorage('refreshToken',jwttoken.refreshToken)
+    // pushRole(jwttoken.accessToken)
     goHome();
     // window.open("http://localhost:3000/or6/#/user");
   } else if (res.status === 404) {
