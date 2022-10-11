@@ -85,7 +85,7 @@ const createNewSchedule = async (
       bookingEmail: newBookingEmail,
       startTime: newStartTime,
       durations: newDurations,
-      eventCategoryId: newCategory,
+      categoryId: newCategory,
       note: newNote
     })
   });

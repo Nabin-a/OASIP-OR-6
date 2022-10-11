@@ -40,7 +40,7 @@ public class EventController {
     //POST
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public Event create(@Valid @RequestBody EventDtoCreate newEventDtoCreate){
+    public EventDtoDetail create(@Valid @RequestBody EventDtoCreate newEventDtoCreate){
         return eventService.save(newEventDtoCreate);
     }
 

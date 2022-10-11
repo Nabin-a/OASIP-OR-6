@@ -18,8 +18,8 @@ import java.time.ZonedDateTime;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Integer eventId;
+    @Column(name = "eventId", nullable = false)
+    private Integer id;
 
     @Column(name = "bookingName", length = 100)
     private String bookingName;

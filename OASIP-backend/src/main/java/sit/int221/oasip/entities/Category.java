@@ -15,8 +15,8 @@ import java.util.Set;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Integer eventCategoryId;
+    @Column(name = "eventCategoryId", nullable = false)
+    private Integer categoryId;
 
     @Column(name = "CategoryName", nullable = false, length = 100)
     private String categoryName;

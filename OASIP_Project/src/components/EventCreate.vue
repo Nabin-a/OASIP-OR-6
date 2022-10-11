@@ -159,7 +159,7 @@ const eventStartTimeEdit = computed(() => {
                         v-for="eventcat in props.eventCategory"
                         :value="{
                           durations: eventcat.durationMin,
-                          id: eventcat.eventCategoryId
+                          id: eventcat.categoryId
                         }"
                       >
                         {{ eventcat.categoryName }}
