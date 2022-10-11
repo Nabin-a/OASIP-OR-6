@@ -51,14 +51,15 @@ public class EventService {
     }
 
     //Method create new Event
-    public Event save(EventDtoCreate newEvent){
-        Category category = categoryRepository.findById(newEvent.getEventCategoryId())
+    public EventDtoDetail save(EventDtoCreate newEvent){
+
+        Category category = categoryRepository.findById(newEvent.getCategoryId())
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                newEvent.getEventCategoryId() + " doesn't exist !!"));
+                                "Category id:" + newEvent.getCategoryId() + " doesn't exist !!"));
         newEvent.setDurations(category.getDurationMin());
-        Event event = modelMapper.map(newEvent , Event.class);
-        return repository.saveAndFlush(event);
+        Event event = repository.saveAndFlush(modelMapper.map(newEvent , Event.class));
+        return modelMapper.map(event, EventDtoDetail.class);
     }
 
     public Event edit(EventDtoEdit editEvent, Integer eventId){

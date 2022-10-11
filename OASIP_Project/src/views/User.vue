@@ -1,17 +1,17 @@
 <script setup>
 import UserTable from './UserTable.vue';
-import {useRouter} from 'vue-router'
+import NavBar from './NavBar.vue'
 
-const appRouter = useRouter()
-const goHome = () => appRouter.push({name: 'Home'})
+
 </script>
  
 <template>
+        <NavBar />
     <div>
         <UserTable/>
         
     </div>
-        <button @click="goHome" class="btn btn-primary btn-lg active">Home</button>
+       
 </template>
  
 <style>

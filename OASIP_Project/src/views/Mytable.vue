@@ -8,9 +8,21 @@ const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
 
+let token = localStorage.getItem('accessToken')
+
+onBeforeMount(async () => {
+
+  await getEvents();
+  await getEventCategory();
+});
 
 const getEvents = async () => {
-  const res = await fetch(`http://localhost:8080/api/events`);
+  const res = await fetch(`http://localhost:8080/api/events`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
   if (res.status === 200) {
     events.value = await res.json();
     console.log(events.value);
@@ -18,13 +30,13 @@ const getEvents = async () => {
   } else console.log("error, cannot get notes");
 };
 
-onBeforeMount(async () => {
-  await getEvents();
-  console.log(events.value);
-});
-
 const getEventCategory = async () => {
-  const res = await fetch(`http://localhost:8080/api/category`);
+  const res = await fetch(`http://localhost:8080/api/category`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
   if (res.status === 200) {
     eventCategory.value = await res.json();
     console.log(eventCategory.value);
@@ -32,14 +44,14 @@ const getEventCategory = async () => {
   } else console.log("error, cannot get notes");
 };
 
-onBeforeMount(async () => {
-  await getEventCategory();
-  console.log(eventCategory.value);
-});
-
 const getEventid = async (id) => {
   console.log(id);
-  const res = await fetch(`http://localhost:8080/api/events/${id}`);
+  const res = await fetch(`http://localhost:8080/api/events/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  })
   if (res.status === 200) {
     eventDetail.value = await res.json();
     console.log(eventDetail.value);
@@ -65,7 +77,8 @@ const createNewSchedule = async (
   const res = await fetch(`http://localhost:8080/api/events/`, {
     method: "POST",
     headers: {
-      "content-type": "application/json;"
+      "content-type": "application/json;",
+      'Authorization' : `Bearer ${token}`
     },
     body: JSON.stringify({
       bookingName: newBookingName,
@@ -88,7 +101,10 @@ const removeEvent = async (id) => {
   if (confirm("Delete this column?") == true) {
     console.log(id);
     const res = await fetch(`http://localhost:8080/api/events/${id}`, {
-      method: "DELETE"
+      method: "DELETE",
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
     });
     if (res.status === 200) {
       events.value = events.value.filter((event) => event.id !== id);
@@ -103,7 +119,8 @@ const updateEvent = async (id, editTime, editNote) => {
   const res = await fetch(`http://localhost:8080/api/events/${id}`, {
     method: "PUT",
     headers: {
-      "content-type": "application/json;"
+      "content-type": "application/json;",
+      'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify({
       startTime: editTime,
@@ -116,14 +133,6 @@ const updateEvent = async (id, editTime, editNote) => {
     console.log("edited successfully");
   } else console.log("error, cannot be edit");
 };
-
-
-
-
-
-
-
-
 </script>
 
 <template>
@@ -141,8 +150,6 @@ const updateEvent = async (id, editTime, editNote) => {
     @removeEvent="removeEvent"
   />
   <EventDetail :eventDetail="eventDetail" />
-
-
 </template>
 
 <style></style>

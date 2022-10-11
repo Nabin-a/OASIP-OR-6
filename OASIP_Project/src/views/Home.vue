@@ -1,19 +1,23 @@
 <script setup>
-import Mytable from '../views/Mytable.vue'
-import {useRouter} from 'vue-router'
+import NavBar from './NavBar.vue';
 
-const appRouter = useRouter()
-const goUser = () => appRouter.push({name: 'User'})
+
 </script>
  
 <template>
+    <NavBar />
+<br />
     <div>
-        <Mytable/>
         
+        Welcome to my project_OR6
     </div>
-    <button @click="goUser" class="btn btn-primary btn-lg active">User</button>
 </template>
  
 <style>
+   .btn:hover{ 
+    background-color: rgb(209, 209, 209)
+   }
 
+   
+   
 </style>

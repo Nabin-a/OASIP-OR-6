@@ -4,80 +4,145 @@ import UserList from "../components/UserList.vue";
 import UserDetail from "../components/UserDetail.vue";
 import UserCreate from "../components/UserCreate.vue";
 
+onBeforeMount(async () => {
+  await getUsers();
+});
+
+
 const users = ref([]);
 const userDetail = ref({});
+const validateUnique = ref(false);
+const goLogin = () => appRouter.push({ name: "Login" });
 
-
+let token = localStorage.getItem('token')
 
 const getUsers = async () => {
-  const res = await fetch(`http://localhost:8080/api/users`);
+  
+  const res = await fetch(`http://localhost:8080/api/users` , {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+    
+  })
   if (res.status === 200) {
     users.value = await res.json();
     console.log(users.value);
     return users.value;
-  } else console.log("error, cannot get notes");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    }
+  };
 };
 
-onBeforeMount(async () => {
-  await getUsers();
-  console.log(users.value);
-});
+
 
 const getUserid = async (userId) => {
   console.log(userId);
-  const res = await fetch(`http://localhost:8080/api/users/${userId}`);
+  const res = await fetch(`http://localhost:8080/api/users/${userId}`, 
+  {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
   if (res.status === 200) {
     userDetail.value = await res.json();
     console.log(userDetail.value);
-  } else console.log("error, cannot get data");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('refreshToken')}`
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    }
+  }
 };
 
-const createNewUser = async (
-  newUserName,
-  newUserEmail,
-  newUserRole
-) => {
-  console.log(
-    newUserName,
-    newUserEmail,
-    newUserRole
-  );
-  const res = await fetch(`http://localhost:8080/api/users`, {
-    method: "POST",
+const removeUser = async (userId) => {
+  if (confirm("Delete this user?") == true) {
+    console.log(userId);
+    const res = await fetch(`http://localhost:8080/api/users/${userId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (res.status === 200) {
+      users.value = users.value.filter((user) => user.userId !== userId);
+      console.log("deleted successfully");
+    } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('refreshToken')}`
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+      }
+      }
+  }
+}
+;
+
+// PATCH
+const updateUser = async (userId, editName, editEmail, editRole) => {
+  console.log(userId, editName, editEmail, editRole);
+  const res = await fetch(`http://localhost:8080/api/users/${userId}`, {
+    method: "PATCH",
     headers: {
-      "content-type": "application/json;"
+      "content-type": "application/json;",
+      'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify({
-      name: newUserName,
-      email: newUserEmail,
-      role: newUserRole,
+      name: editName,
+      email: editEmail,
+      role: editRole
     })
   });
-  if (res.status === 201) {
-    location.reload();
-    alert("Added sucessfully");
-    const addedUser = await res.json();
-    events.value.push(addedUser);
-  } else console.log("error, cannot be added");
-};
-
+  if (res.status === 200) {
+    location.reload()
+    alert("Edit Success");
+    console.log("edited successfully");
+  } else if (res.status === 400) {
+    validateUnique.value = true;
+  }  else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('refreshToken')}`
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    }
+  }
+}
+;
 </script>
- 
+
 <template>
-    <UserCreate 
-    @createUser="createNewUser"
-    :userCreate="users"
+  <UserCreate
+    :currentUser="userDetail"
+    :validateUnique="validateUnique"
+    @updateUser="updateUser"
+  />
+  <UserList :userList="users" @getUserid="getUserid" @removeUser="removeUser" />
 
-    />
-    <UserList
-    :userList="users"
-    @getUserid="getUserid"/>
-
-    <UserDetail :userDetail="userDetail" />
-
-    
+  <UserDetail :userDetail="userDetail" />
 </template>
- 
-<style>
 
-</style>
+<style></style>

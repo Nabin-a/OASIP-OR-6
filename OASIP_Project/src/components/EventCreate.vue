@@ -88,7 +88,7 @@ const eventStartTimeEdit = computed(() => {
             ></button>
           </div>
           <div class="modal-body">
-            <form class="needs-validation" novalidate>
+            <form class="needs-validation" @submit.prevent="submit" novalidate>
               <div>
                 <ul>
                   <li class="list-group-item">
@@ -211,6 +211,7 @@ const eventStartTimeEdit = computed(() => {
              &nbsp
             <button
               type="submit"
+              value="submit"
               class="btn btn-success"
               @click="
                 $emit(
@@ -254,7 +255,7 @@ const eventStartTimeEdit = computed(() => {
           ></button>
         </div>
         <div class="modal-body">
-          <form class="was-validated">
+          <form class="was-validated" @submit.prevent="submit">
             <ul class="list-group">
               <li class="list-group-item">
                 Booker:
@@ -342,6 +343,7 @@ const eventStartTimeEdit = computed(() => {
         <div class="modal-footer">
           <button
             type="submit"
+            value="submit"
             class="btn btn-success"
             @click="
               $emit('updateEvent', currentEvent.id, datetime, currentEvent.note)
