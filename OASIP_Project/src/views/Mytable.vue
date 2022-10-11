@@ -20,7 +20,7 @@ const getEvents = async () => {
   const res = await fetch(`http://localhost:8080/api/events`, {
     method: "GET",
     headers: {
-      'Authorization': `Bearer ${token}`
+      
     }
   });
   if (res.status === 200) {
@@ -78,7 +78,7 @@ const createNewSchedule = async (
     method: "POST",
     headers: {
       "content-type": "application/json;",
-      'Authorization' : `Bearer ${token}`
+     
     },
     body: JSON.stringify({
       bookingName: newBookingName,

@@ -12,22 +12,32 @@ const goRegister = () => appRouter.push({ name: "Register" });
 let token = localStorage.getItem("token");
 let name = localStorage.getItem("email")
 
-
-
 const clearData = () => localStorage.clear();
 const reload = () => location.reload();
+
+function parseJwt (token) {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+};
+
+let role_admin = "ROLE_admin"
+
 </script>
 
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <button @click="goHome" class="btn btn-light rounded-pill">Home</button>
-
+      <button 
+      @click="goHome" class="btn btn-light rounded-pill">Home</button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <button 
-           
             @click="goUser" class="btn btn-light rounded-pill">
               User
             </button>
