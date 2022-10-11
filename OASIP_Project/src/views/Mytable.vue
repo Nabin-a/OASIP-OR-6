@@ -8,7 +8,7 @@ const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
 
-let token = localStorage.getItem('accessToken')
+let token = localStorage.getItem('token')
 
 onBeforeMount(async () => {
 
@@ -20,7 +20,7 @@ const getEvents = async () => {
   const res = await fetch(`http://localhost:8080/api/events`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`
+      'Authorization': `Bearer ${token}`
     }
   });
   if (res.status === 200) {
@@ -34,7 +34,7 @@ const getEventCategory = async () => {
   const res = await fetch(`http://localhost:8080/api/category`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`
+      'Authorization': `Bearer ${token}`
     }
   });
   if (res.status === 200) {
@@ -49,7 +49,7 @@ const getEventid = async (id) => {
   const res = await fetch(`http://localhost:8080/api/events/${id}`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`
+      'Authorization': `Bearer ${token}`
     }
   })
   if (res.status === 200) {

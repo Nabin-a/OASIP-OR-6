@@ -13,8 +13,12 @@ const users = ref([]);
 const userDetail = ref({});
 const validateUnique = ref(false);
 const goLogin = () => appRouter.push({ name: "Login" });
+const goHome = () => appRouter.push({ name: "Home" });
 
 let token = localStorage.getItem('token')
+
+
+
 
 const getUsers = async () => {
   
@@ -29,7 +33,9 @@ const getUsers = async () => {
     users.value = await res.json();
     console.log(users.value);
     return users.value;
-  } else if (res.status === 401) {
+  
+  }
+    else if (res.status === 401) {
     const resfs = await fetch(`https://localhost:8080/api/refresh`, {
       headers: {
         'Authorization': `Bearer` + localStorage.getItem('refreshToken')
@@ -40,8 +46,8 @@ const getUsers = async () => {
       localStorage.setItem('token', data.accessToken)
     } else if (resfs.status === 401) {
       goLogin()
-    }
-  };
+    } 
+  }
 };
 
 

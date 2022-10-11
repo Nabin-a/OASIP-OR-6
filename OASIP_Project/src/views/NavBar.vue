@@ -12,6 +12,8 @@ const goRegister = () => appRouter.push({ name: "Register" });
 let token = localStorage.getItem("token");
 let name = localStorage.getItem("email")
 
+
+
 const clearData = () => localStorage.clear();
 const reload = () => location.reload();
 </script>
@@ -24,7 +26,9 @@ const reload = () => location.reload();
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <button @click="goUser" class="btn btn-light rounded-pill">
+            <button 
+           
+            @click="goUser" class="btn btn-light rounded-pill">
               User
             </button>
           </li>
