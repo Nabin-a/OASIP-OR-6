@@ -34,7 +34,7 @@ public class EventService {
     public List<EventDtoList> getEventsAll() {
         Authentication role = SecurityContextHolder.getContext().getAuthentication();
         //role student
-        if (role.getAuthorities().toString().equals("[student]")){
+        if (role.getAuthorities().toString().equals("[ROLE_student]")){
             List<Event> eventList = repository.findAllByBookingEmail(role.getName());
             return listMapper.mapList(eventList, EventDtoList.class, modelMapper);
         }

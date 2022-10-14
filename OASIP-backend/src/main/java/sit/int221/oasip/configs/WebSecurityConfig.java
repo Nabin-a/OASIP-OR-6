@@ -52,9 +52,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-               .authorizeRequests().antMatchers(HttpMethod.POST, "/api/users/login").permitAll()
-                .antMatchers("/api/users/**", "/api/events/**").hasRole("admin")
-                .antMatchers("/**").permitAll()
+               .authorizeRequests()
+                .antMatchers("/api/users/login").permitAll()
+                .antMatchers("/api/users/**").hasRole("admin")
+                .antMatchers("/api/events/**").hasAnyRole("admin", "student")
+                .antMatchers(HttpMethod.POST, "/api/events").permitAll()
                         .anyRequest().authenticated().and().
                         exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
