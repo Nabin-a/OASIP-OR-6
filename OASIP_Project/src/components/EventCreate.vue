@@ -24,7 +24,7 @@ const newSchedule = computed(() => {
   return {
     eventId: props.eventCreate.eventId,
     bookingName: props.eventCreate.bookingName,
-    bookingEmail: props.eventCreate.bookingEmail,
+    bookingEmail: email,
     note: props.eventCreate.note
   };
 });
@@ -51,7 +51,7 @@ const eventStartTimeEdit = computed(() => {
   }
 });
 
-
+let email = localStorage.getItem("email")
 
 
 </script>
@@ -124,6 +124,7 @@ const eventStartTimeEdit = computed(() => {
                       minlength="1"
                       maxlength="45"
                       required
+                      disabled
                     />
                     <div class="invalid-feedback">
                       Your pattern not correctly.

@@ -6,6 +6,7 @@ import User from "../views/User.vue"
 import Event from "../views/Event.vue"
 import Login from "../views/Login.vue"
 import Register from "../views/Register.vue"
+import Accessdenied from "../views/Accessdenied.vue"
 
 const history = createWebHashHistory(import.meta.env.BASE_URL);
 const routes = [
@@ -42,6 +43,11 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register
+  },
+  {
+    path: "/access-denied",
+    name: "Access denied",
+    component: Accessdenied
   }
 //   { path: "/event/:id", name: "Detail", component: EventDetail },
 ];
@@ -52,10 +58,20 @@ router.beforeEach((to,from,next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!localStorage.getItem('token')) {
       next({ name: 'Login' })
+    } else if (localStorage.getItem("role")=='ROLE_student'){
+      if (to.path==='/user'){
+        next('/access-denied')
+      } else {
+        next()
+      }
+    } else if (localStorage.getItem("role")=='ROLE_admin') {
+      if (to.path==='/users' || to.path==='/event') {
+        next()      
     } else {
-      next()
+        next()
     }
-  } else {
+  } 
+} else  {
     next()
   }
 })
