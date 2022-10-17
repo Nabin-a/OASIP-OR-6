@@ -13,4 +13,6 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<Event, Integer> {
     @Query(value = "select * from event e where e.bookingEmail = :bookingEmail order by e.startTime desc", nativeQuery = true)
     List<Event> findAllByBookingEmail(@Param("bookingEmail") String bookingEmail);
+
+    Event findByBookingEmail(String bookingEmail);
 }
