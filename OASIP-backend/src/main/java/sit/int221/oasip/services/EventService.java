@@ -52,7 +52,12 @@ public class EventService {
 
     //Method create new Event
     public EventDtoDetail save(EventDtoCreate newEvent){
-
+        Authentication role = SecurityContextHolder.getContext().getAuthentication();
+        if(role.getAuthorities().toString().equals("[ROLE_student]")){
+            if(!role.getName().equals(newEvent.getBookingEmail())){
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Email does not the same");
+            }
+        }
         Category category = categoryRepository.findById(newEvent.getCategoryId())
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
