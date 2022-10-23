@@ -19,7 +19,7 @@ const routes = [
     }
   },
   {
-    path: "/user",
+    path: "/users",
     name: "User",
     component: User,
     meta: {
@@ -59,7 +59,7 @@ router.beforeEach((to,from,next) => {
     if (!localStorage.getItem('token')) {
       next({ name: 'Login' })
     } else if (localStorage.getItem("role")=='ROLE_student'){
-      if (to.path==='/user'){
+      if (to.path==='/users'){
         next('/access-denied')
       } else {
         next()
