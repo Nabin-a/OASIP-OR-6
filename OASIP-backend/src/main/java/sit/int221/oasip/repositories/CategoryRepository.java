@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.Query;
 import sit.int221.oasip.entities.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
+
 }

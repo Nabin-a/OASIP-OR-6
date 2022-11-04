@@ -14,10 +14,13 @@ import sit.int221.oasip.dto.eventdto.EventDtoEdit;
 import sit.int221.oasip.dto.eventdto.EventDtoList;
 import sit.int221.oasip.entities.Category;
 import sit.int221.oasip.entities.Event;
+import sit.int221.oasip.entities.User;
 import sit.int221.oasip.repositories.CategoryRepository;
 import sit.int221.oasip.repositories.EventRepository;
+import sit.int221.oasip.repositories.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
@@ -29,6 +32,9 @@ public class EventService {
     private ListMapperService listMapper;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private UserRepository userRepository;
+
 
     //Method list all event
     public List<EventDtoList> getEventsAll() {
@@ -39,12 +45,36 @@ public class EventService {
             return listMapper.mapList(eventList, EventDtoList.class, modelMapper);
         }
 
+        //role lecturer
+        if (role.getAuthorities().toString().equals(("[ROLE_lecturer]"))){
+            User user = userRepository.findByEmail(role.getName());
+            List<Event> eventList = repository.findAllByEventCategoryOwner(user.getId());
+            return listMapper.mapList(eventList, EventDtoList.class, modelMapper);
+        }
+
+        //role admin
         List<Event> eventList = repository.findAll(Sort.by(Sort.Direction.DESC, "startTime"));
         return listMapper.mapList(eventList, EventDtoList.class, modelMapper);
     }
 
     //Method get Event by eventId
     public EventDtoDetail getEventById(Integer id){
+        Authentication role = SecurityContextHolder.getContext().getAuthentication();
+        if(role.getAuthorities().toString().equals("[ROLE_student]")){
+            User user = userRepository.findByEmail(role.getName());
+            Event event = repository.findByBookingEmailAndId(id, user.getEmail());
+            if (event == null){
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            }
+            return modelMapper.map(event, EventDtoDetail.class);
+        }
+
+        if (role.getAuthorities().toString().equals(("[ROLE_lecturer]"))){
+            User user = userRepository.findByEmail(role.getName());
+            Optional<Event> event = repository.findEventByEventCategoryOwner(id, user.getId());
+            return modelMapper.map(event, EventDtoDetail.class);
+        }
+
         Event event = repository.findById(id).orElseThrow(()->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: "+id+" does not exist"));
         return modelMapper.map(event, EventDtoDetail.class);

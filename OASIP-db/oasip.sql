@@ -42,4 +42,29 @@ create table `user` (
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE
   )ENGINE = InnoDB;
   
-
+DROP TABLE IF EXISTS `mydb`.`eventcategoryowner` ;
+CREATE TABLE IF NOT EXISTS `mydb`.`eventcategoryowner` (
+  `ownerId` INT NOT NULL auto_increment,
+  `userId` INT NOT NULL,
+  `eventCategoryId` INT NOT NULL,
+  PRIMARY KEY (`ownerId`),
+  INDEX `fk_category_has_user_user1_idx` (`userId` ASC) VISIBLE,
+  INDEX `fk_category_has_user_category1_idx` (`ownerId` ASC) VISIBLE,
+  INDEX `fk_category_has_user_category_has_user1_idx` (`eventCategoryId` ASC) VISIBLE,
+  CONSTRAINT `fk_category_has_user_category1`
+    FOREIGN KEY (`eventCategoryId`)
+    REFERENCES `mydb`.`category` (`eventCategoryId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_category_has_user_user1`
+    FOREIGN KEY (`userId`)
+    REFERENCES `mydb`.`user` (`userId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_category_has_user_category_has_user1`
+    FOREIGN KEY (`ownerId`)
+    REFERENCES `mydb`.`eventcategoryowner` (`ownerId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb3;
