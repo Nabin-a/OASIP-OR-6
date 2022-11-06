@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", function(){
       if (window.scrollY > 50) {
         document.getElementById('navbar_top').classList.add('fixed-top');
         // add padding top to show content behind navbar
-        navbar_height = document.querySelector('.navbar').offsetHeight;
-        document.body.style.paddingTop = navbar_height + 'px';
+        
+        
       } else {
         document.getElementById('navbar_top').classList.remove('fixed-top');
          // remove padding top from body
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 
 <template>
-  <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light bg-dark shadow p-3 mb-5 nav">
+  <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light bg-nav shadow p-3 mb-5 nav">
     <div class="container-fluid">
       <button @click="goHome" class="OR"><img src="..\assets\logo.jpg" width="30" height="30"></button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -108,5 +108,9 @@ document.addEventListener("DOMContentLoaded", function(){
 img {
   border-radius: 50%;
   
+}
+
+.bg-nav {
+  background-color: #759bcafc;
 }
 </style>

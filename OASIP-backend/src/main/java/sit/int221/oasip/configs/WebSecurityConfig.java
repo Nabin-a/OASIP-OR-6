@@ -53,21 +53,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                .authorizeRequests()
-<<<<<<< HEAD
-                .antMatchers("/api/users/login" , "/api/users/register").permitAll()
-                .antMatchers("/api/users/**").permitAll()
-                .antMatchers("/api/events/**","/api/category").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/events").permitAll()
-                        .anyRequest().authenticated().and().
-=======
-                .antMatchers(HttpMethod.POST, "/api/users/login", "/api/events").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users/login", "/api/events", "/api/users/register").permitAll()
                 .antMatchers("/api/users/**").hasRole("admin")
-                .antMatchers(HttpMethod.GET, "/api/events/**").hasAnyRole("admin", "student", "lecturer")
-                .antMatchers(HttpMethod.POST, "/api/events/**").hasAnyRole("admin", "student")
+                .antMatchers(HttpMethod.GET, "/api/events/**", "/api/category").hasAnyRole("admin","student","lecturer")
+                .antMatchers(HttpMethod.POST, "/api/events/**").hasAnyRole("admin","lecturer")
                 .antMatchers(HttpMethod.PATCH, "/api/events/**").hasAnyRole("admin", "student")
                 .antMatchers(HttpMethod.DELETE, "/api/events/**").hasAnyRole("admin", "student")
                                         .anyRequest().authenticated().and().
->>>>>>> 9c153ab61a13c94d1d9d7700926301acfa917407
                         exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

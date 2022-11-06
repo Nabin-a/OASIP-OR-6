@@ -74,7 +74,7 @@ const createNewSchedule = async (
     newCategory,
     newNote
   );
-  const res = await fetch(`http://localhost:8080/api/events/`, {
+  const res = await fetch(`http://localhost:8080/api/events`, {
     method: "POST",
     headers: {
       "content-type": "application/json;",
