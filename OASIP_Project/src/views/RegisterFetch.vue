@@ -19,11 +19,10 @@ const createNewUser = async (
 ) => {
   if(newUserPassword === confirmPassword 
   );
-  const res = await fetch(`http://localhost:8080/api/users`, {
+  const res = await fetch(`http://localhost:8080/api/users/register`, {
     method: "POST",
     headers: {
       "content-type": "application/json;",
-      "Authorization": `Bearer ${token}`
     },
     body: JSON.stringify({
       name: newUserName,

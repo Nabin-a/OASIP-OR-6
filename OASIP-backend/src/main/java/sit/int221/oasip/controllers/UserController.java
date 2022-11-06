@@ -38,7 +38,7 @@ public class UserController {
         return userService.getUsertById(id);
     }
 
-    @PostMapping("")
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public User create(@Valid @RequestBody UserDtoCreate newUser){
         return  userService.save(newUser);

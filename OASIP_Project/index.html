@@ -13,7 +13,7 @@
 
     <title>Vite App</title>
   </head>
-  <body class="p-3 mb-2 bg-dark text-white">
+  <body class="bg">
     <div id="app"></div>
     
     <script type="module" src="/src/main.js"></script>
@@ -95,3 +95,20 @@
   </script>
   </body>
 </html>
+
+<style>
+  body , html {
+    height: 100%
+  }
+  /* .bg {
+    background: linear-gradient(rgb(249, 132, 132),rgb(250, 250, 250))
+  } */
+  .bg {
+    background-image: url(".\src\assets\pic3.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+</style>

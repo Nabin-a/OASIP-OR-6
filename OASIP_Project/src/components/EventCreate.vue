@@ -53,6 +53,7 @@ const eventStartTimeEdit = computed(() => {
 
 let email = localStorage.getItem("email")
 
+let role = localStorage.getItem("role");
 
 </script>
 
@@ -65,6 +66,7 @@ let email = localStorage.getItem("email")
       class="btn btn-success"
       data-bs-toggle="modal"
       data-bs-target="#CreateModal"
+      v-if = "role != 'ROLE_lecturer'"
     >
       <i class="fa fa-plus"></i>
     </button>

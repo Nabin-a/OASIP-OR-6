@@ -59,7 +59,7 @@ router.beforeEach((to,from,next) => {
     if (!localStorage.getItem('token')) {
       next({ name: 'Login' })
     } else if (localStorage.getItem("role")=='ROLE_student'){
-      if (to.path==='/users'){
+      if (to.path==='/users') {
         next('/access-denied')
       } else {
         next()
@@ -70,7 +70,13 @@ router.beforeEach((to,from,next) => {
     } else {
         next()
     }
-  } 
+  }  else if (localStorage.getItem("role")=='ROLE_lecturer') {
+      if (to.path==='/users') {
+        next('/access-denied')
+      } else {
+        next()
+      }
+  }
 } else  {
     next()
   }
