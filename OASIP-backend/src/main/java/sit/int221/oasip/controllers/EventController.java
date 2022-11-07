@@ -3,7 +3,6 @@ package sit.int221.oasip.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import sit.int221.oasip.dto.eventdto.EventDtoCreate;
 import sit.int221.oasip.dto.eventdto.EventDtoDetail;
 import sit.int221.oasip.dto.eventdto.EventDtoEdit;
@@ -47,9 +46,7 @@ public class EventController {
     //DELETE
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id){
-        repository.findById(id).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, id + "does not exist"));
-        repository.deleteById(id);
+         eventService.delete(id);
     }
 
     //PUT

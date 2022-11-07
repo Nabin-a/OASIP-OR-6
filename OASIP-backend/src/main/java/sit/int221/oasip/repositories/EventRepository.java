@@ -24,6 +24,6 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     Event findByBookingEmailAndId(@Param("eventId") Integer eventId, @Param("email") String email);
 
     @Query(value = "select e.* from event e join eventcategoryowner ec on e.category_id = ec.eventCategoryId where e.eventId = :eventId and ec.userId = :userId ", nativeQuery = true)
-    Optional<Event> findEventByEventCategoryOwner(@Param("eventId") int eventId, @Param("userId") int userId);
+    Event findEventByEventCategoryOwner(@Param("eventId") int eventId, @Param("userId") int userId);
 
 }
