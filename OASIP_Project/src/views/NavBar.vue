@@ -7,6 +7,7 @@ const goUser = () => appRouter.push({ name: "User" });
 const goEvent = () => appRouter.push({ name: "Event" });
 const goLogin = () => appRouter.push({ name: "Login" });
 const goRegister = () => appRouter.push({ name: "Register" });
+const goBooking = () => appRouter.push({ name: "Reserve"})
 
 let token = localStorage.getItem("token");
 let name = localStorage.getItem("email");
@@ -44,6 +45,10 @@ document.addEventListener("DOMContentLoaded", function(){
           <button @click="goHome" class="bd m-3">Home</button>
         </li>
        
+        <li class="nav-item">
+          <button @click="goBooking" class="bd m-3">Reserve</button>
+        </li>
+
         <li class="nav-item">
           <button
             v-if="role == 'ROLE_admin'"

@@ -7,6 +7,7 @@ import Event from "../views/Event.vue"
 import Login from "../views/Login.vue"
 import Register from "../views/Register.vue"
 import Accessdenied from "../views/Accessdenied.vue"
+import EventBook from "../views/EventBook.vue"
 
 const history = createWebHashHistory(import.meta.env.BASE_URL);
 const routes = [
@@ -48,6 +49,11 @@ const routes = [
     path: "/access-denied",
     name: "Access denied",
     component: Accessdenied
+  },
+  {
+    path: "/reserve",
+    name: "Reserve",
+    component: EventBook
   }
 //   { path: "/event/:id", name: "Detail", component: EventDetail },
 ];
