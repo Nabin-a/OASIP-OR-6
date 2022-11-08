@@ -90,6 +90,11 @@ public class EventService {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Email does not the same");
             }
         }
+
+        if(role.getAuthorities().toString().equals("[ROLE_lecturer]")){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
         Category category = categoryRepository.findById(newEvent.getCategoryId())
                 .orElseThrow(
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -103,6 +108,7 @@ public class EventService {
         Authentication role = SecurityContextHolder.getContext().getAuthentication();
         Event event = repository.findById(eventId).orElseThrow(()->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: "+eventId+" does not exist"));
+        //role student
         if(role.getAuthorities().toString().equals("[ROLE_student]")){
             User user = userRepository.findByEmail(role.getName());
             Event event1 = repository.findByBookingEmailAndId(eventId, user.getEmail());
@@ -110,6 +116,11 @@ public class EventService {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN);
             }
         }
+        //role lecturer
+        if (role.getAuthorities().toString().equals("[ROLE_lecturer]")){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
         event.setStartTime(editEvent.getStartTime());
         if (editEvent.getNote()==null){
             editEvent.setNote(event.getNote());
@@ -124,6 +135,7 @@ public class EventService {
         Authentication role = SecurityContextHolder.getContext().getAuthentication();
         repository.findById(eventId).orElseThrow(()->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, eventId + "does not exist"));
+        //role student
         if(role.getAuthorities().toString().equals("[ROLE_student]")){
             User user = userRepository.findByEmail(role.getName());
             Event event = repository.findByBookingEmailAndId(eventId, user.getEmail());
@@ -131,6 +143,12 @@ public class EventService {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN);
             }
         }
+
+        //role lecturer
+        if (role.getAuthorities().toString().equals("[ROLE_lecturer]")){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+
         repository.deleteById(eventId);
     }
 
