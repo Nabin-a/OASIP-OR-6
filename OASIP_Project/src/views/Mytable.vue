@@ -216,7 +216,6 @@ const updateEvent = async (id, editTime, editNote) => {
     :eventCategory="eventCategory"
     :eventCreate="events"
     :currentEvent="eventDetail"
-    @createSchedule="createNewSchedule"
     @updateEvent="updateEvent"
   />
 
