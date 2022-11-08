@@ -20,7 +20,6 @@ import sit.int221.oasip.repositories.EventRepository;
 import sit.int221.oasip.repositories.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EventService {
@@ -71,7 +70,10 @@ public class EventService {
 
         if (role.getAuthorities().toString().equals(("[ROLE_lecturer]"))){
             User user = userRepository.findByEmail(role.getName());
-            Optional<Event> event = repository.findEventByEventCategoryOwner(id, user.getId());
+            Event event = repository.findEventByEventCategoryOwner(id, user.getId());
+            if (event == null){
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            }
             return modelMapper.map(event, EventDtoDetail.class);
         }
 
@@ -98,8 +100,16 @@ public class EventService {
     }
 
     public Event edit(EventDtoEdit editEvent, Integer eventId){
+        Authentication role = SecurityContextHolder.getContext().getAuthentication();
         Event event = repository.findById(eventId).orElseThrow(()->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: "+eventId+" does not exist"));
+        if(role.getAuthorities().toString().equals("[ROLE_student]")){
+            User user = userRepository.findByEmail(role.getName());
+            Event event1 = repository.findByBookingEmailAndId(eventId, user.getEmail());
+            if (event1 == null){
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            }
+        }
         event.setStartTime(editEvent.getStartTime());
         if (editEvent.getNote()==null){
             editEvent.setNote(event.getNote());
@@ -108,6 +118,20 @@ public class EventService {
         modelMapper.map(editEvent, event);
         Event mapEvent = modelMapper.map(event, Event.class);
         return repository.saveAndFlush(mapEvent);
+    }
+
+    public void delete(Integer eventId){
+        Authentication role = SecurityContextHolder.getContext().getAuthentication();
+        repository.findById(eventId).orElseThrow(()->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, eventId + "does not exist"));
+        if(role.getAuthorities().toString().equals("[ROLE_student]")){
+            User user = userRepository.findByEmail(role.getName());
+            Event event = repository.findByBookingEmailAndId(eventId, user.getEmail());
+            if (event == null){
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            }
+        }
+        repository.deleteById(eventId);
     }
 
 }
