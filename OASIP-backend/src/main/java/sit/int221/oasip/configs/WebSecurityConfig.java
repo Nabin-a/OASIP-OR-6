@@ -54,11 +54,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf().disable()
                .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/users/login", "/api/events", "/api/users/register").permitAll()
-                .antMatchers("/api/users/**").hasRole("admin")
-                .antMatchers(HttpMethod.GET, "/api/events/**", "/api/category").hasAnyRole("admin","student","lecturer")
-                .antMatchers(HttpMethod.POST, "/api/events/**").hasAnyRole("admin","lecturer")
-                .antMatchers(HttpMethod.PATCH, "/api/events/**").hasAnyRole("admin", "student")
-                .antMatchers(HttpMethod.DELETE, "/api/events/**").hasAnyRole("admin", "student")
+                .antMatchers("/api/users/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/events/**", "/api/category").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/events/**").permitAll()
+                .antMatchers(HttpMethod.PATCH, "/api/events/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/events/**").permitAll()
                                         .anyRequest().authenticated().and().
                         exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

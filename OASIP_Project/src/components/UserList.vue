@@ -10,16 +10,16 @@ defineProps({
 const appRouter = useRouter();
 const goLogin = () => appRouter.push({ name: "Login" });
 let token = localStorage.getItem("token");
+let role = localStorage.getItem("role");
+
+
+
 </script>
 
 <template>
-  <div class="container pt-3 pb-5">
-    <h2 style="color: darkblue">User List</h2>
-    &nbsp
-    <h1 v-if="token === null">
-      Please <a class="link-blue" @click="goLogin">login</a> before.
-    </h1>
-    <h1 v-else-if="userList.length < 1" class="forusl">No users</h1>
+  
+    
+    <h1 v-if="userList.length < 1" class="forusl">No users</h1>
     <!-- <table class="table table-danger table-striped table-hover" v-else>
       <thead>
         <tr>
@@ -65,9 +65,9 @@ let token = localStorage.getItem("token");
         </tr>
       </tbody>
     </table> -->
-  </div>
-  <div class="container1">
-    <div
+  
+  <div class="container1 scroll ">
+    <div 
       class="card testimonial-card"
       v-for="(user, index) in userList"
       :key="index"
@@ -91,7 +91,7 @@ let token = localStorage.getItem("token");
           
         </div>
       </div>
-      <div class="avatar mx-auto bg-white container2">
+      <div class="avatar mx-auto bg-white">
         <img
           src="../assets/avatar.png"
           class="rounded-circle img-fluid image"
@@ -101,7 +101,7 @@ let token = localStorage.getItem("token");
         />
       </div>
       <div class="card-body">
-        <h4 class="mb-4">{{ user.name }}</h4>
+        <h4 class="mb-0" style="font-size:18px">{{ user.name }}</h4>
         <hr />
         <p class="dark-grey-text mt-1">
           {{ user.email }}
@@ -109,26 +109,57 @@ let token = localStorage.getItem("token");
         <p class="dark-grey-text mt-1">
           Role - {{ user.role }}
         </p>
+        
       </div>
+
     </div>
   </div>
+
 
 </template>
 
 <style>
 .forusl {
   margin-left: 42%;
-  color: white;
+  color: rgb(227, 70, 106);
 }
 
 .container1 {
   background-color: #cbddf6;
-  margin-left: 25%;
+  margin-left: 20%;
+  height: 530px;
   display: flex;
   flex-wrap: wrap;
   width: 65%;
   position: relative;
+  overflow: auto;
+  border-radius: 50px;
 }
+
+.container1::-webkit-scrollbar {
+  width:6px; 
+ 
+}
+
+.container1::-webkit-scrollbar-track {
+  background:#cbddf6;
+  margin :50px;
+  
+}
+
+.container1::-webkit-scrollbar-thumb {
+  background: #f1f1f1;
+  
+  border-radius: 50px;
+  
+}
+
+.container1::-webkit-scrollbar-thumb:hover{
+  background: #bdcde3;
+  
+}
+
+
 
 .container1 > div {
   background-color: rgb(255, 255, 255);
@@ -138,6 +169,7 @@ let token = localStorage.getItem("token");
   margin-bottom: 20px;
   padding: 20px;
   width: 30%;
+  border-radius: 50px;
 }
 
 .testimonial-card .card-up {
@@ -145,6 +177,7 @@ let token = localStorage.getItem("token");
   overflow: hidden;
   border-top-left-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
+  border-radius: 20px;
 }
 
 .testimonial-card .avatar {
@@ -152,7 +185,7 @@ let token = localStorage.getItem("token");
   margin-top: -60px;
   overflow: hidden;
   border: 3px solid #fff;
-  border-radius: 50%;
+  border-radius: 50px;
 }
 
 .image {
@@ -171,6 +204,8 @@ let token = localStorage.getItem("token");
 .fa {
   cursor: pointer;
 }
+
+
 
 
 </style>

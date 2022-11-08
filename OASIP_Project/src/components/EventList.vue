@@ -15,7 +15,7 @@ defineProps({
   <div class="container pt-3 pb-5">
     <h2 style="color: white">Scheduled Events</h2>
     &nbsp
-    <h4 v-if="eventList.length < 1" style="color: white">No schedule events</h4>
+    <h4 v-if="eventList.length < 1" style="color:rgb(227, 70, 106) " >No schedule events</h4>
     <table class="table table-light table-striped table-hover" v-else>
       <thead>
         <tr>

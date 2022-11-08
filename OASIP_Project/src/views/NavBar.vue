@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 
 <template>
-  <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light bg-nav shadow p-3 mb-5 nav">
+  <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light bg-nav shadow p-2 mb-5 nav">
     <div class="container-fluid">
       <button @click="goHome" class="OR"><img src="..\assets\logo.jpg" width="30" height="30"></button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -113,4 +113,10 @@ img {
 .bg-nav {
   background-color: #759bcafc;
 }
+
+.container-fluid {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.nav-bar {}
 </style>

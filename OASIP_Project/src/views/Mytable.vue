@@ -27,7 +27,19 @@ const getEvents = async () => {
     events.value = await res.json();
     console.log(events.value);
     return events.value;
-  } else console.log("error, cannot get notes");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    } 
+  } else console.log("cannot get events")
 };
 
 const getEventCategory = async () => {
@@ -41,7 +53,19 @@ const getEventCategory = async () => {
     eventCategory.value = await res.json();
     console.log(eventCategory.value);
     return eventCategory.value;
-  } else console.log("error, cannot get notes");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    } 
+  } else console.log("cannot get category")
 };
 
 const getEventid = async (id) => {
@@ -55,7 +79,20 @@ const getEventid = async (id) => {
   if (res.status === 200) {
     eventDetail.value = await res.json();
     console.log(eventDetail.value);
-  } else console.log("error, cannot get data");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    } 
+  } 
+  else console.log("error, cannot get data");
 };
 
 const createNewSchedule = async (
@@ -94,7 +131,20 @@ const createNewSchedule = async (
     alert("Added sucessfully");
     const addedSchedule = await res.json();
     events.value.push(addedSchedule);
-  } else console.log("error, cannot be added");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    } 
+  } 
+  else console.log("error, cannot be added");
 };
 
 const removeEvent = async (id) => {
@@ -109,7 +159,20 @@ const removeEvent = async (id) => {
     if (res.status === 200) {
       events.value = events.value.filter((event) => event.id !== id);
       console.log("deleted successfully");
-    } else console.log("error, cannot delete data");
+    } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    } 
+  } 
+    else console.log("error, cannot delete data");
   }
 };
 
@@ -131,7 +194,20 @@ const updateEvent = async (id, editTime, editNote) => {
     location.reload();
     alert("Edit Success");
     console.log("edited successfully");
-  } else console.log("error, cannot be edit");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      headers: {
+        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+      }
+    })
+    if (resfs.status === 200){
+      data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    } 
+  } 
+  else console.log("error, cannot be edit");
 };
 </script>
 
