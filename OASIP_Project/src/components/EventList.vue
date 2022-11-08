@@ -9,6 +9,8 @@ defineProps({
   }
 });
 
+let role = localStorage.getItem("role")
+
 </script>
 
 <template>
@@ -50,6 +52,7 @@ defineProps({
               data-bs-target="#EditModal"
               data-bs-toggle="modal"
               @click="$emit('getEventId', event.id)"
+              v-if = "role != ROLE_lecturer"
             >
               <i class="fa fa-edit"></i>
             </button>
@@ -58,6 +61,7 @@ defineProps({
               type="button"
               class="btn btn-danger"
               @click="$emit('removeEvent', event.id)"
+              v-if = "role != ROLE_lecturer"
             >
               <i class="fa fa-trash"></i>
             </button>

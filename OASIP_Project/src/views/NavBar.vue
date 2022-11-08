@@ -46,7 +46,9 @@ document.addEventListener("DOMContentLoaded", function(){
         </li>
        
         <li class="nav-item">
-          <button @click="goBooking" class="bd m-3">Reserve</button>
+          <button 
+          v-if="role != 'ROLE_lecturer'"
+          @click="goBooking" class="bd m-3">Reserve</button>
         </li>
 
         <li class="nav-item">

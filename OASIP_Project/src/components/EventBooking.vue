@@ -37,22 +37,20 @@ const startTime = ref();
 
 const eventCategorySelect = ref({});
 
-
 let email = localStorage.getItem("email");
 let token = localStorage.getItem("token");
-
 let role = localStorage.getItem("role");
 </script>
 
 <template>
-  <div class="container py-5 h-100">
+  <div class="container">
     <div class="row d-flex justify-content-center">
-      <div class="col col-xl-5">
+      <div class="col col-xl-6">
         <div class="card" style="border-radius: 1rem">
           <div class="row g-0">
             <div class="col-md-6 d-none d-md-block"></div>
             <div class="col-md-6 col-lg-12 d-flex">
-              <div class="card-body p-4 p-lg-5 text-black">
+              <div class="container2 card-body p-4 p-lg-5 text-black">
                 <form @submit.prevent="submit">
                   <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px">
                     Reservation Information
@@ -142,39 +140,45 @@ let role = localStorage.getItem("role");
                     <div class="invalid-feedback">Date must be future.</div>
                   </div>
                   <br />
-                  <div class="pt-1 mb-4">
-                    Event Category :
-                    <select
-                      class="form-select form-select-lg mb-3"
-                      v-model="eventCategorySelect"
-                      required
-                    >
-                      <option
-                        v-for="eventcat in props.eventCategory"
-                        :value="{
-                          durations: eventcat.durationMin,
-                          id: eventcat.categoryId
-                        }"
+                  <div class="row g-4">
+                    <div class="form-group col-md-9">
+                      <label for="inputCategory">Event Category</label>
+
+                      <select
+                        id="inputCategory"
+                        class="form-control"
+                        v-model="eventCategorySelect"
+                        required
                       >
-                        {{ eventcat.categoryName }}
-                      </option>
-                    </select>
+                        <option
+                          v-for="eventcat in props.eventCategory"
+                          :value="{
+                            durations: eventcat.durationMin,
+                            id: eventcat.categoryId
+                          }"
+                        >
+                          {{ eventcat.categoryName }}
+                        </option>
+                      </select>
+                    </div>
                     <div class="invalid-feedback">Please select category.</div>
-                    <div class="pt-1 mb-4">
-                      durations:
+
+                    <div class="form-group col-md-3">
+                      <label for="inputDuration">Durations</label>
                       <input
                         class="form-control"
                         type="number"
                         disabled
-                        placeholder="durations"
                         v-model="eventCategorySelect.durations"
                         required
+                        id="inputDuration"
                       />
                       <div class="invalid-feedback">
                         Please select category.
                       </div>
                     </div>
-                    <label class="form-label" for="form2Example27">Email</label>
+                    </div>
+                    <br />
                     <div class="form-outline mb-4">
                       note:
                       <textarea
@@ -185,7 +189,6 @@ let role = localStorage.getItem("role");
                         v-model="newSchedule.note"
                         minLength="0"
                         maxlength="500"
-                        required
                       ></textarea>
                       <small>
                         <div class="form-text">
@@ -193,7 +196,7 @@ let role = localStorage.getItem("role");
                           <span id="maximum_note">/ 500</span>
                         </div>
                       </small>
-                    </div>
+                    
                   </div>
 
                   <div class="pt-1 mb-4">
@@ -215,7 +218,9 @@ let role = localStorage.getItem("role");
                       Submit
                     </button>
                   </div>
+                  
                 </form>
+                
               </div>
             </div>
           </div>
@@ -225,4 +230,59 @@ let role = localStorage.getItem("role");
   </div>
 </template>
 
-<style></style>
+<style>
+.form-control {
+    outline: none;
+    border: none;
+    border-bottom: 1px solid blue;
+    border-radius: 0%;
+}
+
+:focus::-webkit-input-placeholder {
+    transition: text-indent 1s 0.1s ease; 
+    text-indent: -100%;
+    opacity: 1;
+ }
+
+ input[type="text"]:disabled {
+    background: #f1f1f1;
+ }
+
+.container2 {
+    margin-left:40px;
+  height: 550px;
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: auto;
+  border-radius: 50px;
+}
+
+.container2::-webkit-scrollbar {
+  width:6px; 
+ 
+}
+
+.container2::-webkit-scrollbar-track {
+  background:#fcfcfc;
+  margin :50px;
+  
+}
+
+.container2::-webkit-scrollbar-thumb {
+  background: #b2d7e1;
+  
+  border-radius: 50px;
+  
+}
+
+.container2::-webkit-scrollbar-thumb:hover{
+  background: #97e1a7;
+  
+}
+
+input[type="number"]:disabled{
+    background:#ffffff;
+}
+
+</style>

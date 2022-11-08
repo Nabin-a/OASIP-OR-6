@@ -53,7 +53,10 @@ const routes = [
   {
     path: "/reserve",
     name: "Reserve",
-    component: EventBook
+    component: EventBook, 
+    meta: {
+      requiresAuth: false
+    }
   }
 //   { path: "/event/:id", name: "Detail", component: EventDetail },
 ];
@@ -77,7 +80,7 @@ router.beforeEach((to,from,next) => {
         next()
     }
   }  else if (localStorage.getItem("role")=='ROLE_lecturer') {
-      if (to.path==='/users') {
+      if (to.path==='/users' || to.path==='/reserve') {
         next('/access-denied')
       } else {
         next()
