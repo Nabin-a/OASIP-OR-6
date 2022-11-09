@@ -71,12 +71,6 @@ let role = localStorage.getItem("role");
                     />
                     <div class="invalid-feedback">Name must not be blank.</div>
 
-                    <small>
-                      <div class="form-text">
-                        <span id="current_count">0</span>
-                        <span id="maximum_count">/ 100</span>
-                      </div>
-                    </small>
                   </div>
 
                   <label class="form-label" for="form2Example27">Email</label>
@@ -95,12 +89,25 @@ let role = localStorage.getItem("role");
                     <div class="invalid-feedback">
                       Your pattern not correctly.
                     </div>
-                    <small>
-                      <div class="form-text">
-                        <span id="current_email">0</span>
-                        <span id="maximum_email">/ 45</span>
-                      </div>
-                    </small>
+                    
+                  </div>
+                  <div class="form-outline mb-4" v-else-if="role === 'ROLE_admin'">
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="countEmail"
+                      placeholder="user@example.com"
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                      v-model="newSchedule.bookingEmail"
+                      minlength="1"
+                      maxlength="45"
+                      required
+                      
+                    />
+                    <div class="invalid-feedback">
+                      Your pattern not correctly.
+                    </div>
+                    
                   </div>
                   <div class="form-outline mb-4" v-else>
                     <input
@@ -118,14 +125,9 @@ let role = localStorage.getItem("role");
                     <div class="invalid-feedback">
                       Your pattern not correctly.
                     </div>
-                    <small>
-                      <div class="form-text">
-                        <span id="current_email">0</span>
-                        <span id="maximum_email">/ 45</span>
-                      </div>
-                    </small>
+                    
                   </div>
-
+                  
                   <label class="form-label" for="form2Example27"
                     >startTime</label
                   >
@@ -190,12 +192,7 @@ let role = localStorage.getItem("role");
                         minLength="0"
                         maxlength="500"
                       ></textarea>
-                      <small>
-                        <div class="form-text">
-                          <span id="current_note">0</span>
-                          <span id="maximum_note">/ 500</span>
-                        </div>
-                      </small>
+                    
                     
                   </div>
 

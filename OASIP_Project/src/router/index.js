@@ -8,6 +8,7 @@ import Login from "../views/Login.vue"
 import Register from "../views/Register.vue"
 import Accessdenied from "../views/Accessdenied.vue"
 import EventBook from "../views/EventBook.vue"
+import Match from "../views/Match.vue"
 
 const history = createWebHashHistory(import.meta.env.BASE_URL);
 const routes = [
@@ -55,7 +56,15 @@ const routes = [
     name: "Reserve",
     component: EventBook, 
     meta: {
-      requiresAuth: false
+      requiresAuth: true
+    }
+  },
+  {
+    path: "/match",
+    name: "Match",
+    component: Match,
+    meta: {
+      requiresAuth: true
     }
   }
 //   { path: "/event/:id", name: "Detail", component: EventDetail },
@@ -66,21 +75,24 @@ const router = createRouter({ history, routes });
 router.beforeEach((to,from,next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!localStorage.getItem('token')) {
-      next({ name: 'Login' })
+      if(to.path==='/' || to.path==='/reserve') {
+        next()
+      } else
+       next({ name: 'Login' })
     } else if (localStorage.getItem("role")=='ROLE_student'){
-      if (to.path==='/users') {
+      if (to.path==='/users' || to.path==='/match') {
         next('/access-denied')
       } else {
         next()
       }
     } else if (localStorage.getItem("role")=='ROLE_admin') {
-      if (to.path==='/users' || to.path==='/event') {
+      if (to.path==='/users' || to.path==='/event' || to.path==='/match') {
         next()      
     } else {
         next()
     }
   }  else if (localStorage.getItem("role")=='ROLE_lecturer') {
-      if (to.path==='/users' || to.path==='/reserve') {
+      if (to.path==='/users' || to.path==='/reserve' || to.path==='/match') {
         next('/access-denied')
       } else {
         next()

@@ -26,7 +26,7 @@ let role = localStorage.getItem("role")
           <th scope="col">Start Date</th>
           <th scope="col">Start Time</th>
           <th scope="col">Duration</th>
-          <th scope="col" style="padding-left: 8.5%">ooo</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody v-for="(event, index) in eventList" :key="index">
@@ -52,7 +52,7 @@ let role = localStorage.getItem("role")
               data-bs-target="#EditModal"
               data-bs-toggle="modal"
               @click="$emit('getEventId', event.id)"
-              v-if = "role != ROLE_lecturer"
+              v-if = "role != 'ROLE_lecturer'"
             >
               <i class="fa fa-edit"></i>
             </button>
@@ -61,7 +61,7 @@ let role = localStorage.getItem("role")
               type="button"
               class="btn btn-danger"
               @click="$emit('removeEvent', event.id)"
-              v-if = "role != ROLE_lecturer"
+              v-if = "role != 'ROLE_lecturer'"
             >
               <i class="fa fa-trash"></i>
             </button>

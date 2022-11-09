@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onBeforeMount } from "vue";
 import { useRouter } from "vue-router"
+import UserList from "../components/UserList.vue";
 import UserRegister from "../components/UserRegister.vue";
 
 const users1 = ref([]);
@@ -52,7 +53,8 @@ const createNewUser = async (
     @createUser="createNewUser"
     :userRegister="users1"
     :validate="validate"/>
-
+   
+   
 </template>
  
 <style>
