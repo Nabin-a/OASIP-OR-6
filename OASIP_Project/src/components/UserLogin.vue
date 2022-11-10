@@ -93,9 +93,9 @@ const goRegister = () => appRouter.push({ name: "Register" });
                     </button>
                   </div>
                 </form>
-                <div>
+                <!-- <div>
                   <small>No Account? </small><small class="pointer text-primary" @click="goRegister()">Create One!</small>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>

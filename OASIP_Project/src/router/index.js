@@ -44,7 +44,10 @@ const routes = [
   {
     path: "/register",
     name: "Register",
-    component: Register
+    component: Register,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/access-denied",
@@ -80,7 +83,7 @@ router.beforeEach((to,from,next) => {
       } else
        next({ name: 'Login' })
     } else if (localStorage.getItem("role")=='ROLE_student'){
-      if (to.path==='/users' || to.path==='/match') {
+      if (to.path==='/users' || to.path==='/match' || to.path==='/regsiter') {
         next('/access-denied')
       } else {
         next()
@@ -92,7 +95,7 @@ router.beforeEach((to,from,next) => {
         next()
     }
   }  else if (localStorage.getItem("role")=='ROLE_lecturer') {
-      if (to.path==='/users' || to.path==='/reserve' || to.path==='/match') {
+      if (to.path==='/users' || to.path==='/reserve' || to.path==='/match' || to.path==='/register') {
         next('/access-denied')
       } else {
         next()

@@ -26,6 +26,23 @@ const editUser = computed(() => {
     email: props.userCreate.email
   };
 });
+
+
+
+const checkNameMatch = ref(true);
+const validateName = () => {
+  if (props.currentUser.name == editUser.value.name.trim()) {
+    checkNameMatch.value = false;
+  } else checkNameMatch.value = true;
+};
+
+const checkEmailMatch = ref(true);
+const validateEmail = () => {
+  if (props.currentUser.email == editUser.value.email.trim()) {
+    checkEmailMatch.value = false;
+  } else checkEmailMatch.value = true;
+};
+
 </script>
 
 <template>
@@ -57,6 +74,7 @@ const editUser = computed(() => {
                   class="form-control"
                   disabled
                   v-model="currentUser.name"
+                  v-on:input="validateName()"
                 />
               </li>
               <br />
@@ -69,6 +87,7 @@ const editUser = computed(() => {
                   maxlength="100"
                   v-model="editUser.name"
                   required
+                  v-on:input="validateName()"
                 />
                 <p class="text-danger" v-show="validateUnique">
                   Name must be unique
@@ -84,6 +103,7 @@ const editUser = computed(() => {
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                   disabled
                   v-model="currentUser.email"
+                  v-on:input="validateEmail()"
                 />
               </li>
               <br />
@@ -97,6 +117,7 @@ const editUser = computed(() => {
                   minlength="1"
                   maxlength="50"
                   required
+                  v-on:input="validateEmail()"
                 />
                 <p class="text-danger" v-show="validateUnique">
                   Email must be unique and checking well-formed.
@@ -133,6 +154,7 @@ const editUser = computed(() => {
               <button
                 type="submit"
                 class="btn btn-success"
+                :disabled="checkNameMatch == false || checkEmailMatch == false"
                 @click="
                   $emit(
                     'updateUser',

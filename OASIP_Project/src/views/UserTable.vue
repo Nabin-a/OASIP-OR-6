@@ -178,7 +178,7 @@ const createNewUser = async (
     :validate="validate"
   />
 
-  <UserDetail :userDetail="userDetail" />/>
+  <UserDetail :userDetail="userDetail" />
 </template>
 
 <style></style>

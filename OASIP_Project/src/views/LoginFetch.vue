@@ -54,7 +54,7 @@ const userLogin = async (UserEmail, UserPassword) => {
   });
  
   if (res.status === 200 || res.status === 201) {
-    alert("Password Matched");
+    alert("Login Success");
     const jwttoken = await res.json()
     LocalStorage('token',jwttoken.accessToken)
     LocalStorage('refreshToken',jwttoken.refreshToken)
@@ -68,6 +68,7 @@ const userLogin = async (UserEmail, UserPassword) => {
   } 
   
 };
+
 
 
 </script>
