@@ -53,9 +53,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/users/login", "/api/events", "/api/users/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users/login", "/api/events").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/category").permitAll()
-                .antMatchers("/api/users/**" ,"/api/users/match").hasRole("admin")
+                .antMatchers("/api/users/**" ,"/api/users/match","/api/users/register").hasRole("admin")
                 .antMatchers(HttpMethod.GET, "/api/events/**").hasAnyRole("admin", "student", "lecturer")
                 .antMatchers(HttpMethod.POST, "/api/events/**").hasAnyRole("admin", "student")
                 .antMatchers(HttpMethod.PATCH, "/api/events/**").hasAnyRole("admin", "student")
