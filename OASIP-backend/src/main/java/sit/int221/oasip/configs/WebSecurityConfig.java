@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/users/**").hasRole("admin")
                 .antMatchers(HttpMethod.GET, "/api/events/**").hasAnyRole("admin", "student", "lecturer")
                 .antMatchers(HttpMethod.POST, "/api/events/**").hasAnyRole("admin", "student")
-                .antMatchers(HttpMethod.PATCH, "/api/events/{id}").hasAnyRole("admin", "student")
+                .antMatchers(HttpMethod.PUT, "/api/events/{id}").hasAnyRole("admin", "student")
                 .antMatchers(HttpMethod.DELETE, "/api/events/{id}").hasAnyRole("admin", "student")
                                         .anyRequest().authenticated().and().
                         exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
@@ -71,3 +71,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManager();
     }
 }
+

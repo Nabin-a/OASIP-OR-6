@@ -8,7 +8,6 @@ import sit.int221.oasip.dto.eventdto.EventDtoDetail;
 import sit.int221.oasip.dto.eventdto.EventDtoEdit;
 import sit.int221.oasip.dto.eventdto.EventDtoList;
 import sit.int221.oasip.entities.Event;
-import sit.int221.oasip.repositories.EventRepository;
 import sit.int221.oasip.services.EventService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,9 +21,8 @@ import java.util.List;
 
 public class EventController {
     @Autowired
-    private EventRepository repository;
-    @Autowired
     private EventService eventService;
+
 
     @GetMapping("")
     public List<EventDtoList> getEventDTO() {
