@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function(){
 <template>
   <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light bg-nav shadow p-2 mb-5 nav">
     <div class="container-fluid">
-      <button @click="goHome" class="OR"><img src="..\assets\logo.jpg" width="30" height="30"></button>
+      <button @click="goHome" class="OR"><img src="..\assets\oasip.png" width="30" height="30" class="logo"></button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -112,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function(){
   color: white;
 }
 
-img {
+.logo {
   border-radius: 50%;
   
 }

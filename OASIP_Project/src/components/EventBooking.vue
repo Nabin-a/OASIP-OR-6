@@ -17,7 +17,8 @@ const newSchedule = computed(() => {
     eventId: props.eventCreate.eventId,
     bookingName: props.eventCreate.bookingName,
     bookingEmail: email,
-    note: props.eventCreate.note
+    note: props.eventCreate.note,
+    attachment:fileName.value.length
   };
 });
 
@@ -37,22 +38,73 @@ const startTime = ref();
 
 const eventCategorySelect = ref({});
 
+const fileName = ref("");
+var timestamp;
+const resFiles = ref(false);
+const sizeCheck = () => {
+  if (document.getElementById("fileupload").files[0].size / 1024 / 1024 > 10) {
+    resFiles.value = true;
+
+    alert("file size should be less than 10MB!");
+  } else {
+    fileName.value = document.getElementById("fileupload").files[0].name;
+  }
+};
+
+const clearFile = () => {
+  document.getElementById("fileupload").value = "";
+  fileName.value = "";
+};
+
+
+
 let email = localStorage.getItem("email");
 let token = localStorage.getItem("token");
 let role = localStorage.getItem("role");
+
+const emailErr = ref(0);
+const ValidateEmail = (email) => {
+  return email == ""
+    ? (emailErr.value = 0)
+    : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/.test(
+        email
+      )
+    ? (emailErr.value = 1)
+    : (emailErr.value = 2);
+};
+
+const uploadFile = async () => { 
+  console.log(document.getElementById("fileupload").files[0])
+   
+    const formData = new FormData();
+    formData.append("file",document.getElementById("fileupload").files[0]);
+  
+  const uploadRes = await fetch(`https://localhost:8080/api/upload`,{
+    method:"POST",
+    body: formData
+  })
+  if (uploadRes.status === 200){
+      console.log("Upload Success")
+  }
+} 
+
+const onFileSelected = (event) => {
+  console.log(event)
+} 
+
 </script>
 
 <template>
   <div class="container">
     <div class="row d-flex justify-content-center">
       <div class="col col-xl-6">
-        <div class="card" style="border-radius: 1rem">
+        <div class="card" style="border-radius: 2rem">
           <div class="row g-0">
             <div class="col-md-6 d-none d-md-block"></div>
             <div class="col-md-6 col-lg-12 d-flex">
               <div class="container2 card-body p-4 p-lg-5 text-black">
                 <form @submit.prevent="submit">
-                  <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px">
+                  <h3 class="fw-normal mb-3 pb-1" style="letter-spacing: 1px">
                     Reservation Information
                   </h3>
 
@@ -70,7 +122,6 @@ let role = localStorage.getItem("role");
                       required
                     />
                     <div class="invalid-feedback">Name must not be blank.</div>
-
                   </div>
 
                   <label class="form-label" for="form2Example27">Email</label>
@@ -82,16 +133,19 @@ let role = localStorage.getItem("role");
                       placeholder="user@example.com"
                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                       v-model="newSchedule.bookingEmail"
+                      @keyup="ValidateEmail(newSchedule.bookingEmail)"
                       minlength="1"
                       maxlength="45"
                       required
                     />
-                    <div class="invalid-feedback">
+                    <div class="text-danger" v-if="emailErr == 2">
                       Your pattern not correctly.
                     </div>
-                    
                   </div>
-                  <div class="form-outline mb-4" v-else-if="role === 'ROLE_admin'">
+                  <div
+                    class="form-outline mb-4"
+                    v-else-if="role === 'ROLE_admin'"
+                  >
                     <input
                       type="email"
                       class="form-control"
@@ -99,15 +153,14 @@ let role = localStorage.getItem("role");
                       placeholder="user@example.com"
                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                       v-model="newSchedule.bookingEmail"
+                      @keyup="ValidateEmail(newSchedule.bookingEmail)"
                       minlength="1"
                       maxlength="45"
                       required
-                      
                     />
-                    <div class="invalid-feedback">
+                    <div class="text-danger" v-if="emailErr == 2">
                       Your pattern not correctly.
                     </div>
-                    
                   </div>
                   <div class="form-outline mb-4" v-else>
                     <input
@@ -117,17 +170,17 @@ let role = localStorage.getItem("role");
                       placeholder="user@example.com"
                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                       v-model="newSchedule.bookingEmail"
+                      @keyup="ValidateEmail(newSchedule.bookingEmail)"
                       minlength="1"
                       maxlength="45"
                       required
                       disabled
                     />
-                    <div class="invalid-feedback">
+                    <div class="text-danger" v-if="emailErr == 2">
                       Your pattern not correctly.
                     </div>
-                    
                   </div>
-                  
+
                   <label class="form-label" for="form2Example27"
                     >startTime</label
                   >
@@ -179,24 +232,60 @@ let role = localStorage.getItem("role");
                         Please select category.
                       </div>
                     </div>
-                    </div>
-                    <br />
-                    <div class="form-outline mb-4">
-                      note:
-                      <textarea
-                        class="form-control"
-                        type="text"
-                        id="countNote"
-                        placeholder="detail..."
-                        v-model="newSchedule.note"
-                        minLength="0"
-                        maxlength="500"
-                      ></textarea>
-                    
-                    
                   </div>
+                  <br />
+                  <div class="form-outline mb-4">
+                    note:
+                    <textarea
+                      class="form-control"
+                      type="text"
+                      id="countNote"
+                      placeholder="detail..."
+                      v-model="newSchedule.note"
+                      minLength="0"
+                      maxlength="500"
+                    ></textarea>
+                  </div>
+                  <p>Attachment file</p>
+                  <hr />
 
-                  <div class="pt-1 mb-4">
+                  <label for="fileupload" class="file-label-area">
+                    <input
+                      class="file-upload-input"
+                      @change="sizeCheck()"
+                      
+                      id="fileupload"
+                      type="file"
+                      accept="image/*"
+                    />
+                    <div class="text-file">
+                      <p>Drop files here or Browse</p>
+                    </div>
+                  </label>
+
+                  <div class="row mt-3" v-if="fileName != '' ">
+                    <div class="col">
+                      <img v-if="preview" :src="preview" height="200" alt="Image preview"/>
+                      <p>{{ fileName }}</p>
+
+                    </div>
+
+                    <div class="col col-lg-1" @click="clearFile()">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-x-square-fill pointer"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="footer">
                     <button
                       type="submit"
                       class="btn btn-primary col-xl-12"
@@ -209,15 +298,13 @@ let role = localStorage.getItem("role");
                           eventCategorySelect.durations,
                           eventCategorySelect.id,
                           newSchedule.note
-                        )
+                        ), uploadFile()
                       "
                     >
                       Submit
                     </button>
                   </div>
-                  
                 </form>
-                
               </div>
             </div>
           </div>
@@ -229,24 +316,28 @@ let role = localStorage.getItem("role");
 
 <style>
 .form-control {
-    outline: none;
-    border: none;
-    border-bottom: 1px solid blue;
-    border-radius: 0%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid blue;
+  border-radius: 0%;
 }
 
 :focus::-webkit-input-placeholder {
-    transition: text-indent 1s 0.1s ease; 
-    text-indent: -100%;
-    opacity: 1;
- }
+  transition: text-indent 1s 0.1s ease;
+  text-indent: -100%;
+  opacity: 1;
+}
 
- input[type="text"]:disabled {
-    background: #f1f1f1;
- }
+input[type="text"]:disabled {
+  background: #f1f1f1;
+}
+
+.footer {
+  margin-top: 20px;
+}
 
 .container2 {
-    margin-left:40px;
+  margin-left: 40px;
   height: 550px;
   display: flex;
   flex-wrap: wrap;
@@ -256,30 +347,59 @@ let role = localStorage.getItem("role");
 }
 
 .container2::-webkit-scrollbar {
-  width:6px; 
- 
+  width: 6px;
 }
 
 .container2::-webkit-scrollbar-track {
-  background:#fcfcfc;
-  margin :50px;
-  
+  background: #fcfcfc;
+  margin: 50px;
 }
 
 .container2::-webkit-scrollbar-thumb {
   background: #b2d7e1;
-  
+
   border-radius: 50px;
-  
 }
 
-.container2::-webkit-scrollbar-thumb:hover{
+.container2::-webkit-scrollbar-thumb:hover {
   background: #97e1a7;
-  
 }
 
-input[type="number"]:disabled{
-    background:#ffffff;
+input[type="number"]:disabled {
+  background: #ffffff;
 }
 
+.file-upload-input {
+  position: absolute;
+  outline: none;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.file-label-area {
+  background-color: #d6d6d6;
+  cursor: pointer;
+  border-radius: 4px;
+  padding-right: 32%;
+}
+
+.text-file {
+  margin: 10px 0px 0px 125px;
+  flex-wrap: nowrap;
+  color: rgb(95, 95, 95);
+}
+
+.file-label-area:hover {
+  background-color: #f8b5f5;
+  transition: 0.3s;
+}
+
+.file-label-area:hover > .text-file {
+  transition: 0.3s;
+  color: rgba(255, 0, 0, 0.615);
+}
 </style>

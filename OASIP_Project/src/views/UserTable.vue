@@ -140,7 +140,8 @@ const createNewUser = async (
   const res = await fetch(`http://localhost:8080/api/users/register`, {
     method: "POST",
     headers: {
-      "content-type": "application/json;"
+      "content-type": "application/json;",
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
       name: newUserName,

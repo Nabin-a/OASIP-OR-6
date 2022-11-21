@@ -101,15 +101,18 @@ const createNewSchedule = async (
   newStartTime,
   newDurations,
   newCategory,
-  newNote
+  newNote,
+  newAttachment
 ) => {
+  
   console.log(
     newBookingName,
     newBookingEmail,
     newStartTime,
     newDurations,
     newCategory,
-    newNote
+    newNote,
+    newAttachment
   );
   const res = await fetch(`http://localhost:8080/api/events`, {
     method: "POST",
@@ -123,7 +126,8 @@ const createNewSchedule = async (
       startTime: newStartTime,
       durations: newDurations,
       categoryId: newCategory,
-      note: newNote
+      note: newNote,
+      attachment: fileName.value.length > 0 ? fileName.value : null,
     })
   });
   if (res.status === 201) {

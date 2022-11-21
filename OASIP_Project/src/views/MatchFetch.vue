@@ -9,6 +9,8 @@ const userStore = ref({});
 const appRouter = useRouter();
 const goUser = () => appRouter.push({name: 'User'})
 
+let token = localStorage.getItem("token")
+
 const userMatch = async (UserEmail, UserPassword) => {
   console.log(UserEmail);
   emailNotfound.value = false
