@@ -2,12 +2,15 @@ package sit.int221.oasip.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import sit.int221.oasip.configs.JwtTokenUtil;
 import sit.int221.oasip.dto.userdto.*;
@@ -16,6 +19,11 @@ import sit.int221.oasip.entities.User;
 import sit.int221.oasip.repositories.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Service
@@ -30,9 +38,11 @@ public class UserService {
     private PasswordService passwordService;
     @Autowired
     private UserDetailsService userDetailsService;
-
     @Autowired
     private JwtTokenUtil jwtUtil;
+
+    @Value("${app.upload.dir:${user.home}}")
+    public String uploadDir;
 
     //Method List User All
     public List<UserDtoList> getUsersAll() {
@@ -73,7 +83,7 @@ public class UserService {
         if(editUser.getName() != null && userRepository.existsByNameAndUserIdNot(editUser.getName(), userId)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Name is already registered");
         }
-        else if(editUser.getEmail() != null && userRepository.existsByEmailAndUserIdNot(editUser.getEmail(), userId)){
+        if(editUser.getEmail() != null && userRepository.existsByEmailAndUserIdNot(editUser.getEmail(), userId)){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email address is already registered");
         }
         user.setName(editUser.getName());
@@ -90,12 +100,9 @@ public class UserService {
 
         if (jwtUtil.canTokenBeRefreshed(token)) {
             String accessToken = jwtUtil.generateToken(userDetails);
-            String refreshedToken = jwtUtil.refreshToken(accessToken);
-            return ResponseEntity.ok(new JwtResponse(accessToken, refreshedToken));
+            return ResponseEntity.ok(new JwtRefresh(accessToken));
         } else {
             return ResponseEntity.badRequest().body(null);
         }
     }
-
-
 }

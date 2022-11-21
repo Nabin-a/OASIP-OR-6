@@ -22,6 +22,8 @@ import sit.int221.oasip.repositories.CategoryRepository;
 import sit.int221.oasip.repositories.EventRepository;
 import sit.int221.oasip.repositories.UserRepository;
 
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -38,22 +40,25 @@ public class EventService {
     private UserRepository userRepository;
     @Autowired
     private JavaMailSender mailSender;
+    @Autowired
+    private FileService fileService;
 
-    @Value("${spring.mail.username}") private String sender;
+    @Value("${spring.mail.username}")
+    private String sender;
 
     //Method list all event
     public List<EventDtoList> getEventsAll() {
         Authentication role = SecurityContextHolder.getContext().getAuthentication();
         //role student
-        if (role.getAuthorities().toString().equals("[ROLE_student]")){
+        if (role.getAuthorities().toString().equals("[ROLE_student]")) {
             List<Event> eventList = repository.findAllByBookingEmail(role.getName());
             return listMapper.mapList(eventList, EventDtoList.class, modelMapper);
         }
 
         //role lecturer
-        if (role.getAuthorities().toString().equals(("[ROLE_lecturer]"))){
+        if (role.getAuthorities().toString().equals(("[ROLE_lecturer]"))) {
             User user = userRepository.findByEmail(role.getName());
-            List<Event> eventList = repository.findAllByEventCategoryOwner(user.getId());
+            List<Event> eventList = repository.findAllByEventCategoryOwner(user.getUserId());
             return listMapper.mapList(eventList, EventDtoList.class, modelMapper);
         }
 
@@ -63,43 +68,44 @@ public class EventService {
     }
 
     //Method get Event by eventId
-    public EventDtoDetail getEventById(Integer id){
+    public EventDtoDetail getEventById(Integer id) {
         Authentication role = SecurityContextHolder.getContext().getAuthentication();
-        if(role.getAuthorities().toString().equals("[ROLE_student]")){
+        if (role.getAuthorities().toString().equals("[ROLE_student]")) {
             User user = userRepository.findByEmail(role.getName());
             Event event = repository.findByBookingEmailAndId(id, user.getEmail());
-            if (event == null){
+            if (event == null) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN);
             }
             return modelMapper.map(event, EventDtoDetail.class);
         }
 
-        if (role.getAuthorities().toString().equals(("[ROLE_lecturer]"))){
+        if (role.getAuthorities().toString().equals(("[ROLE_lecturer]"))) {
             User user = userRepository.findByEmail(role.getName());
-            Event event = repository.findEventByEventCategoryOwner(id, user.getId());
-            if (event == null){
+            Event event = repository.findEventByEventCategoryOwner(id, user.getUserId());
+            if (event == null) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN);
             }
             return modelMapper.map(event, EventDtoDetail.class);
         }
 
-        Event event = repository.findById(id).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: "+id+" does not exist"));
+        Event event = repository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: " + id + " does not exist"));
         return modelMapper.map(event, EventDtoDetail.class);
     }
 
     //Method create new Event
-    public EventDtoDetail save(EventDtoCreate newEvent){
+    public EventDtoDetail save(EventDtoCreate newEvent) {
         Authentication role = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(newEvent.getFile().getOriginalFilename());
         //role student
-        if(role.getAuthorities().toString().equals("[ROLE_student]")){
-            if(!role.getName().equals(newEvent.getBookingEmail())){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Email does not the same");
+        if (role.getAuthorities().toString().equals("[ROLE_student]")) {
+            if (!role.getName().equals(newEvent.getBookingEmail())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email does not the same");
             }
         }
 
         //role lecturer
-        if(role.getAuthorities().toString().equals("[ROLE_lecturer]")){
+        if (role.getAuthorities().toString().equals("[ROLE_lecturer]")) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
 
@@ -108,35 +114,53 @@ public class EventService {
                         () -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                                 "Category id:" + newEvent.getCategoryId() + " doesn't exist !!"));
         newEvent.setDurations(category.getDurationMin());
-        Event event = repository.saveAndFlush(modelMapper.map(newEvent , Event.class));
+        Event event = modelMapper.map(newEvent, Event.class);
+
+        //upload files
+        if (newEvent.getFile()!=null){
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
+                        .withZone(ZoneId.systemDefault());
+                String formattedInstant = formatter.format(newEvent.getStartTime());
+
+                String saveFile = formattedInstant + newEvent.getFile().getOriginalFilename();
+                fileService.save(newEvent.getFile(), formattedInstant);
+                event.setFile(saveFile);
+            } catch (Exception e) {
+                throw new RuntimeException("Could not upload the file. Error: " + e.getMessage());
+            }
+        }
+
+        //send email
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(sender);
         message.setTo(event.getBookingEmail());
-        message.setSubject("Event has been created.");
+        message.setSubject("[OASIP] " + category.getCategoryName() + " @ " + event.getStartTime().toString().replace("T", " "));
         message.setText("Booking name: " + '\"' + event.getBookingName() + '\"' + "\n" +
-                "Event Category:" + '\"' + event.getCategory() + '\"' + "\n" +
+                "Event Category:" + '\"' + category.getCategoryName() + '\"' + "\n" +
                 "Event duration: " + '\"' + event.getDurations() + '\"' + "\n" +
-                "Event start time: "+ '\"' + event.getStartTime() + '\"' + "\n" +
+                "Event start time: " + '\"' + event.getStartTime().toString().replace("T", " ") + "\n" +
                 "Event notes: " + '\"' + event.getNote() + '\"' + "\n");
         mailSender.send(message);
+        repository.saveAndFlush(event);
         return modelMapper.map(event, EventDtoDetail.class);
     }
 
-    public Event edit(EventDtoEdit editEvent, Integer eventId){
+    public Event edit(EventDtoEdit editEvent, Integer eventId) {
         Authentication role = SecurityContextHolder.getContext().getAuthentication();
-        Event event = repository.findById(eventId).orElseThrow(()->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: "+eventId+" does not exist"));
+        Event event = repository.findById(eventId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: " + eventId + " does not exist"));
         //role student
-        if(role.getAuthorities().toString().equals("[ROLE_student]")){
+        if (role.getAuthorities().toString().equals("[ROLE_student]")) {
             User user = userRepository.findByEmail(role.getName());
             Event event1 = repository.findByBookingEmailAndId(eventId, user.getEmail());
-            if (event1 == null){
+            if (event1 == null) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN);
             }
         }
 
         event.setStartTime(editEvent.getStartTime());
-        if (editEvent.getNote()==null){
+        if (editEvent.getNote() == null) {
             editEvent.setNote(event.getNote());
         }
         event.setNote(editEvent.getNote());
@@ -145,21 +169,22 @@ public class EventService {
         return repository.saveAndFlush(mapEvent);
     }
 
-    public void delete(Integer eventId){
+    public void delete(Integer eventId) {
         Authentication role = SecurityContextHolder.getContext().getAuthentication();
-        repository.findById(eventId).orElseThrow(()->
+        repository.findById(eventId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, eventId + "does not exist"));
 
         //role student
-        if(role.getAuthorities().toString().equals("[ROLE_student]")){
+        if (role.getAuthorities().toString().equals("[ROLE_student]")) {
             User user = userRepository.findByEmail(role.getName());
             Event event = repository.findByBookingEmailAndId(eventId, user.getEmail());
-            if (event == null){
+            if (event == null) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN);
             }
         }
 
         repository.deleteById(eventId);
     }
+
 
 }
