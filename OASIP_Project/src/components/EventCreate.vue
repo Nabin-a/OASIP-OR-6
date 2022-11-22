@@ -40,8 +40,6 @@ const datetime = computed(() => {
 
 const startTime = ref();
 
-const eventCategorySelect = ref({});
-
 const eventStartTimeEdit = computed(() => {
   if (props.currentEvent.startTime != null) {
     return moment(props.currentEvent.startTime).format("YYYY-MM-DDTHH:mm");
@@ -51,6 +49,8 @@ const eventStartTimeEdit = computed(() => {
 let email = localStorage.getItem("email")
 
 let role = localStorage.getItem("role");
+
+
 
 </script>
 

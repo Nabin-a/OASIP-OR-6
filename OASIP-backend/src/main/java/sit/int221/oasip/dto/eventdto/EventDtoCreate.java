@@ -1,10 +1,11 @@
 package sit.int221.oasip.dto.eventdto;
 
 import lombok.*;
-import sit.int221.oasip.entities.Category;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
-import java.time.ZonedDateTime;
+import java.time.Instant;
+
 
 @Getter
 @Setter
@@ -21,7 +22,7 @@ public class EventDtoCreate {
 
     @Future(message = "must be future Date time")
     @NotNull
-    private ZonedDateTime startTime;
+    private Instant startTime;
 
     private Integer durations;
 
@@ -29,4 +30,7 @@ public class EventDtoCreate {
     private String note;
 
     private Integer categoryId;
+
+    private MultipartFile file;
+
 }

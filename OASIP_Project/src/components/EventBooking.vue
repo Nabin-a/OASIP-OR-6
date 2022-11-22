@@ -1,7 +1,6 @@
 <script setup>
 import { ref, computed } from "vue";
-import moment from "moment";
-defineEmits(["createSchedule", "updateEvent"]);
+defineEmits(["createSchedule", "updateEvent","uploadFile"]);
 const props = defineProps({
   eventCategory: {
     type: Array
@@ -17,10 +16,10 @@ const newSchedule = computed(() => {
     eventId: props.eventCreate.eventId,
     bookingName: props.eventCreate.bookingName,
     bookingEmail: email,
-    note: props.eventCreate.note,
-    attachment:fileName.value.length
+    note: props.eventCreate.note
   };
 });
+
 
 const theDate = new Date();
 theDate.setHours(theDate.getHours() + 7);
@@ -39,7 +38,6 @@ const startTime = ref();
 const eventCategorySelect = ref({});
 
 const fileName = ref("");
-var timestamp;
 const resFiles = ref(false);
 const sizeCheck = () => {
   if (document.getElementById("fileupload").files[0].size / 1024 / 1024 > 10) {
@@ -73,24 +71,6 @@ const ValidateEmail = (email) => {
     : (emailErr.value = 2);
 };
 
-const uploadFile = async () => { 
-  console.log(document.getElementById("fileupload").files[0])
-   
-    const formData = new FormData();
-    formData.append("file",document.getElementById("fileupload").files[0]);
-  
-  const uploadRes = await fetch(`https://localhost:8080/api/upload`,{
-    method:"POST",
-    body: formData
-  })
-  if (uploadRes.status === 200){
-      console.log("Upload Success")
-  }
-} 
-
-const onFileSelected = (event) => {
-  console.log(event)
-} 
 
 </script>
 
@@ -253,10 +233,10 @@ const onFileSelected = (event) => {
                     <input
                       class="file-upload-input"
                       @change="sizeCheck()"
-                      
+                     
                       id="fileupload"
                       type="file"
-                      accept="image/*"
+                      
                     />
                     <div class="text-file">
                       <p>Drop files here or Browse</p>
@@ -265,7 +245,7 @@ const onFileSelected = (event) => {
 
                   <div class="row mt-3" v-if="fileName != '' ">
                     <div class="col">
-                      <img v-if="preview" :src="preview" height="200" alt="Image preview"/>
+                      
                       <p>{{ fileName }}</p>
 
                     </div>
@@ -291,14 +271,15 @@ const onFileSelected = (event) => {
                       class="btn btn-primary col-xl-12"
                       @click="
                         $emit(
-                          'createSchedule',
+                          'uploadFile',
                           newSchedule.bookingName,
                           newSchedule.bookingEmail,
                           datetime,
                           eventCategorySelect.durations,
                           eventCategorySelect.id,
-                          newSchedule.note
-                        ), uploadFile()
+                          newSchedule.note,
+                          fileName
+                        )
                       "
                     >
                       Submit

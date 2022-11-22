@@ -43,6 +43,17 @@ const validateEmail = () => {
   } else checkEmailMatch.value = true;
 };
 
+const emailErr = ref(0);
+const ValidateEmailPat = (email) => {
+  return email == ""
+    ? (emailErr.value = 0)
+    : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/.test(
+        email
+      )
+    ? (emailErr.value = 1)
+    : (emailErr.value = 2);
+};
+
 </script>
 
 <template>
@@ -118,10 +129,14 @@ const validateEmail = () => {
                   maxlength="50"
                   required
                   v-on:input="validateEmail()"
+                  @keyup="ValidateEmailPat(editUser.email)"
                 />
                 <p class="text-danger" v-show="validateUnique">
                   Email must be unique and checking well-formed.
                 </p>
+                <div class="text-danger" v-if="emailErr == 2">
+                      Your pattern not correctly.
+                    </div>
               </li>
 
               <br />

@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 @Table(name = "event", indexes = {
         @Index(name = "ClientFirstsName_index", columnList = "bookingName"),
@@ -29,13 +29,16 @@ public class Event {
 
     @Future
     @Column(name = "startTime", nullable = false)
-    private ZonedDateTime startTime;
+    private Instant startTime;
 
     @Column(name = "Durations", nullable = false)
     private Integer durations;
 
     @Column(name = "Note", length = 500)
     private String note;
+
+    @Column(name = "file", length = 100)
+    private String file;
 
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.EAGER)

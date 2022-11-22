@@ -2,13 +2,13 @@ package sit.int221.oasip.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import sit.int221.oasip.dto.eventdto.EventDtoCreate;
 import sit.int221.oasip.dto.eventdto.EventDtoDetail;
 import sit.int221.oasip.dto.eventdto.EventDtoEdit;
 import sit.int221.oasip.dto.eventdto.EventDtoList;
 import sit.int221.oasip.entities.Event;
-import sit.int221.oasip.repositories.EventRepository;
 import sit.int221.oasip.services.EventService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,9 +22,8 @@ import java.util.List;
 
 public class EventController {
     @Autowired
-    private EventRepository repository;
-    @Autowired
     private EventService eventService;
+
 
     @GetMapping("")
     public List<EventDtoList> getEventDTO() {
@@ -39,7 +38,7 @@ public class EventController {
     //POST
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public EventDtoDetail create(@Valid @RequestBody EventDtoCreate newEventDtoCreate){
+    public EventDtoDetail create(@Valid @ModelAttribute EventDtoCreate newEventDtoCreate, BindingResult result){
         return eventService.save(newEventDtoCreate);
     }
 
