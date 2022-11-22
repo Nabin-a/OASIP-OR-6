@@ -55,11 +55,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/users/login", "/api/events").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/category").permitAll()
-                .antMatchers("/api/users/**" ,"/api/users/match","/api/events/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/events/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/events/**").permitAll()
-                .antMatchers(HttpMethod.PUT, "/api/events/{id}").permitAll()
-                .antMatchers(HttpMethod.DELETE, "/api/events/{id}").permitAll()
+                .antMatchers("/api/users/**" ,"/api/users/match","/api/events/**").hasRole("admin")
+                .antMatchers(HttpMethod.GET, "/api/events/**").hasAnyRole("admin", "student", "lecturer")
+                .antMatchers(HttpMethod.POST, "/api/events/**").hasAnyRole("admin", "student")
+                .antMatchers(HttpMethod.PUT, "/api/events/{id}").hasAnyRole("admin", "student")
+                .antMatchers(HttpMethod.DELETE, "/api/events/{id}").hasAnyRole("admin", "student")
                                         .anyRequest().authenticated().and().
                         exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
