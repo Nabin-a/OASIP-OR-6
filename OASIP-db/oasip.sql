@@ -98,9 +98,14 @@ CREATE TABLE IF NOT EXISTS `eventcategoryowner` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
 
+<<<<<<< HEAD
 LOCK TABLES `eventcategoryowner` WRITE;
 insert into eventcategoryowner (userId, eventCategoryId)
 values(2,1),(2,2),(5,2),(6,3),(4,4),(3,5),(2,5); 
 UNLOCK TABLES;
 
 
+=======
+Alter table event
+add file varchar(100);
+>>>>>>> dedbb7067e1c2f2f598aa97b98ecbe741918694b

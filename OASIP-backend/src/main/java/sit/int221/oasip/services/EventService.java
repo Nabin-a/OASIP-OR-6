@@ -22,8 +22,13 @@ import sit.int221.oasip.repositories.CategoryRepository;
 import sit.int221.oasip.repositories.EventRepository;
 import sit.int221.oasip.repositories.UserRepository;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -133,15 +138,22 @@ public class EventService {
 
         //send email
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(sender);
-        message.setTo(event.getBookingEmail());
-        message.setSubject("[OASIP] " + category.getCategoryName() + " @ " + event.getStartTime().toString().replace("T", " "));
-        message.setText("Booking name: " + '\"' + event.getBookingName() + '\"' + "\n" +
-                "Event Category:" + '\"' + category.getCategoryName() + '\"' + "\n" +
-                "Event duration: " + '\"' + event.getDurations() + '\"' + "\n" +
-                "Event start time: " + '\"' + event.getStartTime().toString().replace("T", " ") + "\n" +
-                "Event notes: " + '\"' + event.getNote() + '\"' + "\n");
-        mailSender.send(message);
+        try {
+            message.setFrom(sender);
+            message.setTo(event.getBookingEmail());
+            message.setSubject("[OASIP] " + category.getCategoryName() + " @ " +
+                    formatDatetime(event.getStartTime()) + " " + event.getDurations() + " mins");
+            message.setReplyTo(String.valueOf(new InternetAddress(sender)));
+            message.setText("Booking name: " + event.getBookingName() + "\n" +
+                    "Event Category:" + category.getCategoryName() + "\n" +
+                    "Event duration: " + event.getDurations()  + " mins" + "\n" +
+                    "Event start time: " + formatDatetime(event.getStartTime()) + "\n" +
+                    "Event notes: " + event.getNote() + "\n");
+            mailSender.send(message);
+        }catch (MessagingException mex){
+            mex.printStackTrace();
+        }
+
         repository.saveAndFlush(event);
         return modelMapper.map(event, EventDtoDetail.class);
     }
@@ -182,9 +194,12 @@ public class EventService {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN);
             }
         }
-
         repository.deleteById(eventId);
     }
 
-
+    public String formatDatetime(Instant time){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
+        String formattedInstant = formatter.format(time);
+        return formattedInstant;
+    }
 }
