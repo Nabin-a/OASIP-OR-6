@@ -128,7 +128,7 @@ const uploadFile = async (newBookingName,
   if (uploadRes.status === 201) {
     location.reload();
     alert("Added sucessfully");
-    const addedSchedule = await res.json();
+    const addedSchedule = await uploadRes.json();
     events.value.push(addedSchedule);
   } else if (uploadRes.status === 401) {
     const resfs = await fetch(`http://localhost:8080/api/refresh`, {

@@ -16,7 +16,7 @@ const newSchedule = computed(() => {
     eventId: props.eventCreate.eventId,
     bookingName: props.eventCreate.bookingName,
     bookingEmail: email,
-    note: props.eventCreate.note
+    note: props.eventCreate.note,
   };
 });
 
