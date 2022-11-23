@@ -68,3 +68,6 @@ CREATE TABLE IF NOT EXISTS `mydb`.`eventcategoryowner` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb3;
+
+Alter table event
+add file varchar(100);
