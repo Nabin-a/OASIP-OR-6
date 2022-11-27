@@ -17,9 +17,13 @@ const newSchedule = computed(() => {
     bookingName: props.eventCreate.bookingName,
     bookingEmail: email,
     note: props.eventCreate.note,
+    file: props.eventCreate.file
   };
 });
 
+
+
+const note = ref("");
 
 const theDate = new Date();
 theDate.setHours(theDate.getHours() + 7);
@@ -38,16 +42,44 @@ const startTime = ref();
 const eventCategorySelect = ref({});
 
 const fileName = ref("");
-const resFiles = ref(false);
-const sizeCheck = () => {
-  if (document.getElementById("fileupload").files[0].size / 1024 / 1024 > 10) {
-    resFiles.value = true;
+var fileAtt = document.getElementById("fileupload")
 
-    alert("file size should be less than 10MB!");
+const fileup = ref('')
+let dataTransfer = new DataTransfer()
+
+const sizeCheck = (e) => {
+  let maxSize = 10 * 1024 * 1024 //10MB
+  if (e.target.files[0].size > maxSize) {
+    let fileInput = document.getElementById('fileupload')
+    console.log(fileInput.value)
+    alert("file size should be less than 10MB")
+    if (fileup.value === undefined || fileup.value === ''){
+      clearFile()
+    } else {
+      dataTransfer.items.clear()
+      dataTransfer.items.add(fileup.value)
+      fileInput.files = dataTransfer.files
+    }
   } else {
-    fileName.value = document.getElementById("fileupload").files[0].name;
+    fileup.value = e.target.files[0]
+    fileName.value = document.getElementById('fileupload').files[0].name
   }
+  
+ 
 };
+
+
+
+// const sizeCheck = () => {
+//   const fileAttt = document.getElementById("fileupload").files
+//   if (document.getElementById("fileupload").files[0].size / 1024 / 1024 > 10) {
+//     fileAttt.value.shift()
+//     alert("file size should be less than 10MB!");
+    
+//   } else {
+//     fileName.value = document.getElementById("fileupload").files[0].name;
+//   }
+// };
 
 const clearFile = () => {
   document.getElementById("fileupload").value = "";
@@ -221,7 +253,7 @@ const ValidateEmail = (email) => {
                       type="text"
                       id="countNote"
                       placeholder="detail..."
-                      v-model="newSchedule.note"
+                      v-model="note"
                       minLength="0"
                       maxlength="500"
                     ></textarea>
@@ -232,8 +264,8 @@ const ValidateEmail = (email) => {
                   <label for="fileupload" class="file-label-area">
                     <input
                       class="file-upload-input"
-                      @change="sizeCheck()"
-                     
+                      @change="sizeCheck($event)"
+                      
                       id="fileupload"
                       type="file"
                       
@@ -277,7 +309,7 @@ const ValidateEmail = (email) => {
                           datetime,
                           eventCategorySelect.durations,
                           eventCategorySelect.id,
-                          newSchedule.note,
+                          note,
                           fileName
                         )
                       "

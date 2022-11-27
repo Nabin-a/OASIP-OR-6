@@ -52,6 +52,9 @@ defineProps({
                 Email : {{ eventDetail.bookingEmail }}
               </li>
               <li class="list-group-item">Note : {{ eventDetail.note }}</li>
+              <li class="list-group-item">
+                  File : {{eventDetail.file}}
+              </li>
             </ul>
           </div>
           <div class="modal-footer">

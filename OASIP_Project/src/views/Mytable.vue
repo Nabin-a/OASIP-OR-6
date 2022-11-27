@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onBeforeMount } from "vue";
+import { useRouter } from "vue-router";
 import EventList from "../components/EventList.vue";
 import EventDetail from "../components/EventDetail.vue";
 import EventCreate from "../components/EventCreate.vue";
@@ -8,7 +9,11 @@ const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
 
+const appRouter = useRouter();
+const goLogin = () => appRouter.push({ name: "Login" });
+
 let token = localStorage.getItem('token')
+let retoken = localStorage.getItem('refreshToken')
 
 onBeforeMount(async () => {
 
@@ -28,13 +33,13 @@ const getEvents = async () => {
     console.log(events.value);
     return events.value;
   } else if (res.status === 401) {
-    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+    const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
       headers: {
-        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+        'Authorization': `Bearer ${retoken}` 
       }
     })
     if (resfs.status === 200){
-      data = await resfs.json()
+      const data = await resfs.json()
       localStorage.setItem('token', data.accessToken)
     } else if (resfs.status === 401) {
       goLogin()
@@ -54,13 +59,13 @@ const getEventCategory = async () => {
     console.log(eventCategory.value);
     return eventCategory.value;
   } else if (res.status === 401) {
-    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+    const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
       headers: {
-        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+        'Authorization': `Bearer ${retoken}`
       }
     })
     if (resfs.status === 200){
-      data = await resfs.json()
+      const data = await resfs.json()
       localStorage.setItem('token', data.accessToken)
     } else if (resfs.status === 401) {
       goLogin()
@@ -80,13 +85,13 @@ const getEventid = async (id) => {
     eventDetail.value = await res.json();
     console.log(eventDetail.value);
   } else if (res.status === 401) {
-    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+    const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
       headers: {
-        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+        'Authorization': `Bearer ${retoken}`
       }
     })
     if (resfs.status === 200){
-      data = await resfs.json()
+      const data = await resfs.json()
       localStorage.setItem('token', data.accessToken)
     } else if (resfs.status === 401) {
       goLogin()
@@ -136,13 +141,13 @@ const createNewSchedule = async (
     const addedSchedule = await res.json();
     events.value.push(addedSchedule);
   } else if (res.status === 401) {
-    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+    const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
       headers: {
-        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+        'Authorization': `Bearer ${retoken}`
       }
     })
     if (resfs.status === 200){
-      data = await resfs.json()
+      const data = await resfs.json()
       localStorage.setItem('token', data.accessToken)
     } else if (resfs.status === 401) {
       goLogin()
@@ -164,13 +169,13 @@ const removeEvent = async (id) => {
       events.value = events.value.filter((event) => event.id !== id);
       console.log("deleted successfully");
     } else if (res.status === 401) {
-    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+    const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
       headers: {
-        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+        'Authorization': `Bearer ${retoken}`
       }
     })
     if (resfs.status === 200){
-      data = await resfs.json()
+      const data = await resfs.json()
       localStorage.setItem('token', data.accessToken)
     } else if (resfs.status === 401) {
       goLogin()
@@ -199,13 +204,13 @@ const updateEvent = async (id, editTime, editNote) => {
     alert("Edit Success");
     console.log("edited successfully");
   } else if (res.status === 401) {
-    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+    const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
       headers: {
-        'Authorization': `Bearer` + localStorage.getItem('refreshToken')
+        'Authorization': `Bearer ${retoken}`
       }
     })
     if (resfs.status === 200){
-      data = await resfs.json()
+      const data = await resfs.json()
       localStorage.setItem('token', data.accessToken)
     } else if (resfs.status === 401) {
       goLogin()

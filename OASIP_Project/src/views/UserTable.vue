@@ -33,13 +33,13 @@ const getUsers = async () => {
     console.log(users.value);
     return users.value;
   } else if (res.status === 401) {
-    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+    const resfs = await fetch(`https://localhost:8080/users/api/refresh`, {
       headers: {
         Authorization: `Bearer` + localStorage.getItem("refreshToken")
       }
     });
     if (resfs.status === 200) {
-      data = await resfs.json();
+      const data = await resfs.json();
       localStorage.setItem("token", data.accessToken);
     } else if (resfs.status === 401) {
       goLogin();
@@ -59,13 +59,13 @@ const getUserid = async (userId) => {
     userDetail.value = await res.json();
     console.log(userDetail.value);
   } else if (res.status === 401) {
-    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+    const resfs = await fetch(`https://localhost:8080/users/api/refresh`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("refreshToken")}`
       }
     });
     if (resfs.status === 200) {
-      data = await resfs.json();
+      const data = await resfs.json();
       localStorage.setItem("token", data.accessToken);
     }
   }
@@ -84,13 +84,13 @@ const removeUser = async (userId) => {
       users.value = users.value.filter((user) => user.userId !== userId);
       console.log("deleted successfully");
     } else if (res.status === 401) {
-      const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+      const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("refreshToken")}`
         }
       });
       if (resfs.status === 200) {
-        data = await resfs.json();
+        const data = await resfs.json();
         localStorage.setItem("token", data.accessToken);
       }
     }
@@ -118,13 +118,13 @@ const updateUser = async (userId, editName, editEmail, editRole) => {
   } else if (res.status === 400) {
     validateUnique.value = true;
   } else if (res.status === 401) {
-    const resfs = await fetch(`https://localhost:8080/api/refresh`, {
+    const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("refreshToken")}`
       }
     });
     if (resfs.status === 200) {
-      data = await resfs.json();
+      const data = await resfs.json();
       localStorage.setItem("token", data.accessToken);
     }
   }
