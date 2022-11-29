@@ -6,7 +6,6 @@ const goHome = () => appRouter.push({ name: "Home" });
 const goUser = () => appRouter.push({ name: "User" });
 const goEvent = () => appRouter.push({ name: "Event" });
 const goLogin = () => appRouter.push({ name: "Login" });
-const goRegister = () => appRouter.push({ name: "Register" });
 const goBooking = () => appRouter.push({ name: "Reserve"})
 
 let token = localStorage.getItem("token");

@@ -42,7 +42,6 @@ const startTime = ref();
 const eventCategorySelect = ref({});
 
 const fileName = ref("");
-var fileAtt = document.getElementById("fileupload")
 
 const fileup = ref('')
 let dataTransfer = new DataTransfer()
