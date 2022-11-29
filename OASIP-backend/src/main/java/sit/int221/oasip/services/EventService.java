@@ -3,10 +3,11 @@ package sit.int221.oasip.services;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -24,11 +25,10 @@ import sit.int221.oasip.repositories.UserRepository;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
-import java.text.SimpleDateFormat;
+import javax.mail.internet.MimeMessage;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -95,6 +95,10 @@ public class EventService {
 
         Event event = repository.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Event id: " + id + " does not exist"));
+        if (event.getFile() != null){
+            fileService.getFile(event.getFile());
+        }
+
         return modelMapper.map(event, EventDtoDetail.class);
     }
 
@@ -137,22 +141,24 @@ public class EventService {
         }
 
         //send email
-        SimpleMailMessage message = new SimpleMailMessage();
-        try {
-            message.setFrom(sender);
-            message.setTo(event.getBookingEmail());
-            message.setSubject("[OASIP] " + category.getCategoryName() + " @ " +
-                    formatDatetime(event.getStartTime()) + " " + event.getDurations() + " mins");
-            message.setReplyTo(String.valueOf(new InternetAddress(sender)));
-            message.setText("Booking name: " + event.getBookingName() + "\n" +
-                    "Event Category:" + category.getCategoryName() + "\n" +
-                    "Event duration: " + event.getDurations()  + " mins" + "\n" +
-                    "Event start time: " + formatDatetime(event.getStartTime()) + "\n" +
-                    "Event notes: " + event.getNote() + "\n");
-            mailSender.send(message);
-        }catch (MessagingException mex){
-            mex.printStackTrace();
-        }
+        MimeMessage message = mailSender.createMimeMessage();
+            try {
+                MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(message, true);
+                mimeMessageHelper.setFrom(sender);
+                mimeMessageHelper.setTo(event.getBookingEmail());
+                mimeMessageHelper.setSubject("[OASIP] " + category.getCategoryName() + " @ " +
+                        formatDatetime(event.getStartTime()) + " " + event.getDurations() + " mins");
+                mimeMessageHelper.setReplyTo(new InternetAddress(sender));
+                mimeMessageHelper.setText("Booking name: " + event.getBookingName() + "\n" +
+                        "Event Category:" + category.getCategoryName() + "\n" +
+                        "Event duration: " + event.getDurations() + " mins" + "\n" +
+                        "Event start time: " + formatDatetime(event.getStartTime()) + "\n" +
+                        "Event notes: " + event.getNote() + "\n");
+                mailSender.send(mimeMessageHelper.getMimeMessage());
+            }
+            catch (MessagingException e) {
+                e.printStackTrace();
+            }
 
         repository.saveAndFlush(event);
         return modelMapper.map(event, EventDtoDetail.class);
