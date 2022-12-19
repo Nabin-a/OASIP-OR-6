@@ -7,6 +7,26 @@ defineProps({
     type: Object
   }
 });
+
+const downloadFile = async () => {
+  fetch(
+    `${import.meta.env.VITE_BASE_URL}file/get/` + thisEvent.value.attachment,
+    {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("access_token"),
+      },
+    }
+  )
+    .then((r) => r.blob())
+    .then((data) => {
+      var link = document.createElement("a");
+      link.href = window.URL.createObjectURL(data);
+      link.download = thisEvent.value.attachment.split(",")[1];
+      link.click();
+    });
+};
+
 </script>
 
 <template>

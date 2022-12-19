@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.time.ZonedDateTime;
 
 @Getter
@@ -17,7 +18,7 @@ public class UserDtoDetail {
     private String email;
     private String role;
     private String password;
-    private ZonedDateTime createdOn;
-    private ZonedDateTime updatedOn;
+    private Instant createdOn;
+    private Instant updatedOn;
 
 }

@@ -48,8 +48,8 @@ const userLogin = async (UserEmail, UserPassword) => {
       email: UserEmail,
       password: UserPassword
       
-    },
-    localStorage.setItem('email',`${UserEmail}`))
+    }
+    )
     
   });
  
@@ -58,6 +58,7 @@ const userLogin = async (UserEmail, UserPassword) => {
     const jwttoken = await res.json()
     LocalStorage('token',jwttoken.accessToken)
     LocalStorage('refreshToken',jwttoken.refreshToken)
+    LocalStorage('email',`${UserEmail}`)
     pushToken(jwttoken.accessToken)
     goHome();
     // window.open("http://localhost:3000/or6/#/user");

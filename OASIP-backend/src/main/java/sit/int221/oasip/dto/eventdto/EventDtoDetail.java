@@ -20,5 +20,5 @@ public class EventDtoDetail {
  private Integer durations;
  private String categoryName;
  private String note;
- private MultipartFile file;
+ private String file;
 }

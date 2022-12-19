@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function(){
   <nav id="navbar_top" class="navbar navbar-expand-lg navbar-light bg-nav shadow p-2 mb-5 nav">
     <div class="container-fluid">
       <button @click="goHome" class="OR"><img src="..\assets\oasip.png" width="30" height="30" class="logo"></button>
+      <h1 class="bigtext">OASIP</h1>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -122,6 +123,14 @@ document.addEventListener("DOMContentLoaded", function(){
 
 .container-fluid {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.bigtext {
+  font-size:45px;
+  font-weight: bolder;
+  margin-top:10px;
+  margin-left: 20px;
+  color:white
 }
 
 .nav-bar {}
