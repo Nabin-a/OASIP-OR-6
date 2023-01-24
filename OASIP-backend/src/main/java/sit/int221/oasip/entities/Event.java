@@ -6,9 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Future;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 @Table(name = "event", indexes = {
         @Index(name = "ClientFirstsName_index", columnList = "bookingName"),
@@ -20,8 +18,8 @@ import java.time.ZonedDateTime;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Integer bookingId;
+    @Column(name = "eventId", nullable = false)
+    private Integer id;
 
     @Column(name = "bookingName", length = 100)
     private String bookingName;
@@ -29,19 +27,18 @@ public class Event {
     @Column(name = "bookingEmail", length = 45)
     private String bookingEmail;
 
-    @Column(name = "eventCategoryName", length = 45)
-    private String eventCategoryName;
-
     @Future
-    @Column(name = "StartTime", nullable = false)
-    private ZonedDateTime startTime;
+    @Column(name = "startTime", nullable = false)
+    private Instant startTime;
 
     @Column(name = "Durations", nullable = false)
     private Integer durations;
 
-    @Size(max = 500)
     @Column(name = "Note", length = 500)
     private String note;
+
+    @Column(name = "file", length = 100)
+    private String file;
 
     @JsonIgnore
     @ManyToOne(optional = false, fetch = FetchType.EAGER)

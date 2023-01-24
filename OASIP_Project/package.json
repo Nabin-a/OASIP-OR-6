@@ -12,8 +12,10 @@
     "json-server": "^0.17.0",
     "moment": "^2.29.3",
     "pinia": "^2.0.13",
+    "vee-validate": "^4.6.6",
     "vue": "^3.2.25",
-    "vue-router": "^4.0.15"
+    "vue-router": "^4.0.15",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.1",

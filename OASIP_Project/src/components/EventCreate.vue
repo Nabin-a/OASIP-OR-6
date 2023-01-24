@@ -14,17 +14,20 @@ const props = defineProps({
     type: Object,
     default: {}
   }
-});
+})
+
+const checkValidation = (e)=>{
+  e.target.classList.add("was-validated");
+}
 
 const newSchedule = computed(() => {
   return {
-    id: props.eventCreate.id,
+    eventId: props.eventCreate.eventId,
     bookingName: props.eventCreate.bookingName,
     bookingEmail: props.eventCreate.bookingEmail,
     note: props.eventCreate.note
   };
 });
-console.log(newSchedule.value);
 
 const theDate = new Date();
 theDate.setHours(theDate.getHours() + 7);
@@ -47,6 +50,10 @@ const eventStartTimeEdit = computed(() => {
     return moment(props.currentEvent.startTime).format("YYYY-MM-DDTHH:mm");
   }
 });
+
+
+
+
 </script>
 
 <template>
@@ -81,11 +88,11 @@ const eventStartTimeEdit = computed(() => {
             ></button>
           </div>
           <div class="modal-body">
-            <form class="was-validated" novalidate>
+            <form class="needs-validation" @submit.prevent="submit" novalidate>
               <div>
                 <ul>
                   <li class="list-group-item">
-                    <label for="uname" class="form-label">Name:</label>
+                    <label for="countChar" class="form-label">Name:</label>
                     <input
                       type="text"
                       class="form-control"
@@ -169,6 +176,7 @@ const eventStartTimeEdit = computed(() => {
                       disabled
                       placeholder="durations"
                       v-model="eventCategorySelect.durations"
+                      required
                     />
                   </li>
                   <br />
@@ -180,8 +188,9 @@ const eventStartTimeEdit = computed(() => {
                       id="countNote"
                       placeholder="detail..."
                       v-model="newSchedule.note"
-                      minLength="1"
+                      minLength="0"
                       maxlength="500"
+                      required
                     ></textarea>
                     <small>
                       <div class="form-text">
@@ -191,19 +200,18 @@ const eventStartTimeEdit = computed(() => {
                     </small>
                   </li>
                 </ul>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button
+                <div style="margin-left:66%">
+                 <button
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
             >
               Close
             </button>
+             &nbsp
             <button
               type="submit"
+              value="submit"
               class="btn btn-success"
               @click="
                 $emit(
@@ -213,12 +221,15 @@ const eventStartTimeEdit = computed(() => {
                   datetime,
                   eventCategorySelect.durations,
                   eventCategorySelect.id,
-                  newSchedule.note
+                  newSchedule.note,
                 )
               "
             >
               Create
             </button>
+            </div>
+              </div>
+            </form> 
           </div>
         </div>
       </div>
@@ -244,7 +255,7 @@ const eventStartTimeEdit = computed(() => {
           ></button>
         </div>
         <div class="modal-body">
-          <form class="was-validated">
+          <form class="was-validated" @submit.prevent="submit">
             <ul class="list-group">
               <li class="list-group-item">
                 Booker:
@@ -332,6 +343,7 @@ const eventStartTimeEdit = computed(() => {
         <div class="modal-footer">
           <button
             type="submit"
+            value="submit"
             class="btn btn-success"
             @click="
               $emit('updateEvent', currentEvent.id, datetime, currentEvent.note)

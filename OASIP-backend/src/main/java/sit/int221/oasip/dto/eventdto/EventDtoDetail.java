@@ -1,12 +1,13 @@
-package sit.int221.oasip.DTO;
+package sit.int221.oasip.dto.eventdto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
-import java.time.ZonedDateTime;
+
 
 @Getter
 @Setter
@@ -15,8 +16,9 @@ public class EventDtoDetail {
  private Integer id;
  private String bookingName;
  private String bookingEmail;
- private ZonedDateTime startTime;
+ private Instant startTime;
  private Integer durations;
  private String categoryName;
  private String note;
+ private String file;
 }

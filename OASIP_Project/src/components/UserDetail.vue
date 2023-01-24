@@ -1,9 +1,8 @@
 <script setup>
 import moment from "moment";
 
-defineEmits(["updateEvent"]);
 defineProps({
-  eventDetail: {
+  userDetail: {
     type: Object
   }
 });
@@ -22,7 +21,7 @@ defineProps({
         <div class="modal-content">
           <div class="modal-header bg-dark">
             <h4 class="modal-title" id="DetailModalLabel">
-              Detail of {{ eventDetail.bookingName }}
+              Detail of {{ userDetail.name }}
             </h4>
             <button
               type="button"
@@ -34,24 +33,20 @@ defineProps({
           <div class="modal-body">
             <ul class="list-group">
               <li class="list-group-item">
-                Date : {{ moment(eventDetail.startTime).format("DD/MM/YYYY") }}
+                name : {{ userDetail.name }} 
               </li>
               <li class="list-group-item">
-                Time : {{ moment(eventDetail.startTime).format("HH:mm") }}
+                email : {{ userDetail.email }}
               </li>
               <li class="list-group-item">
-                Durations : {{ eventDetail.durations }} mins
+                role : {{ userDetail.role }}
               </li>
               <li class="list-group-item">
-                Category : {{ eventDetail.categoryName }}
+                createdOn : {{ moment(userDetail.createdOn).format("YYYY/MM/DD HH:mm") }}
               </li>
               <li class="list-group-item">
-                Booker : {{ eventDetail.bookingName }}
-              </li>
-              <li class="list-group-item">
-                Email : {{ eventDetail.bookingEmail }}
-              </li>
-              <li class="list-group-item">Note : {{ eventDetail.note }}</li>
+                updatedOn : {{ moment(userDetail.updatedOn).format("YYYY/MM/DD HH:mm") }}
+              </li>            
             </ul>
           </div>
           <div class="modal-footer">

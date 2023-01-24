@@ -1,5 +1,6 @@
 package sit.int221.oasip.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,8 +15,8 @@ import java.util.Set;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private Integer eventCategoryId;
+    @Column(name = "eventCategoryId", nullable = false)
+    private Integer categoryId;
 
     @Column(name = "CategoryName", nullable = false, length = 100)
     private String categoryName;
@@ -26,6 +27,7 @@ public class Category {
     @Column(name = "`Duration(min.)`", nullable = false)
     private Integer durationMin;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     private Set<Event> events = new LinkedHashSet<>();
 }

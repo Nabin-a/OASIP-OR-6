@@ -9,24 +9,29 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    
-   
+
+
     <title>Vite App</title>
   </head>
-  <body class="p-3 mb-2 bg-dark text-dark">
+  <body class="p-3 mb-2 bg-dark text-white">
     <div id="app"></div>
     
     <script type="module" src="/src/main.js"></script>
-  
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" 
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     
+    <script src="https://cdn.jsdelivr.net/vee-validate/2.0.0-beta.21/vee-validate.min.js"></script>
+    
+  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript">
 
+      
+//ใช้ JQuery เข้ามาช่วยในการนับ Character ในช่อง input ต่างๆ
     $(function(){
     $('#countChar').keyup(function() {    
-    const characterCount = $(this).val().length,
+    const characterCount = $(this).val().trim().length,
         current_count = $('#current_count'),
         maximum_count = $('#maximum_count'),
         count = $('#count');    
@@ -36,7 +41,7 @@
 
     $(function(){
     $('#countNote').keyup(function() {    
-    const characterNote = $(this).val().length,
+    const characterNote = $(this).val().trim().length,
         current_note = $('#current_note'),
         maximum_note = $('#maximum_note'),
         countNote = $('#countNote');    
@@ -46,7 +51,7 @@
 
     $(function(){
     $('#countEmail').keyup(function() {    
-    const characterEmail = $(this).val().length,
+    const characterEmail = $(this).val().trim().length,
         current_email = $('#current_email'),
         maximum_email = $('#maximum_email'),
         countEmail = $('#countEmail');    
@@ -54,15 +59,38 @@
     });
     });
 
-$(function(){
-$('#countCurNote').keyup(function() {    
-    const characterCurNote = $(this).val().length,
+    $(function(){
+    $('#countCurNote').keyup(function() {    
+    const characterCurNote = $(this).val().trim().length,
         current_curNote = $('#current_CurNote'),
         maximum_curNote = $('#maximum_CurNote'),
         countCurNote = $('#countCurNote');    
         current_curNote.text(characterCurNote);        
 });
 });
+
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+        
+      }, false);
+    });
+  }, false);
+
+})();
+
+
+
 
   </script>
   </body>
