@@ -2,6 +2,7 @@ package sit.int221.oasip.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import sit.int221.oasip.dto.eventdto.EventDtoCreate;
 import sit.int221.oasip.dto.eventdto.EventDtoDetail;
@@ -37,7 +38,7 @@ public class EventController {
     //POST
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
-    public EventDtoDetail create(@Valid @ModelAttribute EventDtoCreate newEventDtoCreate){
+    public EventDtoDetail create(@Valid @ModelAttribute EventDtoCreate newEventDtoCreate, BindingResult result){
         return eventService.save(newEventDtoCreate);
     }
 

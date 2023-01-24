@@ -9,13 +9,15 @@ defineProps({
   }
 });
 
+let role = localStorage.getItem("role")
+
 </script>
 
 <template>
   <div class="container pt-3 pb-5">
     <h2 style="color: white">Scheduled Events</h2>
     &nbsp
-    <h4 v-if="eventList.length < 1" style="color: white">No schedule events</h4>
+    <h4 v-if="eventList.length < 1" style="color:rgb(227, 70, 106) " >No schedule events</h4>
     <table class="table table-light table-striped table-hover" v-else>
       <thead>
         <tr>
@@ -24,7 +26,7 @@ defineProps({
           <th scope="col">Start Date</th>
           <th scope="col">Start Time</th>
           <th scope="col">Duration</th>
-          <th scope="col" style="padding-left: 8.5%">ooo</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody v-for="(event, index) in eventList" :key="index">
@@ -50,6 +52,7 @@ defineProps({
               data-bs-target="#EditModal"
               data-bs-toggle="modal"
               @click="$emit('getEventId', event.id)"
+              v-if = "role != 'ROLE_lecturer'"
             >
               <i class="fa fa-edit"></i>
             </button>
@@ -58,6 +61,7 @@ defineProps({
               type="button"
               class="btn btn-danger"
               @click="$emit('removeEvent', event.id)"
+              v-if = "role != 'ROLE_lecturer'"
             >
               <i class="fa fa-trash"></i>
             </button>

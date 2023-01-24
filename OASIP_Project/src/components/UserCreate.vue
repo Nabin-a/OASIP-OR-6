@@ -26,6 +26,34 @@ const editUser = computed(() => {
     email: props.userCreate.email
   };
 });
+
+
+
+const checkNameMatch = ref(true);
+const validateName = () => {
+  if (props.currentUser.name == editUser.value.name.trim()) {
+    checkNameMatch.value = false;
+  } else checkNameMatch.value = true;
+};
+
+const checkEmailMatch = ref(true);
+const validateEmail = () => {
+  if (props.currentUser.email == editUser.value.email.trim()) {
+    checkEmailMatch.value = false;
+  } else checkEmailMatch.value = true;
+};
+
+const emailErr = ref(0);
+const ValidateEmailPat = (email) => {
+  return email == ""
+    ? (emailErr.value = 0)
+    : /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/.test(
+        email
+      )
+    ? (emailErr.value = 1)
+    : (emailErr.value = 2);
+};
+
 </script>
 
 <template>
@@ -57,6 +85,7 @@ const editUser = computed(() => {
                   class="form-control"
                   disabled
                   v-model="currentUser.name"
+                  v-on:input="validateName()"
                 />
               </li>
               <br />
@@ -69,6 +98,7 @@ const editUser = computed(() => {
                   maxlength="100"
                   v-model="editUser.name"
                   required
+                  v-on:input="validateName()"
                 />
                 <p class="text-danger" v-show="validateUnique">
                   Name must be unique
@@ -84,6 +114,7 @@ const editUser = computed(() => {
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                   disabled
                   v-model="currentUser.email"
+                  v-on:input="validateEmail()"
                 />
               </li>
               <br />
@@ -97,10 +128,15 @@ const editUser = computed(() => {
                   minlength="1"
                   maxlength="50"
                   required
+                  v-on:input="validateEmail()"
+                  @keyup="ValidateEmailPat(editUser.email)"
                 />
                 <p class="text-danger" v-show="validateUnique">
                   Email must be unique and checking well-formed.
                 </p>
+                <div class="text-danger" v-if="emailErr == 2">
+                      Your pattern not correctly.
+                    </div>
               </li>
 
               <br />
@@ -133,6 +169,7 @@ const editUser = computed(() => {
               <button
                 type="submit"
                 class="btn btn-success"
+                :disabled="checkNameMatch == false || checkEmailMatch == false"
                 @click="
                   $emit(
                     'updateUser',

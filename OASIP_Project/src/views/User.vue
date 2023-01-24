@@ -3,6 +3,7 @@ import UserTable from './UserTable.vue';
 import NavBar from './NavBar.vue'
 
 
+
 </script>
  
 <template>

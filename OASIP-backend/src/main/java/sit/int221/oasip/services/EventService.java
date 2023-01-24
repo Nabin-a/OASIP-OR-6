@@ -105,7 +105,7 @@ public class EventService {
     //Method create new Event
     public EventDtoDetail save(EventDtoCreate newEvent) {
         Authentication role = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(newEvent.getFile().getOriginalFilename());
+
         //role student
         if (role.getAuthorities().toString().equals("[ROLE_student]")) {
             if (!role.getName().equals(newEvent.getBookingEmail())) {

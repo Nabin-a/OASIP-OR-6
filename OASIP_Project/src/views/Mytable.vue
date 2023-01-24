@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onBeforeMount } from "vue";
+import { useRouter } from "vue-router";
 import EventList from "../components/EventList.vue";
 import EventDetail from "../components/EventDetail.vue";
 import EventCreate from "../components/EventCreate.vue";
@@ -8,7 +9,11 @@ const events = ref([]);
 const eventDetail = ref({});
 const eventCategory = ref([]);
 
-let token = localStorage.getItem('accessToken')
+const appRouter = useRouter();
+const goLogin = () => appRouter.push({ name: "Login" });
+
+let token = localStorage.getItem('token')
+let retoken = localStorage.getItem('refreshToken')
 
 onBeforeMount(async () => {
 
@@ -20,28 +25,52 @@ const getEvents = async () => {
   const res = await fetch(`http://localhost:8080/api/events`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`
+      'Authorization': `Bearer ${token}`
     }
   });
   if (res.status === 200) {
     events.value = await res.json();
     console.log(events.value);
     return events.value;
-  } else console.log("error, cannot get notes");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
+      headers: {
+        'Authorization': `Bearer ${retoken}` 
+      }
+    })
+    if (resfs.status === 200){
+      const data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    } 
+  } else console.log("cannot get events")
 };
 
 const getEventCategory = async () => {
   const res = await fetch(`http://localhost:8080/api/category`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`
+      'Authorization': `Bearer ${token}`
     }
   });
   if (res.status === 200) {
     eventCategory.value = await res.json();
     console.log(eventCategory.value);
     return eventCategory.value;
-  } else console.log("error, cannot get notes");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
+      headers: {
+        'Authorization': `Bearer ${retoken}`
+      }
+    })
+    if (resfs.status === 200){
+      const data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    } 
+  } else console.log("cannot get category")
 };
 
 const getEventid = async (id) => {
@@ -49,13 +78,26 @@ const getEventid = async (id) => {
   const res = await fetch(`http://localhost:8080/api/events/${id}`, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`
+      'Authorization': `Bearer ${token}`
     }
   })
   if (res.status === 200) {
     eventDetail.value = await res.json();
     console.log(eventDetail.value);
-  } else console.log("error, cannot get data");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
+      headers: {
+        'Authorization': `Bearer ${retoken}`
+      }
+    })
+    if (resfs.status === 200){
+      const data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    } 
+  } 
+  else console.log("error, cannot get data");
 };
 
 const createNewSchedule = async (
@@ -64,29 +106,33 @@ const createNewSchedule = async (
   newStartTime,
   newDurations,
   newCategory,
-  newNote
+  newNote,
+  newAttachment
 ) => {
+  
   console.log(
     newBookingName,
     newBookingEmail,
     newStartTime,
     newDurations,
     newCategory,
-    newNote
+    newNote,
+    newAttachment
   );
-  const res = await fetch(`http://localhost:8080/api/events/`, {
+  const res = await fetch(`http://localhost:8080/api/events`, {
     method: "POST",
     headers: {
       "content-type": "application/json;",
-      'Authorization' : `Bearer ${token}`
+      'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify({
       bookingName: newBookingName,
       bookingEmail: newBookingEmail,
       startTime: newStartTime,
       durations: newDurations,
-      eventCategoryId: newCategory,
-      note: newNote
+      categoryId: newCategory,
+      note: newNote,
+      attachment: fileName.value.length > 0 ? fileName.value : null,
     })
   });
   if (res.status === 201) {
@@ -94,7 +140,20 @@ const createNewSchedule = async (
     alert("Added sucessfully");
     const addedSchedule = await res.json();
     events.value.push(addedSchedule);
-  } else console.log("error, cannot be added");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
+      headers: {
+        'Authorization': `Bearer ${retoken}`
+      }
+    })
+    if (resfs.status === 200){
+      const data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    } 
+  } 
+  else console.log("error, cannot be added");
 };
 
 const removeEvent = async (id) => {
@@ -109,7 +168,20 @@ const removeEvent = async (id) => {
     if (res.status === 200) {
       events.value = events.value.filter((event) => event.id !== id);
       console.log("deleted successfully");
-    } else console.log("error, cannot delete data");
+    } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
+      headers: {
+        'Authorization': `Bearer ${retoken}`
+      }
+    })
+    if (resfs.status === 200){
+      const data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    } 
+  } 
+    else console.log("error, cannot delete data");
   }
 };
 
@@ -131,7 +203,20 @@ const updateEvent = async (id, editTime, editNote) => {
     location.reload();
     alert("Edit Success");
     console.log("edited successfully");
-  } else console.log("error, cannot be edit");
+  } else if (res.status === 401) {
+    const resfs = await fetch(`https://localhost:8080/api/users/refresh`, {
+      headers: {
+        'Authorization': `Bearer ${retoken}`
+      }
+    })
+    if (resfs.status === 200){
+      const data = await resfs.json()
+      localStorage.setItem('token', data.accessToken)
+    } else if (resfs.status === 401) {
+      goLogin()
+    } 
+  } 
+  else console.log("error, cannot be edit");
 };
 </script>
 
@@ -140,7 +225,6 @@ const updateEvent = async (id, editTime, editNote) => {
     :eventCategory="eventCategory"
     :eventCreate="events"
     :currentEvent="eventDetail"
-    @createSchedule="createNewSchedule"
     @updateEvent="updateEvent"
   />
 

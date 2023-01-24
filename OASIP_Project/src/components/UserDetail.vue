@@ -19,7 +19,7 @@ defineProps({
     >
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header bg-dark">
+          <div class="modal-header bgsb">
             <h4 class="modal-title" id="DetailModalLabel">
               Detail of {{ userDetail.name }}
             </h4>
@@ -30,29 +30,29 @@ defineProps({
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body bgsb">
             <ul class="list-group">
-              <li class="list-group-item">
+              <li class="list-group-item list-group-item-light">
                 name : {{ userDetail.name }} 
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item list-group-item-light">
                 email : {{ userDetail.email }}
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item list-group-item-light">
                 role : {{ userDetail.role }}
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item list-group-item-light">
                 createdOn : {{ moment(userDetail.createdOn).format("YYYY/MM/DD HH:mm") }}
               </li>
-              <li class="list-group-item">
+              <li class="list-group-item list-group-item-light">
                 updatedOn : {{ moment(userDetail.updatedOn).format("YYYY/MM/DD HH:mm") }}
               </li>            
             </ul>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer bgsb">
             <button
               type="button"
-              class="btn btn-secondary"
+              class="btn btn-danger"
               data-bs-dismiss="modal"
             >
               Close
@@ -72,5 +72,13 @@ defineProps({
 
 li {
   font-size: 20px;
+}
+
+.bgsb {
+  background-color: #b4bdef;
+}
+
+div.modal-content {
+  border-radius: dpx;
 }
 </style>

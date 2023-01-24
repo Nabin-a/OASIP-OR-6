@@ -40,7 +40,7 @@ const validatePassword = () => {
 <template>
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center">
-      <div class="col col-xl-10">
+      <div class="col col-xl-5">
         <div class="card" style="border-radius: 1rem">
           <div class="row g-0">
             <div class="col-md-6 d-none d-md-block"></div>
@@ -48,9 +48,9 @@ const validatePassword = () => {
               <div class="card-body p-4 p-lg-5 text-black">
                 <form @submit.prevent="submit">
                   
-                  <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px">
-                    Sign into your account
-                  </h5>
+                  <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px">
+                    Create your account
+                  </h3>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="countChar">Name</label>
@@ -178,10 +178,10 @@ const validatePassword = () => {
                     </div>
                   </div>
 
-                  <div class="pt-1 mb-4">
+                  <div class="pt-1 mb-4 ">
                     <button
                       type="submit"
-                      class="btn btn-dark"
+                      class="btn btn-primary col-xl-12"
                       :disabled="checkPasswordMatch == false"
                       @click="
                         $emit(
@@ -194,7 +194,7 @@ const validatePassword = () => {
                         )
                       "
                     >
-                      Create
+                      Submit
                     </button>
                   </div>
                 </form>
